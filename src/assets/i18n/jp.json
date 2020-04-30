@@ -105,5 +105,34 @@
       "cm": "cm",
       "mL": "mL"
     }
+  },
+  "SETTINGS": {
+    "title": "Profile",
+    "changeProfilePicture": "Change Profile Picture",
+    "select": "Select",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "input": "Input",
+    "language": "Language",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "birthday": "Birthday",
+    "gender": "Gender",
+    "nationality": "Nationality",
+    "city": "City",
+    "update": "Update",
+    "languageOptions": {
+      "en": "English",
+      "fr": "Français",
+      "jp": "日本語",
+      "zh": "繁體中文"
+    },
+    "genderOptions": {
+      "female": "Female",
+      "male": "Male",
+      "nonBinary": "Non-binary"
+    }
   }
+  
 }

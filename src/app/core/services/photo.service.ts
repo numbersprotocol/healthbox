@@ -30,17 +30,19 @@ export class PhotoService {
     this.loadSaved();
   }
 
-  startCapture(takePhotoSignal$: Subject<any>): Observable<CameraPhoto> {
+  startCapture(takePhotoSignal$?: Subject<any>, promptForSource = false): Observable<CameraPhoto> {
     return from(Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Uri,
-      source: CameraSource.Camera,
+      source: (promptForSource) ? CameraSource.Prompt : CameraSource.Camera,
     }))
       .pipe(
         map(res => {
-          takePhotoSignal$.next();
-          takePhotoSignal$.complete();
+          if (takePhotoSignal$) {
+            takePhotoSignal$.next();
+            takePhotoSignal$.complete();
+          }
           return res;
         })
       );

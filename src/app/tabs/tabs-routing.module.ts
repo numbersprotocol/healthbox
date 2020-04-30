@@ -55,6 +55,10 @@ const routes: Routes = [
         path: '',
         redirectTo: '/tabs/tab-data',
         pathMatch: 'full'
+      },
+      {
+        path: 'tab-setting',
+        loadChildren: () => import('./tab-setting/tab-setting.module').then(m => m.TabSettingPageModule)
       }
     ]
   },
@@ -62,7 +66,7 @@ const routes: Routes = [
     path: '',
     redirectTo: '/tabs/tab-data',
     pathMatch: 'full'
-  }
+  },
 ];
 
 @NgModule({

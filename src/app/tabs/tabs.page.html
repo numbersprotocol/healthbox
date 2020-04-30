@@ -12,8 +12,9 @@
       <ion-tab-button (click)="onClickShareButton()">
         <img src="../../assets/ui/nav_icon_C.svg" />
       </ion-tab-button>
-      <ion-tab-button tab="tab-data"  disabled="true" >
-        <img src="../../assets/ui/nav_icon_D.svg" />
+      <ion-tab-button tab="tab-setting">
+        <img *ngIf="selectedTab !== 'tab-setting'" src="../../assets/ui/nav_icon_D.svg" />
+        <img *ngIf="selectedTab === 'tab-setting'" src="../../assets/ui/nav_icon_4.svg" />
       </ion-tab-button>
       <ion-tab-button tab="tab-data" disabled="true" >
       </ion-tab-button>
