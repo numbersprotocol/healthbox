@@ -1,20 +1,22 @@
 import { DataField, DataFieldType } from './data-field';
 
-const HEALTH_CONDITION_NAMES = [
-    'SBP',
-    'DBP',
-    'heartbeat',
-    'bloodSugar',
-    'weight',
-    'height',
-    'urineVolume',
+const HEALTH_CONDITIONS = [
+    { name: 'SBP', unit: 'mmHg' },
+    { name: 'DBP', unit: 'mmHg' },
+    { name: 'heartbeat', unit: 'bpm' },
+    { name: 'bloodSugar', unit: 'mg/dL' },
+    { name: 'weight', unit: 'kg' },
+    { name: 'height', unit: 'cm' },
+    { name: 'urineVolume', unit: 'mL' },
 ];
 
 export class HealthCondition {
     list: DataField[] = [];
 
     constructor() {
-        HEALTH_CONDITION_NAMES.forEach(conditionName => this.list.push(new DataField(conditionName, DataFieldType.Number)));
+        HEALTH_CONDITIONS.forEach(condition => {
+            this.list.push(new DataField(condition.name, DataFieldType.Number, null, condition.unit));
+        });
     }
 
     setDefault() {

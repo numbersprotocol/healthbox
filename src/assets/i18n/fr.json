@@ -96,6 +96,14 @@
     "weight": "Weight",
     "height": "Height",
     "urineVolume": "Urine Volume",
-    "noData": "Input your data here"
+    "noData": "Input your data here",
+    "unit": {
+      "mmHg": "mmHg",
+      "bpm": "bpm",
+      "mg/dL": "mg/dL",
+      "kg": "kg",
+      "cm": "cm",
+      "mL": "mL"
+    }
   }
 }
