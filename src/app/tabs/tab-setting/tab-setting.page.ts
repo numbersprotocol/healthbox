@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
+import { getNameList, getNames } from 'country-list';
 
 export interface Setting {
   name: string;
@@ -16,6 +17,7 @@ export interface SelectOption {
 export enum FormSettingType {
   select,
   input,
+  datetime,
 }
 
 @Component({
@@ -39,7 +41,7 @@ export class TabSettingPage implements OnInit {
     { name: 'firstName', type: FormSettingType.input },
     { name: 'lastName', type: FormSettingType.input },
     { name: 'email', type: FormSettingType.input },
-    { name: 'birthday', type: FormSettingType.select },
+    { name: 'birthday', type: FormSettingType.datetime },
     {
       name: 'gender',
       type: FormSettingType.select,
@@ -47,7 +49,12 @@ export class TabSettingPage implements OnInit {
         'female', 'male', 'nonBinary',
       ]
     },
-    { name: 'nationality', type: FormSettingType.select },
+    {
+      name: 'nationality',
+      type: FormSettingType.select,
+      // WORKAROUND: Use Taiwan. Find another country list package later
+      selectOptions: getNames().map(name => (name.includes('Taiwan') ? 'Taiwan' : name))
+    },
     { name: 'city', type: FormSettingType.input },
   ];
   constructor(

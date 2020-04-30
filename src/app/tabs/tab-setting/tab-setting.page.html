@@ -2,31 +2,35 @@
 <ion-content>
   <ion-list>
     <form [formGroup]="settingsForm">
-    <ion-item *ngFor="let setting of settings">
-      <ion-grid fixed>
-        <ion-row>
-          <ion-col class="ion-align-self-center" size="4">
-            <ion-label>{{ 'SETTINGS.' + setting.name | translate }}</ion-label>
-          </ion-col>
-          <ion-col class="ion-align-self-center" size="8">
-            <ion-select class="ion-text-right"
-            *ngIf="setting.type === formSettingType.select"
-            [cancelText]="'SETTINGS.cancel' | translate" [okText]="'SETTINGS.ok' | translate"
-            [placeholder]="'SETTINGS.select' | translate">
-              <ng-container *ngFor="let option of setting.selectOptions">
-                <ion-label>{{ 'SETTINGS.' + setting.name + 'Options.' + option }}</ion-label>
-              <ion-select-option [value]="option.name">{{ 'SETTINGS.' + setting.name + 'Options.' + option | translate }}</ion-select-option>
-              </ng-container>
-            </ion-select>
-            <ion-input class="ion-text-right ion-padding-end"
-            *ngIf="setting.type === formSettingType.input"
-            [formControlName]="setting.name"
-            type="setting.type"
-            [placeholder]="'SETTINGS.input' | translate"></ion-input>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
+      <ion-item *ngFor="let setting of settings">
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col class="ion-align-self-center" size="4">
+              <ion-label>{{ 'SETTINGS.' + setting.name | translate }}</ion-label>
+            </ion-col>
+            <ion-col class="ion-align-self-center" size="8">
+              <ion-select class="ion-text-right" *ngIf="setting.type === formSettingType.select"
+                [cancelText]="'SETTINGS.cancel' | translate" [okText]="'SETTINGS.ok' | translate"
+                [placeholder]="'SETTINGS.select' | translate" [formControlName]="setting.name">
+                <ng-container *ngFor="let option of setting.selectOptions">
+                  <ion-label>{{ 'SETTINGS.' + setting.name + 'Options.' + option }}</ion-label>
+                  <ion-select-option *ngIf="setting.name !== 'nationality'" [value]="option">
+                    {{ 'SETTINGS.' + setting.name + 'Options.' + option | translate }}</ion-select-option>
+                  <ion-select-option *ngIf="setting.name === 'nationality'" [value]="option">
+                    {{ option }}</ion-select-option>
+                </ng-container>
+              </ion-select>
+              <ion-input class="ion-text-right ion-padding-end" *ngIf="setting.type === formSettingType.input"
+                [formControlName]="setting.name" type="setting.type" [placeholder]="'SETTINGS.input' | translate">
+              </ion-input>
+              <ion-datetime class="ion-text-right ion-padding-end" *ngIf="setting.type === formSettingType.datetime"
+                [placeholder]="'SETTINGS.select' | translate" displayFormat="YYYY/MM/DD" min="1900-01-01"
+                max="2020-01-01" [formControlName]="setting.name">
+              </ion-datetime>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
     </form>
   </ion-list>
 </ion-content>
