@@ -85,5 +85,25 @@
     "placeholder": "e.g. John Doe",
     "success": "Data shared",
     "error": "Upload error. Please try again later."
+  },
+  "HEALTH_DATA": {
+    "addRecordTitle": "Add New Health Data",
+    "addRecordDesc": "Fill in your health data today",
+    "SBP": "Systolic Blood Pressure",
+    "DBP": "Diastolic Blood Pressure",
+    "heartbeat": "Heartbeat",
+    "bloodSugar": "Blood Sugar",
+    "weight": "Weight",
+    "height": "Height",
+    "urineVolume": "Urine Volume",
+    "noData": "Input your data here",
+    "unit": {
+      "mmHg": "mmHg",
+      "bpm": "bpm",
+      "mg/dL": "mg/dL",
+      "kg": "kg",
+      "cm": "cm",
+      "mL": "mL"
+    }
   }
 }

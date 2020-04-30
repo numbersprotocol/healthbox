@@ -87,5 +87,25 @@
     "placeholder": "e.g. 小貓貓",
     "success": "分享成功！",
     "error": "上傳失敗。請稍後再試"
+  },
+  "HEALTH_DATA": {
+    "addRecordTitle": "新增健康數據",
+    "addRecordDesc": "填寫每日健康數據",
+    "SBP": "收縮壓",
+    "DBP": "舒張壓",
+    "heartbeat": "心跳",
+    "bloodSugar": "血糖",
+    "weight": "體重",
+    "height": "身高",
+    "urineVolume": "尿量",
+    "noData": "輸入資料...",
+    "unit": {
+      "mmHg": "mmHg",
+      "bpm": "bpm",
+      "mg/dL": "mg/dL",
+      "kg": "公斤",
+      "cm": "公分",
+      "mL": "毫升"
+    }
   }
 }
