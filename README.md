@@ -1,4 +1,4 @@
-# mylog14
+# HealthBox
 
 ## Build & Run
 
@@ -15,8 +15,8 @@ $ npm i -g @ionic/cli
 3. Clone & install dependencies
 
 ```
-$ git clone https://github.com/MyDataTaiwan/mylog14.git
-$ cd mylog14
+$ git clone https://github.com/numbersprotocol/healthbox.git
+$ cd healthbox
 $ npm i
 ```
 
