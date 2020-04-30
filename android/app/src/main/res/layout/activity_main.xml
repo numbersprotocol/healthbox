@@ -9,5 +9,5 @@
     <WebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/screen" />
+        android:background="@drawable/drawable_port__screen" />
 </android.support.design.widget.CoordinatorLayout>
