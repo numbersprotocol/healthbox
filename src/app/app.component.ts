@@ -41,9 +41,9 @@ export class AppComponent {
     this.dataStore.updateUserData()
       .pipe(
         tap(userData => {
-          if (userData.newUser) {
-            this.router.navigate(['/tour']);
-          }
+          // if (userData.newUser) {
+          //   this.router.navigate(['/tour']);
+          // }
         })
       ).subscribe(() => { }, err => console.log(err));
     SplashScreen.hide();
