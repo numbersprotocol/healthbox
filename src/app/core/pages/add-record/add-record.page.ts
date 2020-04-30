@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PickerController, ModalController, PopoverController, AlertController, LoadingController } from '@ionic/angular';
-import { PickerOptions } from '@ionic/core';
+import { PopoverController, LoadingController } from '@ionic/angular';
 import { Symptoms } from '../../classes/symptoms';
 import { SnapshotService } from '../../services/snapshot.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -9,7 +8,8 @@ import { switchMap, takeUntil, tap, delay, concatMap } from 'rxjs/operators';
 import { GeolocationService } from '../../services/geolocation.service';
 import { RecordFinishPage } from '../../components/record-finish/record-finish.page';
 import { Location } from '@angular/common';
-import { Symptom } from '../../classes/symptom';
+import { HealthCondition } from '../../classes/health-condition';
+import { DataField } from '../../classes/data-field';
 
 @Component({
   selector: 'app-add-record',
@@ -17,18 +17,6 @@ import { Symptom } from '../../classes/symptom';
   styleUrls: ['./add-record.page.scss'],
 })
 export class AddRecordPage implements OnInit, OnDestroy {
-  isShow = true;
-  isSelect = true;
-  isShow1 = true;
-  isShow2 = true;
-  isShow3 = true;
-  btCIntegerList = this.genIntArr(34, 40).map(x => x.toString());
-  btDecimalList = this.genIntArr(0, 9).map(x => `.${x}`);
-  btUnitList = ['°C'];
-  defaultBt = '-';
-  defaultBtUnit = '°C';
-  bt: string;
-  btUnit: string;
   text = {
     recorded: '',
     ok: '',
@@ -36,14 +24,11 @@ export class AddRecordPage implements OnInit, OnDestroy {
   recorded$: Observable<string>;
   ok$: Observable<string>;
   destroy$ = new Subject();
-  symptoms = new Symptoms();
-  symptomsView: SymptomView[] = this.symptoms.list;
+  healthCondition = new HealthCondition();
 
   constructor(
-    private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
     private location: Location,
-    private pickerCtrl: PickerController,
     private geolocationService: GeolocationService,
     private snapshotService: SnapshotService,
     private translate: TranslateService,
@@ -60,25 +45,11 @@ export class AddRecordPage implements OnInit, OnDestroy {
   ngOnInit() {
     // Trigger location cache update
     this.geolocationService.getPosition().subscribe();
-    this.presentBtPicker();
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  onToggleChanged(toggledSymptom: Symptom) {
-    this.symptomsView = this.symptomsView
-      .map(symptomView => {
-        if (symptomView.name === toggledSymptom.name) {
-          symptomView.expand = symptomView.present;
-          return symptomView;
-        } else {
-          symptomView.expand = false;
-          return symptomView;
-        }
-      });
   }
 
   showRecordFinish() {
@@ -107,40 +78,6 @@ export class AddRecordPage implements OnInit, OnDestroy {
       .pipe(tap(() => this.location.back()));
   }
 
-  async presentBtPicker() {
-    const options: PickerOptions = {
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'Ok',
-          handler: (value: any) => {
-            this.bt = `${value.integer.value}${value.decimal.value}`;
-            this.btUnit = value.unit.value;
-          }
-        }
-      ],
-      columns: [
-        {
-          name: 'integer',
-          options: this.getColumnOptions(this.btCIntegerList)
-        },
-        {
-          name: 'decimal',
-          options: this.getColumnOptions(this.btDecimalList)
-        },
-        {
-          name: 'unit',
-          options: this.getColumnOptions(this.btUnitList)
-        }
-      ]
-    };
-    const picker = await this.pickerCtrl.create(options);
-    await picker.present();
-  }
-
   presentLoading() {
     return this.translate.get('DAILY_RECORD.saving')
       .pipe(
@@ -154,18 +91,6 @@ export class AddRecordPage implements OnInit, OnDestroy {
       );
   }
 
-  getColumnOptions(column: string[]) {
-    const options = [];
-    column.forEach(x => {
-      options.push({ text: x, value: x });
-    });
-    return options;
-  }
-
-  onBodyTemperatureClick() {
-    this.presentBtPicker();
-  }
-
   onClearClick() {
     this.resetPage();
   }
@@ -176,10 +101,8 @@ export class AddRecordPage implements OnInit, OnDestroy {
 
   submitRecord(): Observable<any> {
     // FIXME: It's a dirty hack to add/remove expand value for symptoms view
-    this.symptoms.list = this.symptomsView;
-    this.symptoms.list.forEach((symptom: SymptomView) => delete symptom.expand);
     const loading$ = this.presentLoading();
-    const snapRecord$ = this.snapshotService.snapRecord(+this.bt, this.btUnit, this.symptoms);
+    const snapRecord$ = this.snapshotService.snapRecord(this.healthCondition);
     return forkJoin([loading$, snapRecord$])
       .pipe(
         switchMap(([[loadingElement, _1], _]) => loadingElement.dismiss()),
@@ -189,23 +112,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
   }
 
   resetPage() {
-    this.bt = this.defaultBt;
-    this.btUnit = this.defaultBtUnit;
-    this.symptoms.setDefault();
-    this.symptomsView = this.symptoms.list;
-    this.symptomsView = this.symptomsView.map(symptomView => {
-      symptomView.expand = false;
-      return symptomView;
-    });
+    this.healthCondition.setDefault();
   }
 
-  // Create an integer array [start..end]
-  private genIntArr(start: number, end: number, step = 1): number[] {
-    return Array.from({ length: end - start + 1 }, (_, k) => start + k);
-  }
-
-}
-
-export interface SymptomView extends Symptom {
-  expand?: boolean;
 }

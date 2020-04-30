@@ -12,6 +12,7 @@ import { Symptoms } from '../classes/symptoms';
 import { LocalStorageService } from './local-storage.service';
 import { DataStoreService } from './data-store.service';
 import { RecordMeta } from '../classes/record-meta';
+import { HealthCondition } from '../classes/health-condition';
 
 @Injectable({
   providedIn: 'root'
@@ -106,7 +107,7 @@ export class SnapshotService {
       );
   }
 
-  snapRecord(bodyTemperature: number, bodyTemperatureUnit: string, symptoms: Symptoms): Observable<RecordMeta[]> {
+  snapRecord(healthCondition: HealthCondition): Observable<RecordMeta[]> {
     return forkJoin([
       this.createSnapshot(),
       this.dataStore.recordMetaList$.pipe(take(1)),
@@ -114,9 +115,7 @@ export class SnapshotService {
       .pipe(
         mergeMap(([snapshot, recordMetaList]) => {
           const record: Record = {
-            bodyTemperature,
-            bodyTemperatureUnit,
-            symptoms,
+            healthCondition,
             timestamp: snapshot.timestamp,
             locationStamp: snapshot.locationStamp,
             photos: [],
