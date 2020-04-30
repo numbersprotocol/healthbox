@@ -38,9 +38,8 @@ export class TabSettingPage implements OnInit, OnDestroy {
     {
       name: 'language',
       type: FormSettingType.select,
-      validator: Validators.compose([Validators.maxLength(30)]),
       selectOptions: [
-        'zh', 'en', 'fr', 'jp',
+        'zh', 'en',
       ],
     },
     { name: 'firstName', type: FormSettingType.input },
