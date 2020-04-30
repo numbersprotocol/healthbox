@@ -6,6 +6,7 @@ import { tap, map, switchMap, take } from 'rxjs/operators';
 import { DailyRecords } from '../classes/daily-records';
 import { OverviewDailyCard } from '../classes/overview-daily-card';
 import { UserData } from '../interfaces/user-data';
+import { TranslateConfigService } from 'src/app/translate-config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,7 @@ export class DataStoreService {
 
   constructor(
     private localStorage: LocalStorageService,
+    private translateConfig: TranslateConfigService,
   ) {
     this.updateRecordMetaList().subscribe(); // Initial update (load from storage)
   }
@@ -66,6 +68,11 @@ export class DataStoreService {
     const update$ = (userData) ? save$ : load$;
     return update$.pipe(
       tap((data: UserData) => this.userData.next(data)),
+      tap((data: UserData) => {
+        if (data.language) {
+          this.translateConfig.setLanguage(data.language);
+        }
+      }),
     );
   }
 
