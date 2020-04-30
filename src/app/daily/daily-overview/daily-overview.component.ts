@@ -4,6 +4,7 @@ import { AnimationOptions, } from 'ngx-lottie';
 import { Observable, Subject, timer } from 'rxjs';
 import { tap, map, takeUntil, switchMap, filter } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
+import { DailyRecord } from 'src/app/core/classes/daily-record';
 
 @Component({
   selector: 'app-daily-overview',
@@ -14,7 +15,7 @@ import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 export class DailyOverviewComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
-  items$ = new Observable<CardItem[]>();
+  items$ = new Observable<DailyRecord[]>();
   cachedDateDiff = -10;
 
   WhatIsItToday = 0;
@@ -50,9 +51,9 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
     public dataStore: DataStoreService,
     private ngZone: NgZone
   ) {
-    this.items$ = this.dataStore.overviewCards$
+    this.items$ = this.dataStore.dailyRecords$
       .pipe(
-        map(cards => cards.reverse()),
+        map(dailyRecords => dailyRecords.list.reverse()),
       );
   }
 

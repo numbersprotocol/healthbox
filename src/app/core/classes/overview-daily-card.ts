@@ -26,16 +26,17 @@ export class OverviewDailyCard implements DailyCard {
     }
 
     update(dailyRecord: DailyRecord) {
-        this.day = dailyRecord.dayCount.toString();
+        // this.day = dailyRecord.dayCount.toString();
         if (dailyRecord.date) {
             this.month = dailyRecord.date.split('-')[1];
             this.date = dailyRecord.date.split('-')[2];
         }
-        this.bt = `${dailyRecord.getHighestBt()}`;
-        this.imgSrc = dailyRecord.getLatestPhotoPath();
+        // this.bt = `${dailyRecord.getHighestBt()}`;
+        // this.imgSrc = dailyRecord.getLatestPhotoPath();
         this.locations = dailyRecord.records
             .map(record => record.locationStamp)
             .filter(locationStamp => locationStamp !== undefined);
+        /*
         this.presentedSymptoms = dailyRecord.records
             .map(record => {
                 return record.symptoms.list
@@ -44,6 +45,7 @@ export class OverviewDailyCard implements DailyCard {
             .reduce((flat, next) => flat.concat(next), []) // Flatten
             .map(symptoms => symptoms.name)
             .filter((v, i, a) => a.indexOf(v) === i); // Unique filter
+        */
     }
 
 }
