@@ -1,5 +1,17 @@
 <app-main-header headerTitle="Healthbox"></app-main-header>
 <ion-content>
+  <ion-grid fixed>
+    <ion-row class="ion-justify-content-center">
+      <ion-thumbnail>
+        <ion-skeleton-text></ion-skeleton-text>
+      </ion-thumbnail>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-button (click)="onClickChangeProfilePicture()" expand="block" fill="solid" shape="round">
+        {{ 'SETTINGS.changeProfilePicture' | translate }}
+      </ion-button>
+    </ion-row>
+  </ion-grid>
   <ion-list>
     <form [formGroup]="settingsForm">
       <ion-item *ngFor="let setting of settings">
@@ -31,6 +43,9 @@
           </ion-row>
         </ion-grid>
       </ion-item>
+      <ion-button (click)="onClickUpdate()" expand="block" fill="solid" shape="round">
+        {{ 'SETTINGS.update' | translate }}
+      </ion-button>
     </form>
   </ion-list>
 </ion-content>

@@ -68,4 +68,12 @@ export class TabSettingPage implements OnInit {
     this.settingsForm = this.formBuilder.group(this.settingsFormControlsConfig);
   }
 
+  onClickChangeProfilePicture() {
+
+  }
+
+  onClickUpdate() {
+    
+  }
+
 }
