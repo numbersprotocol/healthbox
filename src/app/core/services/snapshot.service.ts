@@ -89,6 +89,22 @@ export class SnapshotService {
       );
   }
 
+  // FIXME: Dirty reuse of the current photoshot functions
+  profileCapture() {
+    const takePhotoSignal$ = new Subject();
+    const subscription = takePhotoSignal$.subscribe();
+    return this.photoService.startCapture(takePhotoSignal$, true)
+      .pipe(
+        switchMap(capturedPhoto => {
+          subscription.unsubscribe();
+          return from(this.photoService.createPicture(capturedPhoto));
+        }),
+        map(({ photo, metadata }) => {
+          return photo;
+        }),
+      );
+  }
+
   snapCapture() {
     return forkJoin([
       this.createPhotoWithSnapshot(),

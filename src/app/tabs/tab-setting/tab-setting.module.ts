@@ -9,6 +9,7 @@ import { TabSettingPageRoutingModule } from './tab-setting-routing.module';
 import { TabSettingPage } from './tab-setting.page';
 import { MainHeaderModule } from 'src/app/core/components/main-header/main-header.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     MainHeaderModule,
     TranslateModule,
+    CoreModule,
   ],
   declarations: [TabSettingPage]
 })

@@ -3,7 +3,10 @@
   <ion-grid fixed>
     <ion-row class="ion-justify-content-center">
       <ion-thumbnail>
-        <ion-skeleton-text></ion-skeleton-text>
+        <ng-container *ngIf="(dataStore.userData$ | async).profilePicture as picture">
+          <img [src]="picture.webviewPath | safeUrl">
+        </ng-container>
+        <ion-skeleton-text *ngIf="!(dataStore.userData$ | async)"></ion-skeleton-text>
       </ion-thumbnail>
     </ion-row>
     <ion-row class="ion-justify-content-center">
@@ -13,7 +16,7 @@
     </ion-row>
   </ion-grid>
   <ion-list>
-    <form [formGroup]="settingsForm">
+    <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
       <ion-item *ngFor="let setting of settings">
         <ion-grid fixed>
           <ion-row>
@@ -43,7 +46,7 @@
           </ion-row>
         </ion-grid>
       </ion-item>
-      <ion-button (click)="onClickUpdate()" expand="block" fill="solid" shape="round">
+      <ion-button type="submit" [disabled]="!settingsForm.valid" expand="block" fill="solid" shape="round">
         {{ 'SETTINGS.update' | translate }}
       </ion-button>
     </form>
