@@ -1,9 +1,11 @@
 <ion-list style="width:100%;height:90%;overflow:scroll;padding-bottom: 90px;">
   <div *ngFor="let recordView of (recordViews$ | async)">
     <ion-item detail="false">
-      <ion-label>{{ recordView.time }}</ion-label>
-      <ion-label class="ion-text-start">
-        {{ recordView.bt }}
+      <ion-label class="time ion-text-center">{{ recordView.time }}</ion-label>
+      <ion-label class="ion-justify-content-evenly ion-self-align-center">
+        <ng-container *ngFor="let dataField of recordView.healthCondition.list">
+          <ion-icon [name]="dataField.icon"></ion-icon>
+        </ng-container>
       </ion-label>
       <div>
         <ion-icon name="caret-forward-outline" *ngIf="!recordView.expand" button
@@ -20,10 +22,10 @@
       <ion-item *ngFor="let dataField of recordView.healthCondition.list">
         <ng-container *ngIf="dataField">
           <ion-icon [name]="dataField.icon"></ion-icon>
-          <ion-label class="ion-padding-start">
+          <ion-label class="data-name ion-padding-start">
             {{ 'HEALTH_DATA.' + dataField.name | translate }}</ion-label>
-          <ion-label class="ion-text-center">{{ dataField.value }}</ion-label>
-          <ion-label class="ion-text-center">{{ dataField.unit }}</ion-label>
+          <ion-label class="data-value ion-text-center">{{ dataField.value }}</ion-label>
+          <ion-label class="data-unit ion-text-center">{{ dataField.unit }}</ion-label>
         </ng-container>
       </ion-item>
     </ion-list>
