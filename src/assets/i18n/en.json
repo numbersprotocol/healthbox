@@ -98,7 +98,7 @@
     "weight": "Weight",
     "height": "Height",
     "urineVolume": "Urine Volume",
-    "noData": "Input your data here",
+    "noData": "Input",
     "unit": {
       "mmHg": "mmHg",
       "bpm": "bpm",
