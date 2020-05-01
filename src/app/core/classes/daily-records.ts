@@ -11,7 +11,6 @@ export class DailyRecords {
     constructor(records?: Record[]) {
         this.list = this.createEmptyDailyRecords();
         if (records) {
-            this.fillDates(records);
             this.pushRecords(records);
         }
     }
@@ -34,6 +33,12 @@ export class DailyRecords {
             const recordOnDate = this.list.find(dailyRecord => dailyRecord.date === this.toDateString(record.timestamp));
             if (recordOnDate) {
                 this.list[this.list.indexOf(recordOnDate)].records.push(record);
+            } else {
+                const newDailyRecord = new DailyRecord();
+                newDailyRecord.date = this.toDateString(record.timestamp);
+                newDailyRecord.records.push(record);
+                this.list.push(newDailyRecord);
+                this.list = this.list.sort((a, b) => (new Date(a.date)).getTime() - (new Date(b.date)).getTime() );
             }
         });
         this.list.forEach(dailyRecord => {
@@ -42,11 +47,7 @@ export class DailyRecords {
     }
 
     private createEmptyDailyRecords(): DailyRecord[] {
-        const DAY_LENGTH = 14;
-        const dailyRecords: DailyRecord[] = new Array(DAY_LENGTH);
-        for (let i = 0; i < DAY_LENGTH; i++) {
-            dailyRecords[i] = new DailyRecord(i + 1);
-        }
+        const dailyRecords: DailyRecord[] = [];
         return dailyRecords;
     }
 

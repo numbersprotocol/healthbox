@@ -6,7 +6,7 @@ export class DailyRecord {
     dayCount: number = null;
     latestPhoto: string;
     records: Record[] = [];
-    constructor(dayCount: number) {
+    constructor(dayCount?: number) {
         this.dayCount = dayCount;
     }
 

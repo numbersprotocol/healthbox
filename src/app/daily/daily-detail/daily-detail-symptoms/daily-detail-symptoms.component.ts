@@ -11,18 +11,10 @@ import { formatDate } from '@angular/common';
   styleUrls: ['./daily-detail-symptoms.component.scss'],
 })
 export class DailyDetailSymptomsComponent implements OnInit {
-  @Input() dayCount: number;
+  @Input() date: string;
   recordViews$: Observable<RecordView[]>;
   isShow = true;
-  mockCoughDetail = '5分鐘咳了10次左右';
-  mockFeverDetail = '';
-  mockRunnyNoseDetail = '';
-  mockStuffyNoseDetail = '有點嗅覺失靈';
 
-  cough = false;
-  fever = false;
-  runnyNose = false;
-  stuffyNose = false;
   constructor(
     private dataStore: DataStoreService,
   ) { }
@@ -30,10 +22,11 @@ export class DailyDetailSymptomsComponent implements OnInit {
   ngOnInit() {
     this.recordViews$ = this.dataStore.dailyRecords$
       .pipe(
-        map(dailyRecords => dailyRecords.list[this.dayCount - 1].records),
+        map(dailyRecords => {
+          return dailyRecords.list.find(dailyRecord => dailyRecord.date === this.date).records;
+        }),
         map(records => records
           .map(record => this.createRecordView(record))
-          .filter(recordView => recordView.bt !== undefined)
         ),
       );
   }
@@ -42,10 +35,7 @@ export class DailyDetailSymptomsComponent implements OnInit {
     const recordView: RecordView = record;
     recordView.expand = false;
     recordView.time = formatDate(record.timestamp, 'HH:mm', 'en-us');
-    if (record.bodyTemperature && record.bodyTemperatureUnit) {
-      recordView.bt = `${record.bodyTemperature}${record.bodyTemperatureUnit}`;
-    }
-    recordView.symptoms.list=recordView.symptoms.list.filter((symptom)=>symptom.present==true);
+    recordView.healthCondition.list = recordView.healthCondition.list.filter(dataField => (dataField.value));
     return recordView;
   }
 

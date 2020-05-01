@@ -9,16 +9,15 @@ import { Observable } from 'rxjs';
   styleUrls: ['./daily-detail.page.scss'],
 })
 export class DailyDetailPage implements OnInit {
-  dayCount$: Observable<number>;
+  date$: Observable<string>;
   selectedSegment = true;
   constructor(
     private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.dayCount$ = this.activatedRoute.paramMap.pipe(
-      map(params => params.get('day')),
-      map(day => +day),
+    this.date$ = this.activatedRoute.paramMap.pipe(
+      map(params => params.get('date')),
     );
   }
 
