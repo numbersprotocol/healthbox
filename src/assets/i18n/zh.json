@@ -124,6 +124,7 @@
     "nationality": "國籍",
     "city": "所在城市",
     "update": "更新",
+    "updated": "基本資料已更新",
     "languageOptions": {
       "en": "English",
       "fr": "Français",
@@ -133,7 +134,8 @@
     "genderOptions": {
       "female": "女性",
       "male": "男性",
-      "nonBinary": "非二元性別"
+      "nonBinary": "非二元性別",
+      "preferNotToSay": "不願透露"
     }
   }
 }

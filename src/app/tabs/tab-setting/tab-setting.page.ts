@@ -4,7 +4,9 @@ import { getNameList, getNames } from 'country-list';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { SnapshotService } from 'src/app/core/services/snapshot.service';
 import { switchMap, take, takeUntil, map, tap } from 'rxjs/operators';
-import { forkJoin, Subject } from 'rxjs';
+import { forkJoin, Subject, defer } from 'rxjs';
+import { ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface Setting {
   name: string;
@@ -50,7 +52,7 @@ export class TabSettingPage implements OnInit, OnDestroy {
       name: 'gender',
       type: FormSettingType.select,
       selectOptions: [
-        'female', 'male', 'nonBinary',
+        'female', 'male', 'nonBinary', 'preferNotToSay',
       ]
     },
     {
@@ -65,6 +67,8 @@ export class TabSettingPage implements OnInit, OnDestroy {
     public dataStore: DataStoreService,
     private formBuilder: FormBuilder,
     private snapshotService: SnapshotService,
+    private toastCtrl: ToastController,
+    private translate: TranslateService,
   ) {}
 
   ngOnInit() {
@@ -116,8 +120,25 @@ export class TabSettingPage implements OnInit, OnDestroy {
           Object.assign(userData, this.settingsForm.value);
           return this.dataStore.updateUserData(userData);
         }),
+        switchMap(() => this.presentToastUpdated()),
         takeUntil(this.destroy$),
       ).subscribe(() => {}, err => console.log(err));
+  }
+
+  private presentToastUpdated() {
+    return this.translate.get('SETTINGS.updated')
+      .pipe(
+        switchMap(msg => {
+          return this.toastCtrl.create({
+            message: msg,
+            position: 'top',
+            color: 'success',
+            cssClass: 'toast',
+            duration: 1000,
+          });
+        }),
+        switchMap(toast => toast.present()),
+      );
   }
 
 }

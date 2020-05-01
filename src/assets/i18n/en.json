@@ -124,6 +124,7 @@
     "nationality": "Nationality",
     "city": "City",
     "update": "Update",
+    "updated": "Profile Updated",
     "languageOptions": {
       "en": "English",
       "fr": "Français",
@@ -133,7 +134,8 @@
     "genderOptions": {
       "female": "Female",
       "male": "Male",
-      "nonBinary": "Non-binary"
+      "nonBinary": "Non-binary",
+      "preferNotToSay": "Prefer Not to Say"
     }
   }
 }
