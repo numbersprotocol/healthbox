@@ -62,7 +62,7 @@ export class TabSettingPage implements OnInit, OnDestroy {
     { name: 'city', type: FormSettingType.input },
   ];
   constructor(
-    private dataStore: DataStoreService,
+    public dataStore: DataStoreService,
     private formBuilder: FormBuilder,
     private snapshotService: SnapshotService,
   ) {}
