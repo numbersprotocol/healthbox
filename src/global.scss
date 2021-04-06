@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -25,8 +25,24 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-.recordSaved{
-     
+@font-face {
+  font-family: "NotoSans-Regular";
+  src: url("./assets/fonts/NotoSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NotoSans-Bold";
+  src: url("./assets/fonts/NotoSans-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+app-header{
+ color: #8EC3C3;
+}
+
+.recordSaved {
   .alert-title {
     text-align: center;
   }
@@ -43,71 +59,137 @@
     -ms-flex-pack: center;
     justify-content: center;
   }
-
 }
 .popover-content {
   --min-width: 80%;
-  // --min-height:  40% ;
-
 }
 .popover_class {
-  // --min-hight: 300px !important;
   --min-width: 100%;
-
-  // width: 30px !important;
-  // height:  80vw !important;
 }
 .success_class {
-  // --min-hight: 300px !important;
   --min-width: 100%;
 
   width: 100% !important;
-  height:  30vw !important;
+  height: 30vw !important;
 }
-.Guide-modal{
+.Guide-modal {
   --background: transparent !important;
   --height: 100%;
   --width: 110%;
-
-  // --background: "#FFff0f" !important;
-  // --height: 100%;
-  // --width: 100%;
-  // clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 40% 100%, 40% 91%, 18% 91%, 18% 100%, 0% 100%);
-
-
-   // --height: 80%;
-  // --width: 80%;
-  // --border-radius: 25px;
-  // clip-path: circle(11.9% at 13% 88%);
-  // clip-path: polygon(0% 91%, 18% 91%, 18% 100%, 100% 100%, 100% 0%, 0% 0%);
-
-  // clip-path: circle(10.2% at 11% 11%);
-  // clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 93% 55%, 39% 35%);
-
- // content:'';
-  // position:absolute;
-  // bottom:50%;
-  // width:100%;
-  // height:100%;
-  // border-radius:100%;
-    // // --background: transparent !important;
-    // --background: "#FFff0f" !important;
-    // --height: 100%;
-    // --width: 100%;
-    // clip-path: polygon(33% 100%, 32% 78%, 63% 79%, 63% 99%, 100% 100%, 100% 1%, 0% 0%, 0% 100%);
 }
 
 .toast {
-    text-align: center;
-    font-weight: bold;
+  text-align: center;
+  font-weight: bold;
 }
 
-
-.picker-button.test{
-  background: forestgreen!important;
+.picker-button.test {
+  background: forestgreen !important;
   cursor: not-allowed;
   background-color: rgb(229, 229, 229) !important;
-  pointer-events:none;
-
+  pointer-events: none;
 }
 
+:root {
+  --font-size-1: 22pt;
+  --font-size-2: 18pt;
+  --font-size-3: 14pt;
+  --font-weight-heavy: 500;
+  --ion-font-family: "NotoSans-Regular", "Roboto", "Helvetica-Neue", "sans-serif";
+}
+
+ion-text {
+  font-size: var(--font-size-1) !important;
+  font-weight: var(--font-weight-heavy) !important;
+  line-height: calc(var(--font-size-1) + 6pt);
+}
+
+ion-button {
+  font-size: var(--font-size-2) !important;
+  font-weight: var(--font-weight-heavy) !important;
+  line-height: calc(var(--font-size-2) + 6pt);
+}
+
+ion-card-title {
+  font-size: var(--font-size-2) !important;
+  font-weight: var(--font-weight-heavy) !important;
+  line-height: calc(var(--font-size-2) + 6pt);
+}
+
+.input-form {
+  font-size: var(--font-size-2) !important;
+  font-weight: var(--font-weight-heavy) !important;
+  line-height: calc(var(--font-size-2) + 6pt);
+}
+
+h2 {
+  font-size: var(--font-size-2) !important;
+  font-weight: var(--font-weight-heavy) !important;
+  line-height: calc(var(--font-size-2) + 6pt);
+}
+
+h3 {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+}
+
+.alert-radio-label {
+  font-size: var(--font-size-3) !important;
+}
+
+.alert-button {
+  font-size: var(--font-size-3) !important;
+}
+
+ion-label {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+  h3 {
+    font-size: var(--font-size-3) !important;
+    line-height: calc(var(--font-size-3) + 6pt);
+  }
+}
+
+ion-datetime {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+}
+
+ion-select {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+}
+
+ion-select::part(placeholder)::first-letter {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+}
+
+ion-card-subtitle {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+}
+
+ion-card-content {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+}
+
+.alert-radio-label {
+  white-space: normal !important;
+}
+
+.alert-wrapper {
+  width: 90% !important;
+  height: 80% !important;
+  max-width: 100% !important;
+}
+
+.alert-radio-button {
+  height: 110px !important;
+}
+
+.alert-radio-group {
+  max-height: 100% !important;
+  height: 100% !important;
+}

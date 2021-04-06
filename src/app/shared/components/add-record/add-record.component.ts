@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
 import {
-  filter, map, mergeMap, switchMap, take,
-  takeUntil, tap,
+  catchError, filter, map, mergeMap, switchMap,
+  take, takeUntil, tap,
 } from 'rxjs/operators';
 
 import { Record } from '@core/classes/record';
@@ -18,7 +18,9 @@ import { RecordService } from '@core/services/record.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalController } from '@ionic/angular';
 import { LoadingService } from '@shared/services/loading.service';
-import { PopoverIcon, PopoverService } from '@shared/services/popover.service';
+import {
+  PopoverButtonSet, PopoverIcon, PopoverService,
+} from '@shared/services/popover.service';
 
 @Component({
   selector: 'app-add-record',
@@ -30,6 +32,21 @@ export class AddRecordComponent implements OnInit, OnDestroy {
 
   private readonly record = new BehaviorSubject<Record>(new Record(Date.now()));
   record$: Observable<Record> = this.record;
+  fieldGroups$: Observable<FieldGroup[]> = this.record
+    .pipe(
+      map(record => {
+        const fieldGroups = [];
+        record.dataGroups.forEach(dataGroup => fieldGroups.push({
+          name: dataGroup,
+          fields: record.fields.filter(field => field.dataGroup === dataGroup),
+        }));
+        return fieldGroups;
+      }),
+    );
+  templateName$ = this.record
+    .pipe(
+      map(record => record.templateName),
+    );
   recordFieldType = RecordFieldType;
 
   private readonly edit = new Subject<[RecordField, string]>();
@@ -39,6 +56,8 @@ export class AddRecordComponent implements OnInit, OnDestroy {
         if (field.type === RecordFieldType.photo) {
           return this.photoService.create()
             .pipe(
+              catchError(() => of(null)),
+              filter(data => data !== null),
               map(byteString => ({ [field.name]: byteString })),
             );
         } else {
@@ -79,11 +98,19 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   onClickEdit(field: RecordField, templateName: string) {
-    if (field.type === this.recordFieldType.boolean) {
+    if (field.type === this.recordFieldType.option) {
+      return;
+    } else if (field.type === this.recordFieldType.boolean) {
       field.value = !field.value;
     } else {
       this.edit.next([field, templateName]);
     }
+  }
+
+  onOptionChanged(event: CustomEvent, field: RecordField) {
+    const data = {};
+    data[field.name] = event.detail.value;
+    this.updateRecordFields(data);
   }
 
   private createProof() {
@@ -119,11 +146,28 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   submitRecord(): Observable<any> {
-    return this.saveRecordWithLoading()
+    return this.confirmAddEmptyRecord()
       .pipe(
+        mergeMap(() => this.saveRecordWithLoading()),
         mergeMap(() => this.showRecordSavedPopover()),
         mergeMap(() => this.modalCtrl.dismiss()),
         takeUntil(this.destroy$),
+      );
+  }
+
+  private confirmAddEmptyRecord() {
+    if (this.record.getValue().fields.find(field => field.value != null)) {
+      return of(true);
+    }
+    return this.popoverService.showPopover({
+      i18nTitle: '',
+      i18nMessage: 'description.confirmEmpty',
+      buttonSet: PopoverButtonSet.CONFIRM,
+      dataOnConfirm: true,
+      dataOnCancel: false,
+    })
+      .pipe(
+        filter(data => data?.data === true),
       );
   }
 
@@ -141,7 +185,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     this.dataStore.userData$
       .pipe(
         take(1),
-        switchMap(userData => this.recordService.create(userData.recordPreset)),
+        switchMap(userData => this.recordService.create(userData.dataTemplateName)),
         tap(record => this.record.next(record)),
         takeUntil(this.destroy$),
       ).subscribe();
@@ -165,4 +209,9 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     this.record.next(record);
   }
 
+}
+
+interface FieldGroup {
+  name: string;
+  fields: RecordField[];
 }
