@@ -1,42 +1,28 @@
-import { Component, AfterViewInit, OnDestroy } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
-import { AddRecordPage } from '../core/pages/add-record/add-record.page';
-import { SnapshotService } from '../core/services/snapshot.service';
-import { take, debounce, filter, switchMap, takeUntil } from 'rxjs/operators';
-import { interval, Observable, defer, Subject } from 'rxjs';
-import { EulaPage } from '../core/pages/eula/eula.page';
-import { DataStoreService } from '../core/services/data-store.service';
-import { UserData } from '../core/interfaces/user-data';
-import { SharePage } from '../core/pages/share/share.page';
-import { UploadService } from '../core/services/upload.service';
+import { Component, OnDestroy } from '@angular/core';
+
+import { defer, Observable, Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
+
+import { PopoverController } from '@ionic/angular';
+import {
+  SharePopoverPage,
+} from '@shared/components/share-popover/share-popover.page';
+import { ModalService } from '@shared/services/modal.service';
+import { PopoverService } from '@shared/services/popover.service';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss']
 })
-export class TabsPage implements AfterViewInit, OnDestroy {
+export class TabsPage implements OnDestroy {
   destroy$ = new Subject();
   selectedTab: string;
-  showDebugButton = false;
-  eulaLoader$: Observable<UserData>;
-
   constructor(
-    private dataStore: DataStoreService,
-    private modalController: ModalController,
-    private popoverCtrl: PopoverController,
-    private snapshotService: SnapshotService,
-    private uploadService: UploadService,
+    private readonly popoverCtrl: PopoverController,
+    private readonly popoverService: PopoverService,
+    private readonly modalService: ModalService,
   ) { }
-
-  ngAfterViewInit() {
-    this.eulaLoader$ = this.dataStore.userData$
-      .pipe(
-        filter(userData => userData.eulaAccepted === false),
-        switchMap(userData => this.presentEulaModal(userData)),
-        switchMap(userData => this.dataStore.updateUserData(userData)),
-      );
-  }
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -47,53 +33,37 @@ export class TabsPage implements AfterViewInit, OnDestroy {
     this.selectedTab = event.tab;
   }
 
-  async presentAddRecordModal() {
-    const modal = await this.modalController.create({
-      backdropDismiss: false,
-      component: AddRecordPage,
-    });
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    return Promise.resolve(data);
-  }
-
-  async presentEulaModal(userData: UserData) {
-    const modal = await this.modalController.create({
-      backdropDismiss: false,
-      component: EulaPage,
-      componentProps: { userData },
-      cssClass: 'eula-modal',
-    });
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    return Promise.resolve(data);
-  }
-
   onClickCameraButton() {
-    this.snapshotService.snapCapture()
+    this.modalService.showAddPhotoModal()
       .pipe(
-        debounce((() => interval(1000))),
-        take(1),
-      )
-      .subscribe();
+        first(),
+      ).subscribe();
   }
 
-  async onClickRecordButton() {
-    await this.presentAddRecordModal();
+  onClickRecordButton() {
+    this.modalService.showAddRecordModal()
+      .pipe(
+        first(),
+      ).subscribe();
   }
 
   onClickShareButton() {
-    this.createSharePopover()
+    this.showShareDisabledPopover()
       .pipe(
-        switchMap(popover => popover.present()),
-        takeUntil(this.destroy$),
-      )
-      .subscribe(() => { }, e => console.log(e));
+        first(),
+      ).subscribe();
+  }
+
+  private showShareDisabledPopover() {
+    return this.popoverService.showPopover({
+      i18nTitle: 'title.shareDisabled',
+      i18nMessage: 'description.shareDisabled',
+    }, 2000, true);
   }
 
   private createSharePopover(): Observable<HTMLIonPopoverElement> {
     return defer(() => this.popoverCtrl.create({
-      component: SharePage,
+      component: SharePopoverPage,
     }));
   }
 

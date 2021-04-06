@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Plugins, GeolocationOptions, GeolocationPosition } from '@capacitor/core';
-import { bindCallback, Observable, from, of } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+
+import { bindCallback, from, Observable, of } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+
+import {
+  GeolocationOptions, GeolocationPosition, Plugins,
+} from '@capacitor/core';
 
 const { Geolocation } = Plugins;
 
@@ -17,7 +21,8 @@ export class GeolocationService {
   cachedPosition: GeolocationPosition;
   cachedPositionTime: number;
   cacheTimeout = 60000; // ms
-  constructor() { }
+  constructor(
+  ) { }
 
   getPosition(useCache = true): Observable<GeolocationPosition> {
     const cache = (this.isCachedPositionValid() && useCache);
@@ -30,7 +35,7 @@ export class GeolocationService {
           this.cachedPositionTime = Date.now();
           return this.cachedPosition = position;
         }),
-        );
+      );
   }
 
   watchPosition(geolocationOptions: GeolocationOptions = {}): Observable<any> {
@@ -44,4 +49,5 @@ export class GeolocationService {
     console.log('Use cached postion: ', (cached && !isTimeout));
     return (cached && !isTimeout);
   }
+
 }

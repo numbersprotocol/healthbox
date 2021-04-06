@@ -1,24 +1,22 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
+import player from 'lottie-web';
+import { LottieModule } from 'ngx-lottie';
+
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyIonicModule } from '@ngx-formly/ionic';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SharedModule } from '@shared/shared.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-
-import { LottieModule } from 'ngx-lottie';
-import player from 'lottie-web';
 import { CoreModule } from './core/core.module';
-import { AddRecordPageModule } from './core/pages/add-record/add-record.module';
-import { CategorizeFinishPageModule } from './category/category-pending/categorize-finish/categorize-finish.module';
-import { CategorizeImgPopoverPageModule } from './category/category-pending/categorize-img-popover/categorize-img-popover.module';
-import { RecordFinishPageModule } from './core/components/record-finish/record-finish.module';
-import { ImgPopoverPageModule } from './core/pages/img-popover/img-popover.module';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -35,31 +33,29 @@ export function playerFactory() {
   declarations: [
     AppComponent,
   ],
-  entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    CategorizeFinishPageModule,
-    RecordFinishPageModule,
-    CategorizeImgPopoverPageModule,
     TranslateModule.forRoot({
-    loader: {
-      provide: TranslateLoader,
-      useFactory: (LanguageLoader),
-      deps: [HttpClient],
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (LanguageLoader),
+        deps: [HttpClient],
       }
     }),
     CoreModule,
-    AddRecordPageModule,
-    ImgPopoverPageModule,
-    LottieModule.forRoot({ player: playerFactory })
-],
+    SharedModule,
+    LottieModule.forRoot({ player: playerFactory }),
+    ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyIonicModule
+  ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
 

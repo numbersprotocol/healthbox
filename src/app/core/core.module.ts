@@ -1,35 +1,34 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { MainHeaderModule } from './components/main-header/main-header.module';
-import { AddRecordPageModule } from './pages/add-record/add-record.module';
+
+import {
+  SharePopoverPageModule,
+} from '../shared/components/share-popover/share-popover.module';
+import {
+  ClickOutsideSameClassDirective,
+} from './directives/click-outside-same-class.directive';
+import { HeaderComponent } from './header/header.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
-import { EulaPageModule } from './pages/eula/eula.module';
-import { ClickOutsideSameClassDirective } from './directives/click-outside-same-class.directive';
-import { SharePageModule } from './pages/share/share.module';
-import { ShareFinishPageModule } from './pages/share-finish/share-finish.module';
-
-
 
 @NgModule({
   declarations: [
     SafeUrlPipe,
     ClickOutsideSameClassDirective,
+    HeaderComponent,
   ],
   imports: [
     CommonModule,
     IonicModule,
     TranslateModule,
-    MainHeaderModule,
-    AddRecordPageModule,
-    EulaPageModule,
-    SharePageModule,
-    ShareFinishPageModule,
+    SharePopoverPageModule,
   ],
   exports: [
     SafeUrlPipe,
     ClickOutsideSameClassDirective,
+    HeaderComponent,
   ]
 })
 export class CoreModule { }

@@ -1,0 +1,13 @@
+ion-toolbar {
+  color: #52c7f4;
+  .ios {
+    font-size: 16pt;
+  }
+  --background: #ffffff;
+  .header-md::after {
+    display: none;
+  }
+  ion-button {
+    height:50px ;
+  }
+}

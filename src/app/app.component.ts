@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { Plugins, StatusBarStyle } from '@capacitor/core';
-
-import { TranslateConfigService } from './translate-config.service';
-import { GeolocationService } from './core/services/geolocation.service';
-import { DataStoreService } from './core/services/data-store.service';
 import { Router } from '@angular/router';
-import { filter, tap } from 'rxjs/operators';
+
+import { defer, Observable, of } from 'rxjs';
+import { filter, first, switchMap, take } from 'rxjs/operators';
+
+import { Plugins, StatusBarStyle } from '@capacitor/core';
+import { LanguageService } from '@core/services/language.service';
+import { RecordPreset } from '@core/services/preset.service';
+import { Platform } from '@ionic/angular';
+
+import { DataStoreService } from './core/services/store/data-store.service';
 
 const { SplashScreen, StatusBar } = Plugins;
 
@@ -17,38 +20,39 @@ const { SplashScreen, StatusBar } = Plugins;
 })
 export class AppComponent {
 
-  selectedLanguage: string;
-
   constructor(
-    private dataStore: DataStoreService,
-    private geolocation: GeolocationService,
-    private platform: Platform,
-    private router: Router,
-    private translateConfigService: TranslateConfigService
+    private readonly dataStore: DataStoreService,
+    private readonly platform: Platform,
+    private readonly router: Router,
+    private readonly language: LanguageService
   ) {
-    this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
-    this.initializeApp();
-  }
-  async initializeApp() {
-    if (this.platform.is('hybrid')) {
-      try {
-        await StatusBar.setStyle({ style: StatusBarStyle.Light });
-      } catch {
-        console.log('Status Bar is not implemented in web');
-      }
-    }
-    this.geolocation.getPosition().subscribe(); // Update location cache
-    this.dataStore.updateUserData()
+    this.setStatusBarStyle().subscribe();
+    this.dataInitialized()
       .pipe(
-        tap(userData => {
-          if (userData.newUser) {
-            this.router.navigate(['/tour']);
-          }
+        switchMap(() => this.language.init()),
+        switchMap(() => this.dataStore.userData$.pipe(take(1))),
+        switchMap(userData => {
+          return (userData.recordPreset) ? of(userData) : this.dataStore.updateUserData({ recordPreset: RecordPreset.COMMON_COLD });
         })
-      ).subscribe(() => { }, err => console.log(err));
-    SplashScreen.hide();
+      )
+      .subscribe(userData => {
+        if (userData.newUser) {
+          this.router.navigate(['/onboarding']);
+        }
+        SplashScreen.hide();
+      });
+    this.dataStore.initializeStore().subscribe();
   }
-  languageChanged() {
-    this.translateConfigService.setLanguage(this.selectedLanguage);
+
+  private setStatusBarStyle(): Observable<void> {
+    const setStyle$ = defer(() => StatusBar.setStyle({ style: StatusBarStyle.Light })).pipe(first());
+    return (this.platform.is('hybrid')) ? setStyle$ : of(null);
+  }
+
+  private dataInitialized(): Observable<any> {
+    return this.dataStore.initialized$
+      .pipe(
+        filter(isInitialized => isInitialized === true),
+      );
   }
 }
