@@ -144,7 +144,8 @@ export class UploadService {
           map(info => info.uuid)
         ),
     ]).pipe(
-      map(([email, uuid]) => ({ email, password: uuid })),
+      map(([email, uuid]) => ({   email:email== undefined ? 'guest@logboard.numbersprotocol.io' : email
+      , password: uuid })),
     );
   }
 
