@@ -134,18 +134,14 @@ export class UploadService {
   }
 
   private getUserCredential(): Observable<UserCredential> {
-    return combineLatest([
-      this.dataStore.userData$
-        .pipe(
-          map(userData => userData.email)
-        ),
-      from(Device.getInfo())
-        .pipe(
-          map(info => info.uuid)
-        ),
-    ]).pipe(
-      map(([email, uuid]) => ({ email, password: uuid })),
+    const defaultEmail = 'guest@logboard.numbersprotocol.io';
+    const userEmail$ = this.dataStore.userData$.pipe(map(userData => userData.email ?? defaultEmail));
+    const deviceUuid$ = from(Device.getInfo()).pipe(map(info => info.uuid));
+
+    const userCredential$ = combineLatest([userEmail$, deviceUuid$]).pipe(
+      map(([email, password]) => ({ email, password }))
     );
+    return userCredential$;
   }
 
   private createNewUserAndSharedLink(): Observable<SharedLink> {
