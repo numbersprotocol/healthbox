@@ -3,26 +3,7 @@
   <ng-container *ngIf="versionClick$ | async"></ng-container>
   <ng-container *ngIf="userData$ | async as userDataView">
     <ion-list>
-      <ion-item-divider>
-        <ion-label>
-          {{ 'title.accountInfo' | translate }}
-        </ion-label>
-      </ion-item-divider>
-
-      <ion-item>
-        <ion-icon name="mail-outline" slot="start"></ion-icon>
-        <ion-label>
-          <h3>{{ 'title.email' | translate }}</h3>
-          <h3 *ngIf="userDataView.email">{{ userDataView.email }}</h3>
-          <p *ngIf="!userDataView.email">{{ 'title.notSet' | translate }}</p>
-        </ion-label>
-      </ion-item>
-
-      <ion-item (click)="onResetAccountClicked()" button>
-        <ion-icon name="refresh-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.resetAccount' | translate }}</ion-label>
-      </ion-item>
-
+      
       <ion-item-divider>
         <ion-label>
           {{ 'title.profile' | translate }}
