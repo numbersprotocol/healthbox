@@ -387,9 +387,9 @@
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.14.4;
+				MARKETING_VERSION = 0.14.5;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
-				PRODUCT_BUNDLE_IDENTIFIER = io.numbersprotocol.lifebox.boom;
+				PRODUCT_BUNDLE_IDENTIFIER = io.numbersprotocol.lifebox;
 				PRODUCT_NAME = LIFEBOX;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG USE_PUSH";
 				SWIFT_VERSION = 4.2;
@@ -409,8 +409,8 @@
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.14.4;
-				PRODUCT_BUNDLE_IDENTIFIER = io.numbersprotocol.lifebox.boom;
+				MARKETING_VERSION = 0.14.5;
+				PRODUCT_BUNDLE_IDENTIFIER = io.numbersprotocol.lifebox;
 				PRODUCT_NAME = LIFEBOX;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = USE_PUSH;
