@@ -1,0 +1,8 @@
+NSCameraUsageDescription="Grant camera permission to take photos and video.";
+NSLocationAlwaysUsageDescription="Grant GPS permission to automatically append location information to your photos & videos";
+NSLocationWhenInUseUsageDescription="Grant GPS permission to append location information to your photos & videos";
+NSMicrophoneUsageDescription="Grant camera and microphone permission to record video and audio.";
+NSPhotoLibraryAddUsageDescription="Grant write access permission to your local storage to export the photos and videos you took.";
+NSPhotoLibraryUsageDescription="Grant read access permission to your local storage to read the photos and videos you took.";
+
+

@@ -1,0 +1,6 @@
+NSCameraUsageDescription="授予相機拍攝照片和影片的權限。";
+NSLocationAlwaysUsageDescription="授予 GPS 取用權限，以將位置信息自動添加到您的紀錄中。在您主動分享每日記錄前我們不會將您的資料上傳至任何平台及服務！";
+NSLocationWhenInUseUsageDescription="授予 GPS 取用權限，以將位置信息添加到您的紀錄中。在您主動分享每日記錄前我們不會將您的資料上傳至任何平台及服務！";
+NSMicrophoneUsageDescription="授予相機和麥克風錄製影片和音頻的權限。";
+NSPhotoLibraryAddUsageDescription="授予對本地儲存空間的寫入權限，以將您拍攝的照片和影片存入本地儲存空間。";
+NSPhotoLibraryUsageDescription="授予對本地儲存空間的讀取權限，以讀取您拍攝的照片和影片。在您主動分享資料前我們不會將您的資料上傳至任何平台及服務！";
