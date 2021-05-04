@@ -1,3 +1,16 @@
 img {
   padding: 60px;
 }
+
+@media (prefers-color-scheme: dark) {
+  .lightimg {
+    display: none;
+  }
+}
+
+
+@media (prefers-color-scheme: light) {
+  .darkimg {
+    display: none;
+  }
+}
