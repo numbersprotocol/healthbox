@@ -26,6 +26,7 @@ import {
 import { ToastService } from '@shared/services/toast.service';
 
 import { version } from '../../../../package.json';
+import { ProofService } from '@core/services/proof.service';
 
 const { Browser } = Plugins;
 
@@ -35,8 +36,9 @@ const { Browser } = Plugins;
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit, OnDestroy {
+    
   @ViewChild(IonContent) content: IonContent;
-
+  enableGeolocation = this.proofService.enableGeolocation
   fakeDataDays = 1;
   private readonly destroy$ = new Subject();
 
@@ -47,6 +49,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   readonly dataTemplateNames = this.dataTemplateService.dataTemplateNames;
   // Supported sizes: ['small', 'medium', 'large', 'veryLarge'];
   readonly fontSizes = ['small', 'large'];
+  readonly enableLocationOption = ['disable','enable'];
   showSelects = true;
 
   userData$: Observable<UserData> = this.dataStore.userData$;
@@ -90,6 +93,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly toastService: ToastService,
     private readonly styleService: StyleService,
     private readonly utilityService: UtilityService,
+    private readonly proofService: ProofService,
   ) { }
 
   ngOnInit() {
@@ -133,7 +137,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   onClickAboutItem(): void {
-    Browser.open({ url: 'https://numbersprotocol.io/' });
+    Browser.open({ url: 'https://numbersprotocol.io/contact' });
   }
 
   onClickVersion(): void {
@@ -144,8 +148,14 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.updateFromPage.next({ dataTemplateName: event.detail.value });
   }
 
+  locationSelected(event: CustomEvent): void {
+    this.updateFromPage.next({ enableLocation: event.detail.value });
+    this.proofService.setLocationInfoCollection(event.detail.value);
+  }
+
   fontSizeSelected(event: CustomEvent): void {
     this.updateFromPage.next({ fontSize: event.detail.value });
+    console.log('event.detail.value', event.detail.value);
     this.styleService.setFontSize(event.detail.value);
   }
 
@@ -213,4 +223,5 @@ export interface UserDataPatch {
   endDate?: string; // yyyy-MM-dd
   uploadHost?: string;
   fontSize?: string;
+  enableLocation?: string;
 }

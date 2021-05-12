@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { GeolocationPosition } from '@capacitor/core';
@@ -13,10 +13,16 @@ import { GeolocationService } from './geolocation.service';
   providedIn: 'root'
 })
 export class ProofService {
+  enableGeolocation: string = 'disable'; 
 
   constructor(
     private readonly geolocationService: GeolocationService,
   ) { }
+
+  async setLocationInfoCollection(enable: string) {
+    console.log("setLocationInfoCollection",enable);
+    return this.enableGeolocation=enable;
+  }
 
   createProof(): Observable<Proof> {
     return this.geolocationService.getPosition()
@@ -25,6 +31,14 @@ export class ProofService {
           const location = this.getLocationProof(geolocationPosition);
           return { timestamp: Date.now(), location } as Proof;
         })
+      );
+  }
+
+
+  createDisableLocationProof(): Observable<Proof> {
+    return of(null)
+      .pipe(
+        map(() => ({ timestamp: Date.now() } as Proof))
       );
   }
 
@@ -37,7 +51,7 @@ export class ProofService {
    *  manually copy each property of the GeolocationPosition
    */
   private getLocationProof(position: GeolocationPosition): LocationProof {
-    return {
+    return position && {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
       accuracy: position.coords.accuracy,
