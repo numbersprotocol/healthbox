@@ -3,7 +3,7 @@
   "splitter": ", ",
   "title": {
     "QRScanner": "Scan QR Code",
-    "about": "About",
+    "about": "Contace US",
     "accountInfo": "Account Info",
     "accumulated": "Accumulated ",
     "addNewData": "Add Record",
@@ -79,7 +79,10 @@
     "small": "Small",
     "medium": "Medium",
     "large": "Large",
-    "veryLarge": "Very Large"
+    "veryLarge": "Very Large",
+    "locationInfo":"Collection Location Info",
+    "enable":"Enable",
+    "disable":"Disable"
   },
   "description": {
     "addingDataAndVerifiableInformation": "Adding new data and integrity information...",
