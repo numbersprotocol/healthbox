@@ -13,14 +13,14 @@ import { GeolocationService } from './geolocation.service';
   providedIn: 'root'
 })
 export class ProofService {
-  enableGeolocation: string = 'disable'; 
+  enableGeolocation = 'disable'; 
 
   constructor(
     private readonly geolocationService: GeolocationService,
   ) { }
 
   async setLocationInfoCollection(enable: string) {
-    return this.enableGeolocation=enable;
+    this.enableGeolocation=enable;
   }
 
   createProof(): Observable<Proof> {
@@ -30,14 +30,6 @@ export class ProofService {
           const location = this.getLocationProof(geolocationPosition);
           return { timestamp: Date.now(), location } as Proof;
         })
-      );
-  }
-
-
-  createDisableLocationProof(): Observable<Proof> {
-    return of(null)
-      .pipe(
-        map(() => ({ timestamp: Date.now() } as Proof))
       );
   }
 
