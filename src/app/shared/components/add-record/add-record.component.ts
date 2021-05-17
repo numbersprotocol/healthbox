@@ -114,7 +114,6 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   private createProof() {
-    console.log('enableGeolocation',this.proofService.enableGeolocation)
     if ( this.proofService.enableGeolocation == 'enable') {
       return this.proofService.createProof()
       .pipe(
@@ -123,12 +122,9 @@ export class AddRecordComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       );
     } else {
-      return this.proofService.createDisableLocationProof()
-      .pipe(
-        tap(proof => this.updateRecordProof(proof)),
-        tap(() => this.proofStatus = ProofStatus.COMPLETE),
-        takeUntil(this.destroy$),
-      );
+      const proof = this.proofService.createProofWithoutLocation();
+      this.updateRecordProof(proof);
+      this.proofStatus = ProofStatus.COMPLETE;
     }
   }
 
