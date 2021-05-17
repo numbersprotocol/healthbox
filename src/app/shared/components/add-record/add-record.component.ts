@@ -115,7 +115,6 @@ export class AddRecordComponent implements OnInit, OnDestroy {
 
   private createProof() {
     console.log('enableGeolocation',this.proofService.enableGeolocation)
-    ///add 判斷是否啟用
     if ( this.proofService.enableGeolocation == 'enable') {
       return this.proofService.createProof()
       .pipe(
