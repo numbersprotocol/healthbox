@@ -83,13 +83,13 @@
       <ion-item lines="inset">
         <ion-icon name="location-outline" slot="start"></ion-icon>
         <ion-label>
-          <h3>{{ 'title.location' | translate }}</h3>
+          <h3>{{ 'title.locationInfo' | translate }}</h3>
         </ion-label>
         <ion-select  [value]="(userDataView.enableLocation) ? userDataView.enableLocation : enableLocationOption[0]" (ionChange)="locationSelected($event)"
         [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
         <ion-select-option *ngFor="let Option of enableLocationOption" [value]="Option">
-          <!-- {{ 'title.' + Option | translate }} -->
-          {{Option}}
+          {{ 'title.' + Option | translate }}
+          <!-- {{Option}} -->
         </ion-select-option>
       </ion-select>
       </ion-item>
