@@ -3,6 +3,12 @@ ion-card {
   margin: 3vh;
 }
 
+app-header {
+  ion-icon {
+    color:white;
+  }
+}
+
 ion-list {
   height: 100%;
 }

@@ -1,14 +1,41 @@
+
 ion-toolbar {
-  color: #8EC3C3;
-  --background: #ffffff;
+  color: #ffffff;
+  --background: #8EC3C3;
   .header-md::after {
     display: none;
   }
   ion-button {
     height: 50px;
+    color: #ffffff;
   }
   ion-title {
     font-size: 22pt;
     font-weight: 700;
   }
+  ion-icon {
+    color:white;
+  }
+}
+
+
+ion-toolbar.ios {
+  padding-top: constant(safe-area-inset-top); /* Status bar height on iOS 11.0 */
+  padding-top: env(safe-area-inset-top); /* Status bar height on iOS 11+ */
+color: #ffffff;
+--background: #8EC3C3;
+.header-md::after {
+  display: none;
+}
+ion-button {
+  height: 50px;
+  color: #ffffff;
+}
+ion-title {
+  font-size: 22pt;
+  font-weight: 700;
+}
+ion-icon {
+  color:white;
+}
 }
