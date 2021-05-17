@@ -155,7 +155,6 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   fontSizeSelected(event: CustomEvent): void {
     this.updateFromPage.next({ fontSize: event.detail.value });
-    console.log('event.detail.value', event.detail.value);
     this.styleService.setFontSize(event.detail.value);
   }
 

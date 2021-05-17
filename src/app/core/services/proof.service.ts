@@ -20,7 +20,6 @@ export class ProofService {
   ) { }
 
   async setLocationInfoCollection(enable: string) {
-    console.log("setLocationInfoCollection",enable);
     return this.enableGeolocation=enable;
   }
 
