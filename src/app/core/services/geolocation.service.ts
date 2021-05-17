@@ -9,6 +9,11 @@ import {
 
 const { Geolocation } = Plugins;
 
+enum GeolocationErrorCode {
+  Timeout = '0',
+  Denied = '1',
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,13 +32,14 @@ export class GeolocationService {
   getPosition(useCache = true): Observable<GeolocationPosition> {
     const cache = (this.isCachedPositionValid() && useCache);
 
+    const handlePositionTimeoutError = (error: Error) => error.message.includes(GeolocationErrorCode.Timeout)
+      ? getPosition() // retry
+      : null;
+
     const getPosition = (): Promise<GeolocationPosition> =>
       Geolocation
         .getCurrentPosition(this.defaultGeolocationOptions)
-        .catch<GeolocationPosition>((error) => (error.message as string).includes('0')
-            ? getPosition()
-            : null
-        )
+        .catch<GeolocationPosition>(handlePositionTimeoutError);
 
     const position$ = (cache) ? of(this.cachedPosition) : from(getPosition());
 
