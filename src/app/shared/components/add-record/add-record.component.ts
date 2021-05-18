@@ -125,6 +125,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
       const proof = this.proofService.createProofWithoutLocation();
       this.updateRecordProof(proof);
       this.proofStatus = ProofStatus.COMPLETE;
+      return of(undefined);
     }
   }
 
