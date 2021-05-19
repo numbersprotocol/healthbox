@@ -1,19 +1,19 @@
-ion-header {
-  ion-navbar:nth-child(1) {
-    padding-top: constant(safe-area-inset-top) !important;
+// ion-header {
+//   ion-navbar:nth-child(1) {
+//     padding-top: constant(safe-area-inset-top) !important;
 
-    padding-top: env(safe-area-inset-top) !important;
-  }
-}
+//     padding-top: env(safe-area-inset-top) !important;
+//   }
+// }
 
-@media (max-width: 380px) {
-  .ios ion-toolbar {
-    padding-top: 40px;
-    ion-title {
-      padding-top: 35px;
-    }
-  }
-}
+// @media (max-width: 380px) {
+//   .ios ion-toolbar {
+//     padding-top: 40px;
+//     ion-title {
+//       padding-top: 0px;
+//     }
+//   }
+// }
 .toolbar-ios {
   padding-top: env(safe-area-inset-top);
 }
@@ -23,9 +23,11 @@ ion-header {
 }
 
 body {
-  margin-top: 20px; /* Status bar height on iOS 10 */
-  margin-top: constant(safe-area-inset-top); /* Status bar height on iOS 11.0 */
-  margin-top: env(safe-area-inset-top); /* Status bar height on iOS 11+ */
+  margin-top: 0px; /* Status bar height on iOS 10 */
+
+  // margin-top: 20px; /* Status bar height on iOS 10 */
+  // margin-top: constant(safe-area-inset-top); /* Status bar height on iOS 11.0 */
+  // margin-top: env(safe-area-inset-top); /* Status bar height on iOS 11+ */
 }
 
 ion-tab-bar {

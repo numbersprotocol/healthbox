@@ -1,3 +1,10 @@
+.button-background {
+    background-color: white;
+    @media (prefers-color-scheme: dark) {
+        background-color: black;
+    }
+}
+
 .upload-button {
     width: 95%;
 }
@@ -31,5 +38,25 @@
         border: none;
         font-size: 4vw;
         overflow-x: hidden;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        height: 40px;
+        width: 80%;
+        background-color: white;
+        border-style: solid;
+        border-width: 1px 1px 1px 0.5px;
+        border-color: #838383;
+        display: flex;
+        padding: 1px;
+        input {
+            width: 95%;
+            margin: auto;
+            background-color: white;
+            border: none;
+            font-size: 4vw;
+            color: black;
+            overflow-x: hidden;
+        }
     }
 }

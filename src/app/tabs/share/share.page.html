@@ -46,7 +46,7 @@
     </ion-list>
 </ion-content>
 <ion-footer>
-    <ion-grid>
+    <ion-grid class="button-background">
         <ion-row class="ion-justify-content-center">
             <ion-button class="upload-button" (click)="onUploadButtonClicked()" fill="solid" size="large"
                 [disabled]="!(recordCount$ | async)">
@@ -54,5 +54,4 @@
             </ion-button>
         </ion-row>
     </ion-grid>
-
 </ion-footer>

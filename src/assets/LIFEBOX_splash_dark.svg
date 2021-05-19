@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1462" height="252" viewBox="0 0 1462 252">
+  <defs>
+    <clipPath id="clip-LIFEBOX_splash_dark">
+      <rect width="1462" height="252"/>
+    </clipPath>
+  </defs>
+  <g id="LIFEBOX_splash_dark" clip-path="url(#clip-LIFEBOX_splash_dark)">
+    <g id="LIFEBOX_splash" transform="translate(-158.9 -72.635)">
+      <g id="Group_2585" data-name="Group 2585">
+        <path id="Path_3238" data-name="Path 3238" d="M1206.6,187.5h0c-1.3-54.3,24.6-101.1,59.4-107.2s66.8,30.4,73.4,83.9h9.5L1331,183.6l-20.4-19.4h9.5c-5.6-42.4-28.5-70.4-52.9-64.6-24.4,5.7-42.4,43.3-41.5,86.8Z" fill="#d4ceb9"/>
+        <path id="Path_3239" data-name="Path 3239" d="M1182,174.1h0a26.546,26.546,0,0,1,26.5-26.5h127.4a26.632,26.632,0,0,1,26.5,26.5V280a26.546,26.546,0,0,1-26.5,26.5H1208.5A26.546,26.546,0,0,1,1182,280Z" fill="#8ec3c3"/>
+        <path id="Path_3240" data-name="Path 3240" d="M1233,213.4h0a39.093,39.093,0,0,1,39.1-39.1h0a39.264,39.264,0,0,1,39.2,39.2h0a39.093,39.093,0,0,1-39.1,39.1h0A39.328,39.328,0,0,1,1233,213.4Z" fill="rgba(0,0,0,0)"/>
+        <path id="Path_3241" data-name="Path 3241" d="M1233,213.4h0a39.093,39.093,0,0,1,39.1-39.1h0a39.264,39.264,0,0,1,39.2,39.2h0a39.093,39.093,0,0,1-39.1,39.1h0A39.328,39.328,0,0,1,1233,213.4Z" fill="none" stroke="#fff" stroke-miterlimit="10" stroke-width="5"/>
+        <path id="Path_3242" data-name="Path 3242" d="M1272.2,302.9V204.8" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="5"/>
+        <path id="Path_3243" data-name="Path 3243" d="M1271.1,225.8l-13.4-6.9" fill="rgba(0,0,0,0)"/>
+        <path id="Path_3244" data-name="Path 3244" d="M1271.1,225.8l-13.4-6.9" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="4"/>
+        <path id="Path_3245" data-name="Path 3245" d="M1274.1,232.6l13.4-6.9" fill="rgba(0,0,0,0)"/>
+        <path id="Path_3246" data-name="Path 3246" d="M1274.1,232.6l13.4-6.9" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="5"/>
+      </g>
+      <g id="Group_2586" data-name="Group 2586">
+        <path id="Path_3247" data-name="Path 3247" d="M286.8,269.2v37.6H166.9V130.1h44.9V269.2Z" fill="#fff"/>
+        <path id="Path_3248" data-name="Path 3248" d="M366.9,306.8V130.1h44.9V306.8Z" fill="#fff"/>
+        <path id="Path_3249" data-name="Path 3249" d="M550.6,165.4v40.9h79.3v35.3H550.6v65.1H505.7V130.1h131v35.3H550.6Z" fill="#fff"/>
+        <path id="Path_3250" data-name="Path 3250" d="M761.7,165.4v35.1H846v35.3H761.7v35.6h96.2v35.3H716.8V130.1H855.1v35.3H761.7Z" fill="#fff"/>
+        <path id="Path_3251" data-name="Path 3251" d="M1029.1,130.1c39.6,0,64.9,17.2,64.9,44.2,0,18.7-11.6,33.6-30.3,38.9,22.2,4.3,36.4,21.7,36.4,44.7,0,30-26.3,49-67.9,49H945.6V130.1Zm-38.9,70.7h36.4c13.1,0,21.5-7.1,21.5-18.4s-8.3-17.9-21.5-17.9H990.2v36.3Zm0,71.4h36.4c16.7,0,27-7.3,27-19.9,0-11.9-10.4-19.2-27-19.2H990.2v39.1Z" fill="#fff"/>
+        <path id="Path_3252" data-name="Path 3252" d="M1612.3,306.8h-53.8l-38.1-56.3-38.1,56.3H1430l63.1-90.4L1434,130.1h52.3l34.1,51.5,34.1-51.5h52.8L1549,214.4Z" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>
