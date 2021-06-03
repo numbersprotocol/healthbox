@@ -27,6 +27,7 @@ import { ToastService } from '@shared/services/toast.service';
 
 import { version } from '../../../../package.json';
 import { ProofService } from '@core/services/proof.service';
+import { WebCryptoApiSignatureProvider } from '../../core/services/web-crypto-api-signature-rovider.service'
 
 const { Browser } = Plugins;
 
@@ -81,7 +82,8 @@ export class SettingsPage implements OnInit, OnDestroy {
       switchMap(() => this.dataStore.flushRecord()),
       takeUntil(this.destroy$),
     );
-
+    readonly publicKey$ = this.webCryptoApiSignatureProvider.publicKey$;
+    readonly privateKey$ = this.webCryptoApiSignatureProvider.privateKey$;
   constructor(
     private readonly dataStore: DataStoreService,
     private readonly dataTemplateService: DataTemplateService,
@@ -94,6 +96,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly styleService: StyleService,
     private readonly utilityService: UtilityService,
     private readonly proofService: ProofService,
+    private readonly webCryptoApiSignatureProvider: WebCryptoApiSignatureProvider,
   ) { }
 
   ngOnInit() {
@@ -137,7 +140,14 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   onClickAboutItem(): void {
-    Browser.open({ url: 'https://numbersprotocol.io/contact' });
+    console.log("webCryptoApiSignatureProvider.getPrivateKey");
+    console.log("getPublicKey",this.webCryptoApiSignatureProvider.getPublicKey);
+    console.log("getPublicKey",this.webCryptoApiSignatureProvider.getPrivateKey);
+
+
+    
+
+    // Browser.open({ url: 'https://numbersprotocol.io/contact' });
   }
 
   onClickVersion(): void {
