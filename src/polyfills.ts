@@ -63,9 +63,10 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /* Web3 */
 (window as any).global = window;
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-var-requires
-global.Buffer = global.Buffer ?? require('buffer').Buffer;
+// global.Buffer = global.Buffer ?? require('buffer').Buffer;
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-global.process = global.process ?? require('process');
+// global.process = global.process ?? require('process');
+
 
 /***************************************************************************************************
  * APPLICATION IMPORTS

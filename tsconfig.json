@@ -8,7 +8,6 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -17,10 +16,11 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "lib": ["es2019", "dom"],
-    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "paths": {
-      "process": ["node_modules/process"],
       "@core/*": [
         "src/app/core/*"
       ],
@@ -31,8 +31,6 @@
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "strictTemplates": true,
-    "strictInputAccessModifiers": true
+    "strictInjectionParameters": true
   }
 }

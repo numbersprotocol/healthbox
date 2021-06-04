@@ -140,9 +140,11 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   onClickAboutItem(): void {
-    console.log("webCryptoApiSignatureProvider.getPrivateKey");
-    console.log("getPublicKey",this.webCryptoApiSignatureProvider.getPublicKey);
-    console.log("getPublicKey",this.webCryptoApiSignatureProvider.getPrivateKey);
+    this.webCryptoApiSignatureProvider.initialize();
+
+    // console.log("webCryptoApiSignatureProvider.getPrivateKey");
+    // console.log("getPublicKey",this.webCryptoApiSignatureProvider.getPublicKey());
+    // console.log("getPublicKey",this.webCryptoApiSignatureProvider.getPrivateKey());
 
 
     

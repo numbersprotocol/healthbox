@@ -2,6 +2,7 @@
 <ion-content>
   <ng-container *ngIf="versionClick$ | async"></ng-container>
   <ng-container *ngIf="userData$ | async as userDataView">
+    <marquee>聖誕快樂VS中秋佳節</marquee>
     <ion-list>
       
       <ion-item-divider>
@@ -36,21 +37,27 @@
 
       <ion-item-divider>
         <ion-label>
-          {{ 'title.userSettings' | translate }}
+          <marquee>{{ 'title.userSettings' | translate }}</marquee>
         </ion-label>
+        <marquee>{{ 'title.userSettings' | translate }}</marquee>
+        <marquee> <h3> {{ 'title.language' | translate }}</h3></marquee>
       </ion-item-divider>
 
       <ion-item lines="inset">
         <ion-icon name="language-outline" slot="start"></ion-icon>
         <ion-label>
-          <h3>{{ 'title.language' | translate }}</h3>
+          <h3>  <marquee>{{ 'title.language' | translate }}</marquee></h3>
         </ion-label>
+        <h3>  <marquee>{{ 'title.language' | translate }}</marquee></h3>
+
+        
         <ion-select [value]="userDataView.language" (ionChange)="onChangeLanguage($event)"
           [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
           <ion-select-option *ngFor="let language of languages" [value]="language">
-            {{ 'language.' + language | translate }}
+          {{ 'language.' + language | translate }}
           </ion-select-option>
         </ion-select>
+       
       </ion-item>
 
       <ion-item lines="inset">

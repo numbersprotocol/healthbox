@@ -9,8 +9,6 @@ import { DataTemplateService } from '@core/services/data-template.service';
 import { LanguageService } from '@core/services/language.service';
 import { StyleService } from '@core/services/style.service';
 import { Platform } from '@ionic/angular';
-// import { WebCryptoApiSignatureProvider } from './core/services/web-crypto-api-signature-rovider.service'
-
 import { DataStoreService } from './core/services/store/data-store.service';
 // import { WebCryptoApiSignatureProvider } from './core/services/web-crypto-api-signature-rovider.service'
 const { SplashScreen, StatusBar } = Plugins;
@@ -29,12 +27,7 @@ export class AppComponent {
     private readonly router: Router,
     private readonly languageService: LanguageService,
     private readonly styleService: StyleService,
-    // private readonly webCryptoApiSignatureProvider: WebCryptoApiSignatureProvider,
-
-    // private readonly signatureService: WebCryptoApiSignatureProvider,
   ) {
-    // console.log(signatureService.getPrivateKey);
-
     this.setStatusBarStyle().subscribe();
     this.dataInitialized()
       .pipe(
@@ -87,11 +80,6 @@ export class AppComponent {
   }
 
   initializeCollector() {
-    // this.webCryptoApiSignatureProvider.initialize();
-    // this.collectorService.addFactsProvider(this.capacitorFactsProvider);
-    // this.collectorService.addSignatureProvider(
-    //   this.webCryptoApiSignatureProvider
-    // );
   }
 
 }
