@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
-import {
-  map, mergeMap, switchMap, take, takeUntil,
-  tap,
-} from 'rxjs/operators';
+import { map, mergeMap, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
 import { Record } from '@core/classes/record';
 import { ProofStatus } from '@core/enums/proof-status.enum';
@@ -24,7 +21,6 @@ import { PopoverIcon, PopoverService } from '@shared/services/popover.service';
   styleUrls: ['./add-photo.component.scss'],
 })
 export class AddPhotoComponent implements OnInit, OnDestroy {
-
   destroy$ = new Subject();
 
   private readonly record = new BehaviorSubject<Record>(new Record(Date.now()));
@@ -39,8 +35,8 @@ export class AddPhotoComponent implements OnInit, OnDestroy {
     private readonly recordService: RecordService,
     private readonly popoverService: PopoverService,
     private readonly modalCtrl: ModalController,
-    private readonly proofService: ProofService,
-  ) { }
+    private readonly proofService: ProofService
+  ) {}
 
   ngOnInit() {
     this.createProof().subscribe();
@@ -60,12 +56,15 @@ export class AddPhotoComponent implements OnInit, OnDestroy {
     forkJoin([this.createEmptyRecord(), this.photoService.create()])
       .pipe(
         map(([record, byteString]) => {
-          record.fields.find(field => field.type === RecordFieldType.photo).value = byteString;
+          record.fields.find(
+            field => field.type === RecordFieldType.photo
+          ).value = byteString;
           return record;
         }),
         tap(record => this.record.next(record)),
-        takeUntil(this.destroy$),
-      ).subscribe();
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
 
   confirm() {
@@ -73,40 +72,44 @@ export class AddPhotoComponent implements OnInit, OnDestroy {
       .pipe(
         mergeMap(() => this.showRecordSavedPopover()),
         mergeMap(() => this.modalCtrl.dismiss()),
-        takeUntil(this.destroy$),
-      ).subscribe();
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
 
   private showRecordSavedPopover(): Observable<any> {
-    return this.popoverService.showPopover({ i18nTitle: 'title.recordSaved', icon: PopoverIcon.CONFIRM }, 500);
+    return this.popoverService.showPopover(
+      { i18nTitle: 'title.recordSaved', icon: PopoverIcon.CONFIRM },
+      500
+    );
   }
 
   private saveRecordWithLoading(): Observable<any> {
     return forkJoin([
-      this.loadingService.showLoading('description.addingDataAndVerifiableInformation', 10000),
-      this.dataStore.pushRecord(this.record.getValue())
-    ])
-      .pipe(
-        mergeMap(([loading, _]) => loading.dismiss()),
-      );
+      this.loadingService.showLoading(
+        'description.addingDataAndVerifiableInformation',
+        10000
+      ),
+      this.dataStore.pushRecord(this.record.getValue()),
+    ]).pipe(mergeMap(([loading, _]) => loading.dismiss()));
   }
 
   private createEmptyRecord(): Observable<Record> {
-    return this.dataStore.userData$
-      .pipe(
-        take(1),
-        switchMap(userData => this.recordService.create(userData.dataTemplateName)),
-        tap(record => this.record.next(record)),
-      );
+    return this.dataStore.userData$.pipe(
+      take(1),
+      switchMap(userData =>
+        this.recordService.create(userData.dataTemplateName)
+      ),
+      tap(record => this.record.next(record))
+    );
   }
 
   private createProof() {
-    return this.proofService.createProof()
-      .pipe(
-        tap(proof => this.updateRecordProof(proof)),
-        tap(() => this.proofStatus = ProofStatus.COMPLETE),
-        takeUntil(this.destroy$),
-      );
+    return this.proofService.createProof().pipe(
+      tap(proof => this.updateRecordProof(proof)),
+      tap(() => (this.proofStatus = ProofStatus.COMPLETE)),
+      takeUntil(this.destroy$)
+    );
   }
 
   private updateRecordProof(proof: Proof) {
@@ -114,6 +117,4 @@ export class AddPhotoComponent implements OnInit, OnDestroy {
     record.setProof(proof);
     this.record.next(record);
   }
-
 }
-

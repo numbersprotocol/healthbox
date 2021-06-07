@@ -10,14 +10,12 @@ import { ModalService } from '@shared/services/modal.service';
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+  styleUrls: ['tabs.page.scss'],
 })
 export class TabsPage implements OnDestroy {
   destroy$ = new Subject();
   selectedTab: string;
-  constructor(
-    private readonly modalService: ModalService,
-  ) { }
+  constructor(private readonly modalService: ModalService) {}
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -29,19 +27,12 @@ export class TabsPage implements OnDestroy {
   }
 
   onClickCameraButton() {
-    this.modalService.showAddPhotoModal()
-      .pipe(
-        first(),
-      ).subscribe();
+    this.modalService.showAddPhotoModal().pipe(first()).subscribe();
   }
 
   onClickRecordButton() {
-    this.modalService.showAddRecordModal()
-      .pipe(
-        first(),
-      ).subscribe();
+    this.modalService.showAddRecordModal().pipe(first()).subscribe();
   }
-
 }
 
 export interface TabsEvent {

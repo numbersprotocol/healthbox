@@ -7,7 +7,7 @@ import { UserData } from '../../interfaces/user-data';
 import { LocalStorageService } from '../storage/local-storage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserDataRepositoryService {
   USER_DATA_REPOSITORY = 'userData';
@@ -20,23 +20,24 @@ export class UserDataRepositoryService {
   private readonly userData = new Subject<UserData>();
   userData$: Observable<UserData> = this.userData;
 
-  constructor(
-    private readonly localStorage: LocalStorageService
-  ) { }
+  constructor(private readonly localStorage: LocalStorageService) {}
 
   get(): Observable<UserData> {
-    return this.localStorage.getData(this.USER_DATA_REPOSITORY, this.defaultUserData);
+    return this.localStorage.getData(
+      this.USER_DATA_REPOSITORY,
+      this.defaultUserData
+    );
   }
 
   save(userData: UserData): Observable<UserData> {
-    return this.localStorage.setData(userData, this.USER_DATA_REPOSITORY)
+    return this.localStorage
+      .setData(userData, this.USER_DATA_REPOSITORY)
       .pipe(tap(u => this.userData.next(u)));
   }
 
   resetToDefault(): Observable<UserData> {
-    return this.localStorage.setData(this.defaultUserData, this.USER_DATA_REPOSITORY)
-      .pipe(
-        tap(u => this.userData.next(u)),
-      );
+    return this.localStorage
+      .setData(this.defaultUserData, this.USER_DATA_REPOSITORY)
+      .pipe(tap(u => this.userData.next(u)));
   }
 }

@@ -7,33 +7,43 @@ import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { DataStoreService } from '@core/services/store/data-store.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocationApiService {
-
   baseUrl = 'https://nominatim.openstreetmap.org';
 
   constructor(
     private readonly dataStore: DataStoreService,
-    private readonly httpClient: HttpClient,
-  ) { }
+    private readonly httpClient: HttpClient
+  ) {}
 
   getReverseGeocoding(latitude: number, longitude: number): Observable<any> {
     const endpoint = this.baseUrl + '/reverse';
-    return this.dataStore.userData$
-      .pipe(
-        take(1),
-        map(userData => this.createReverseGeocodingParams(latitude, longitude, userData.language)),
-        switchMap(params => this.httpClient.get<ReverseGeocoderResponse>(endpoint, { params })),
-        map(response => `${response.address.suburb}, ${response.address.city}`),
-        catchError(error => {
-          console.error(error);
-          return of('');
-        })
-      );
+    return this.dataStore.userData$.pipe(
+      take(1),
+      map(userData =>
+        this.createReverseGeocodingParams(
+          latitude,
+          longitude,
+          userData.language
+        )
+      ),
+      switchMap(params =>
+        this.httpClient.get<ReverseGeocoderResponse>(endpoint, { params })
+      ),
+      map(response => `${response.address.suburb}, ${response.address.city}`),
+      catchError(error => {
+        console.error(error);
+        return of('');
+      })
+    );
   }
 
-  private createReverseGeocodingParams(latitude: number, longitude: number, language: string): HttpParams {
+  private createReverseGeocodingParams(
+    latitude: number,
+    longitude: number,
+    language: string
+  ): HttpParams {
     return new HttpParams({
       fromObject: {
         format: 'json',
@@ -41,10 +51,9 @@ export class LocationApiService {
         lon: `${longitude}`,
         zoom: `18`,
         language,
-      }
+      },
     });
   }
-
 }
 
 interface ReverseGeocoderResponse {

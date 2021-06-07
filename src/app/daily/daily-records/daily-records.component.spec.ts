@@ -10,8 +10,8 @@ describe('DailyRecordsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DailyRecordsComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [DailyRecordsComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DailyRecordsComponent);

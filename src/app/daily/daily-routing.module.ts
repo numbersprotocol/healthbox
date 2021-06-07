@@ -6,12 +6,12 @@ import { DailyPage } from './daily.page';
 const routes: Routes = [
   {
     path: '',
-    component: DailyPage
-  }
+    component: DailyPage,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class DailyPageRoutingModule { }
+export class DailyPageRoutingModule {}

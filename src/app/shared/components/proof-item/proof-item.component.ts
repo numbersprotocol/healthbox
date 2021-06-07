@@ -1,5 +1,9 @@
 import {
-  Component, Input, OnChanges, OnInit, SimpleChanges,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
 } from '@angular/core';
 
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -15,15 +19,19 @@ export class ProofItemComponent implements OnInit, OnChanges {
   @Input() status: ProofStatus;
 
   proofStatus = ProofStatus;
-  private readonly display = new BehaviorSubject<ProofDisplay>(this.getProofDisplay(ProofStatus.LOADING));
+  private readonly display = new BehaviorSubject<ProofDisplay>(
+    this.getProofDisplay(ProofStatus.LOADING)
+  );
   display$: Observable<ProofDisplay> = this.display;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    this.display.next(this.getProofDisplay(changes.status.currentValue as ProofStatus));
+    this.display.next(
+      this.getProofDisplay(changes.status.currentValue as ProofStatus)
+    );
   }
 
   private getProofDisplay(status: ProofStatus): ProofDisplay {

@@ -10,8 +10,8 @@ describe('PhotoViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PhotoViewerComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [PhotoViewerComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PhotoViewerComponent);

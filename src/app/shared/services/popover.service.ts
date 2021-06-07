@@ -8,54 +8,60 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { PopoverComponent } from '@shared/components/popover/popover.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PopoverService {
+  constructor(private readonly popoverCtrl: PopoverController) {}
 
-  constructor(
-    private readonly popoverCtrl: PopoverController,
-  ) { }
-
-  showPopover(componentProps: PopoverProps, dismissTime?: number, animated?: boolean): Observable<any> {
-    return this.createPopover(componentProps, animated)
-      .pipe(
-        switchMap(popover => this.presentPopover(popover, dismissTime)),
-      );
+  showPopover(
+    componentProps: PopoverProps,
+    dismissTime?: number,
+    animated?: boolean
+  ): Observable<any> {
+    return this.createPopover(componentProps, animated).pipe(
+      switchMap(popover => this.presentPopover(popover, dismissTime))
+    );
   }
 
-  showPopoverManualDismiss(componentProps: PopoverProps): Observable<HTMLIonPopoverElement> {
-    return this.createPopover(componentProps)
-      .pipe(
-        switchMap(popover => this.presentPopoverManualDismiss(popover)),
-      );
+  showPopoverManualDismiss(
+    componentProps: PopoverProps
+  ): Observable<HTMLIonPopoverElement> {
+    return this.createPopover(componentProps).pipe(
+      switchMap(popover => this.presentPopoverManualDismiss(popover))
+    );
   }
 
-  private createPopover(componentProps: PopoverProps, animated: boolean = false): Observable<HTMLIonPopoverElement> {
-    return defer(() => this.popoverCtrl.create({
-      component: PopoverComponent,
-      componentProps,
-      animated,
-    }));
+  private createPopover(
+    componentProps: PopoverProps,
+    animated: boolean = false
+  ): Observable<HTMLIonPopoverElement> {
+    return defer(() =>
+      this.popoverCtrl.create({
+        component: PopoverComponent,
+        componentProps,
+        animated,
+      })
+    );
   }
 
-  private presentPopover(popover: HTMLIonPopoverElement, dismissTime?: number): Observable<any> {
-    const manualDismiss$ = defer(() => popover.present())
-      .pipe(
-        switchMap(() => from(popover.onDidDismiss())),
-      );
-    const autoDismiss$ = defer(() => popover.present())
-      .pipe(
-        delay(dismissTime),
-        switchMap(() => popover.dismiss()),
-      );
-    return (dismissTime) ? autoDismiss$ : manualDismiss$;
+  private presentPopover(
+    popover: HTMLIonPopoverElement,
+    dismissTime?: number
+  ): Observable<any> {
+    const manualDismiss$ = defer(() => popover.present()).pipe(
+      switchMap(() => from(popover.onDidDismiss()))
+    );
+    const autoDismiss$ = defer(() => popover.present()).pipe(
+      delay(dismissTime),
+      switchMap(() => popover.dismiss())
+    );
+    return dismissTime ? autoDismiss$ : manualDismiss$;
   }
 
-  private presentPopoverManualDismiss(popover: HTMLIonPopoverElement): Observable<HTMLIonPopoverElement> {
-    return defer(() => popover.present())
-      .pipe(
-        map(() => popover),
-      );
+  private presentPopoverManualDismiss(
+    popover: HTMLIonPopoverElement
+  ): Observable<HTMLIonPopoverElement> {
+    return defer(() => popover.present()).pipe(map(() => popover));
   }
 }
 

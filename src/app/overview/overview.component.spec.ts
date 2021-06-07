@@ -11,11 +11,8 @@ describe('OverviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OverviewComponent ],
-      imports: [
-        IonicModule.forRoot(),
-        RouterModule.forRoot([]),
-      ]
+      declarations: [OverviewComponent],
+      imports: [IonicModule.forRoot(), RouterModule.forRoot([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(OverviewComponent);

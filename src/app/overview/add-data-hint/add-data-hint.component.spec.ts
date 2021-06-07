@@ -9,8 +9,8 @@ describe('AddDataHintComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddDataHintComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [AddDataHintComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AddDataHintComponent);

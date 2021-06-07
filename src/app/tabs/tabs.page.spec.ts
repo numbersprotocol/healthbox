@@ -11,10 +11,7 @@ describe('TabsPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TabsPage],
-      imports: [
-        IonicModule.forRoot(),
-        RouterModule.forRoot([]),
-      ],
+      imports: [IonicModule.forRoot(), RouterModule.forRoot([])],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));

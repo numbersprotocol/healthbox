@@ -1,4 +1,6 @@
-<ion-list style="width:100%;height:50%;overflow:scroll;padding-bottom: 90px;">
+<ion-list
+  style="width: 100%; height: 50%; overflow: scroll; padding-bottom: 90px"
+>
   <div *ngFor="let record of records$ | async">
     <ion-item detail="false" *ngIf="getAvailableFields(record).length > 0">
       <ion-label>{{ record.timestamp | date: 'HH:mm aa' }}</ion-label>
@@ -6,45 +8,69 @@
         <ion-icon [name]="summary.icon"></ion-icon>
         <ion-label class="ion-text-start" *ngIf="summary.value != null">
           {{ summary.value }}
-          {{ 'preset.' + record.templateName + '.unit.' + summary.valueUnit | translate }}
+          {{
+            'preset.' + record.templateName + '.unit.' + summary.valueUnit
+              | translate
+          }}
         </ion-label>
         <ion-label class="ion-text-start" *ngIf="summary.value == null">
           {{ 'title.recordNotTaken' | translate }}
         </ion-label>
       </ng-container>
       <div>
-        <ion-icon name="caret-forward-outline" *ngIf="!isSelected(record)" button (click)="selectRecord(record)">
+        <ion-icon
+          name="caret-forward-outline"
+          *ngIf="!isSelected(record)"
+          button
+          (click)="selectRecord(record)"
+        >
         </ion-icon>
-        <ion-icon name="caret-down-outline" *ngIf="isSelected(record)" button (click)="selectRecord()">
+        <ion-icon
+          name="caret-down-outline"
+          *ngIf="isSelected(record)"
+          button
+          (click)="selectRecord()"
+        >
         </ion-icon>
       </div>
     </ion-item>
     <ion-list *ngIf="isSelected(record)">
       <ng-container *ngFor="let field of getAvailableFields(record)">
         <ion-item>
-          <ion-label style="color: #F9AD35;">
-            {{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
-          <ion-label class="ion-text-center" style="color: #F9AD35;">
-            <ng-container *ngIf="field.type !== 'boolean' && field.type !== 'option'">
+          <ion-label style="color: #f9ad35">
+            {{
+              'preset.' + record.templateName + '.' + field.name | translate
+            }}</ion-label
+          >
+          <ion-label class="ion-text-center" style="color: #f9ad35">
+            <ng-container
+              *ngIf="field.type !== 'boolean' && field.type !== 'option'"
+            >
               {{ field.value }}
             </ng-container>
             <ng-container *ngIf="field.type === 'boolean'">
-              {{ ((field.value) ? 'title.yes' : 'title.no') | translate }}
+              {{ (field.value ? 'title.yes' : 'title.no') | translate }}
             </ng-container>
             <ng-container *ngIf="field.type === 'option'">
-              {{ 'preset.' + record.templateName + '.options.' + field.value | translate }}
+              {{
+                'preset.' + record.templateName + '.options.' + field.value
+                  | translate
+              }}
             </ng-container>
             <ng-container *ngIf="field.valueUnit">
-              {{ 'preset.' + record.templateName + '.unit.' + field.valueUnit | translate }}
+              {{
+                'preset.' + record.templateName + '.unit.' + field.valueUnit
+                  | translate
+              }}
             </ng-container>
           </ion-label>
         </ion-item>
       </ng-container>
       <ion-item *ngIf="getAvailableFields(record).length === 0">
-        <ion-label style="color: #F9AD35;">
+        <ion-label style="color: #f9ad35">
           {{ 'title.emptyRecord' | translate }}
         </ion-label>
-        <ion-label class="ion-text-center" style="color: #F9AD35;">
+        <ion-label class="ion-text-center" style="color: #f9ad35">
           {{ 'title.noFieldsSelected' | translate }}
         </ion-label>
       </ion-item>

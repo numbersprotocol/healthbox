@@ -80,9 +80,9 @@
     "medium": "Medium",
     "large": "Large",
     "veryLarge": "Very Large",
-    "locationInfo":"Collection Location Info",
-    "enable":"Enable",
-    "disable":"Disable"
+    "locationInfo": "Collection Location Info",
+    "enable": "Enable",
+    "disable": "Disable"
   },
   "description": {
     "addingDataAndVerifiableInformation": "Adding new data and integrity information...",

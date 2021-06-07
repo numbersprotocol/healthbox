@@ -27,11 +27,20 @@
       </div>
     </ion-slide>
     <ion-slide>
-      <app-eula-zh *ngIf="(language$ | async) === 'zh'" class="terms-and-conditions ion-margin"></app-eula-zh>
-      <app-eula-en *ngIf="(language$ | async) !== 'zh'" class="terms-and-conditions ion-margin"></app-eula-en>
+      <app-eula-zh
+        *ngIf="(language$ | async) === 'zh'"
+        class="terms-and-conditions ion-margin"
+      ></app-eula-zh>
+      <app-eula-en
+        *ngIf="(language$ | async) !== 'zh'"
+        class="terms-and-conditions ion-margin"
+      ></app-eula-en>
     </ion-slide>
     <ion-slide>
-      <app-signup-form [title]="'title.getStarted' | translate" (signupEvent)="onSignup()"></app-signup-form>
+      <app-signup-form
+        [title]="'title.getStarted' | translate"
+        (signupEvent)="onSignup()"
+      ></app-signup-form>
     </ion-slide>
   </ion-slides>
 </ion-content>

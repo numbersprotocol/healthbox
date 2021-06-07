@@ -6,8 +6,8 @@ import { SharePage } from './share.page';
 const routes: Routes = [
   {
     path: '',
-    component: SharePage
-  }
+    component: SharePage,
+  },
 ];
 
 @NgModule({

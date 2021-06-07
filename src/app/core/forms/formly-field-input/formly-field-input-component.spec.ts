@@ -9,8 +9,8 @@ describe('FormlyFieldInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FormlyFieldInputComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [FormlyFieldInputComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(FormlyFieldInputComponent);

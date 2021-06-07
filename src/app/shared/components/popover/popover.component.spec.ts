@@ -9,8 +9,8 @@ describe('PopoverComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PopoverComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [PopoverComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PopoverComponent);

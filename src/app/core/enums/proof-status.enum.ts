@@ -1,5 +1,5 @@
 export enum ProofStatus {
-    LOADING = 'loading',
-    COMPLETE = 'complete',
-    ERROR = 'error',
+  LOADING = 'loading',
+  COMPLETE = 'complete',
+  ERROR = 'error',
 }

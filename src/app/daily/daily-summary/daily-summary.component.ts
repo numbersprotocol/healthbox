@@ -16,23 +16,18 @@ export class DailySummaryComponent implements OnInit {
     height: '100px',
   };
 
-  proofs$ = this.dataStore.recordsByDate$
-    .pipe(
-      map(recordsByDate => recordsByDate[this.date]),
-      map(records => (records) ? records.map(record => record.proof) : null),
-    );
+  proofs$ = this.dataStore.recordsByDate$.pipe(
+    map(recordsByDate => recordsByDate[this.date]),
+    map(records => (records ? records.map(record => record.proof) : null))
+  );
 
-  dailySummary$ = this.dataStore.summaryByDate$
-    .pipe(
-      map(summaryByDate => summaryByDate[this.date]),
-    );
+  dailySummary$ = this.dataStore.summaryByDate$.pipe(
+    map(summaryByDate => summaryByDate[this.date])
+  );
 
-  constructor(
-    private readonly dataStore: DataStoreService,
-  ) { }
+  constructor(private readonly dataStore: DataStoreService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onClickOutside() {
     if (this.selectedSymptoms) {
@@ -43,7 +38,5 @@ export class DailySummaryComponent implements OnInit {
   getSummaryTranslation(summary) {
     console.log(summary);
     return summary;
-
   }
-
 }

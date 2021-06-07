@@ -21,7 +21,7 @@ describe('DailyPage', () => {
         DailySummaryModule,
         DailyRecordsModule,
         DailyPhotosModule,
-      ]
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DailyPage);

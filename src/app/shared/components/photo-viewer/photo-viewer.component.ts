@@ -10,7 +10,8 @@ import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '@shared/services/loading.service';
 import {
-  PopoverButtonSet, PopoverService,
+  PopoverButtonSet,
+  PopoverService,
 } from '@shared/services/popover.service';
 
 @Component({
@@ -30,8 +31,8 @@ export class PhotoViewerComponent implements OnInit, OnDestroy {
     private readonly loadingService: LoadingService,
     private readonly locationApiService: LocationApiService,
     private readonly popoverService: PopoverService,
-    private readonly translateService: TranslateService,
-  ) { }
+    private readonly translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     this.address$ = this.getAddress(this.record);
@@ -48,20 +49,27 @@ export class PhotoViewerComponent implements OnInit, OnDestroy {
       return noLocationData$;
     } else if (!record.proof.location) {
       return noLocationData$;
-    } else if (!record.proof.location.latitude || !record.proof.location.longitude) {
+    } else if (
+      !record.proof.location.latitude ||
+      !record.proof.location.longitude
+    ) {
       return noLocationData$;
     } else {
-      return this.locationApiService.getReverseGeocoding(record.proof.location.latitude, record.proof.location.longitude);
+      return this.locationApiService.getReverseGeocoding(
+        record.proof.location.latitude,
+        record.proof.location.longitude
+      );
     }
   }
 
   delete() {
     this.showDeletePhotoPopover()
       .pipe(
-        filter(res => (res.data === 'delete')),
+        filter(res => res.data === 'delete'),
         switchMap(() => this.deletePhotoWithLoading()),
-        switchMap(() => this.modalCtrl.dismiss()),
-      ).subscribe();
+        switchMap(() => this.modalCtrl.dismiss())
+      )
+      .subscribe();
   }
 
   cancel() {
@@ -81,10 +89,9 @@ export class PhotoViewerComponent implements OnInit, OnDestroy {
     return forkJoin([
       this.loadingService.showLoading('description.deletingPhoto', 10000),
       this.dataStore.deleteRecord(this.record),
-    ])
-      .pipe(
-        mergeMap(([loading, _]) => loading.dismiss()),
-        takeUntil(this.destroy$),
-      );
+    ]).pipe(
+      mergeMap(([loading, _]) => loading.dismiss()),
+      takeUntil(this.destroy$)
+    );
   }
 }

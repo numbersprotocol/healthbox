@@ -24,6 +24,6 @@ import { DailyPage } from './daily.page';
     DailyRecordsModule,
     DailyPhotosModule,
   ],
-  declarations: [DailyPage]
+  declarations: [DailyPage],
 })
-export class DailyPageModule { }
+export class DailyPageModule {}

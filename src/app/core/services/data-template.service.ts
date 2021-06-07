@@ -9,18 +9,18 @@ import { DataTemplate } from '@core/interfaces/data-template';
 import { Record } from '../classes/record';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataTemplateService {
-
   readonly dataTemplateNames: string[] = [
-    'heartFailure', 'commonCold','healthDeclaration', 'npc',
+    'heartFailure',
+    'commonCold',
+    'healthDeclaration',
+    'npc',
   ];
   dataTemplates: DataTemplate[];
 
-  constructor(
-    private readonly httpClient: HttpClient,
-  ) { }
+  constructor(private readonly httpClient: HttpClient) {}
 
   /** Initialize data templates
    *  The observable must be subscribed and only subscribed once when the App initialization.
@@ -29,11 +29,12 @@ export class DataTemplateService {
    * @returns Observable
    */
   initialize(): Observable<DataTemplate[]> {
-    return forkJoin(this.dataTemplateNames.map(name => this.loadDataTemplatesFromFile(name)))
-      .pipe(
-        tap(dataTemplates => this.dataTemplates = dataTemplates),
-        tap(data => data.forEach(d => console.log(d))),
-      );
+    return forkJoin(
+      this.dataTemplateNames.map(name => this.loadDataTemplatesFromFile(name))
+    ).pipe(
+      tap(dataTemplates => (this.dataTemplates = dataTemplates)),
+      tap(data => data.forEach(d => console.log(d)))
+    );
   }
 
   setRecordWithDataTemplate(record: Record, dataTemplateName: string): Record {
@@ -46,32 +47,38 @@ export class DataTemplateService {
   }
 
   getDataTemplate(dataTemplateName: string): DataTemplate {
-    const dataTemplate = this.dataTemplates.find(template => template.templateName === dataTemplateName);
+    const dataTemplate = this.dataTemplates.find(
+      template => template.templateName === dataTemplateName
+    );
     if (!dataTemplate) {
-      throw new Error(`Critical: Data template ${dataTemplateName} does not exist or does not initialized properly`);
+      throw new Error(
+        `Critical: Data template ${dataTemplateName} does not exist or does not initialized properly`
+      );
     }
     return dataTemplate;
   }
 
-  private loadDataTemplatesFromFile(dataTemplateName: string): Observable<DataTemplate> {
+  private loadDataTemplatesFromFile(
+    dataTemplateName: string
+  ): Observable<DataTemplate> {
     const filename = this.getDataTemplateFileName(dataTemplateName);
     const dataTemplateUrl = `assets/data-templates/${filename}`;
-    return this.httpClient.get<DataTemplate>(dataTemplateUrl)
-      .pipe(
-        catchError((err: HttpErrorResponse) => {
-          throw new Error(`Critical: Failed to read data template ${dataTemplateName}. Reason: ${err.message}`);
-        }),
-        map(dataTemplate => {
-          dataTemplate.fields.forEach(field => field.value = null);
-          return dataTemplate;
-        }),
-      );
+    return this.httpClient.get<DataTemplate>(dataTemplateUrl).pipe(
+      catchError((err: HttpErrorResponse) => {
+        throw new Error(
+          `Critical: Failed to read data template ${dataTemplateName}. Reason: ${err.message}`
+        );
+      }),
+      map(dataTemplate => {
+        dataTemplate.fields.forEach(field => (field.value = null));
+        return dataTemplate;
+      })
+    );
   }
 
   private getDataTemplateFileName(dataTemplateName: string): string {
-    return dataTemplateName.replace(/[A-Z]/g, m => '-' + m.toLowerCase()) + '.json';
+    return (
+      dataTemplateName.replace(/[A-Z]/g, m => '-' + m.toLowerCase()) + '.json'
+    );
   }
-
 }
-
-

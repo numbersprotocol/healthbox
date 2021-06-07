@@ -1,22 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import {
-  combineLatest, defer, forkJoin, Observable, of,
-  Subject,
-} from 'rxjs';
+import { combineLatest, defer, forkJoin, Observable, of, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { Plugins } from '@capacitor/core';
 import { ShopInfo } from '@core/interfaces/shop-info';
 import { RewardService } from '@core/services/reward.service';
 import {
-  BarcodeScanner, BarcodeScannerOptions,
+  BarcodeScanner,
+  BarcodeScannerOptions,
 } from '@ionic-native/barcode-scanner/ngx';
 import { ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalService } from '@shared/services/modal.service';
 import {
-  PopoverButtonSet, PopoverIcon, PopoverService,
+  PopoverButtonSet,
+  PopoverIcon,
+  PopoverService,
 } from '@shared/services/popover.service';
 import { ToastService } from '@shared/services/toast.service';
 
@@ -31,31 +31,26 @@ const { Browser } = Plugins;
   styleUrls: ['./reward.component.scss'],
 })
 export class RewardComponent implements OnInit, OnDestroy {
-
   private readonly destory$ = new Subject();
   canRedeem = false;
 
   initRewardStatus$ = this.rewardService.initRewardStatus$;
-  daysRecorded$ = this.rewardService.daysRecorded$
-    .pipe(
-      filter(value => value != null),
-      map(value => `${value}`),
-    );
-  pool$ = this.rewardService.poolBalance$
-    .pipe(
-      filter(value => value != null),
-      map(value => Math.floor(value / 20)),
-      map(value => `${value}`),
-    );
-  userBalance$ = this.rewardService.userBalance$
-    .pipe(
-      filter(value => value != null),
-      map(value => `${value}`),
-    );
-  canRedeem$ = combineLatest([this.pool$, this.userBalance$])
-    .pipe(
-      map(([pool, userBalance]) => (+pool >= 1 && +userBalance >= 20)),
-    );
+  daysRecorded$ = this.rewardService.daysRecorded$.pipe(
+    filter(value => value != null),
+    map(value => `${value}`)
+  );
+  pool$ = this.rewardService.poolBalance$.pipe(
+    filter(value => value != null),
+    map(value => Math.floor(value / 20)),
+    map(value => `${value}`)
+  );
+  userBalance$ = this.rewardService.userBalance$.pipe(
+    filter(value => value != null),
+    map(value => `${value}`)
+  );
+  canRedeem$ = combineLatest([this.pool$, this.userBalance$]).pipe(
+    map(([pool, userBalance]) => +pool >= 1 && +userBalance >= 20)
+  );
 
   constructor(
     private readonly barcodeScanner: BarcodeScanner,
@@ -65,11 +60,12 @@ export class RewardComponent implements OnInit, OnDestroy {
     private readonly popoverService: PopoverService,
     private readonly rewardService: RewardService,
     private readonly toastService: ToastService,
-    private readonly translateService: TranslateService,
-  ) { }
+    private readonly translateService: TranslateService
+  ) {}
 
   ngOnInit() {
-    this.rewardService.login()
+    this.rewardService
+      .login()
       .pipe(
         catchError(err => {
           if (err?.error?.reason === 'WRONG_PASSWORD') {
@@ -83,10 +79,11 @@ export class RewardComponent implements OnInit, OnDestroy {
           }
           return of(data);
         }),
-        filter(data => (data?.data?.email_updated || data?.token)),
+        filter(data => data?.data?.email_updated || data?.token),
         tap(() => this.rewardService.refreshInitRewardStatus()),
-        switchMap(() => this.rewardService.getBalance()),
-      ).subscribe();
+        switchMap(() => this.rewardService.getBalance())
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {
@@ -95,21 +92,26 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   getInitialReward() {
-    this.rewardService.getInitReward()
+    this.rewardService
+      .getInitReward()
       .pipe(
         tap(() => this.rewardService.refreshInitRewardStatus()),
-        switchMap(() => this.rewardService.getBalance()),
-      ).subscribe();
+        switchMap(() => this.rewardService.getBalance())
+      )
+      .subscribe();
   }
 
   scan() {
-    const getQRText$ = (this.platform.is('cordova')) ? this.getQRTextForCordova() : this.getQRTextForWeb();
+    const getQRText$ = this.platform.is('cordova')
+      ? this.getQRTextForCordova()
+      : this.getQRTextForWeb();
     getQRText$
       .pipe(
         this.parseAndFilterInvalidQRText(),
         this.showShopInfoAndFilterCancel(),
-        switchMap(shopInfo => this.startRedeemWithLoadingPopover(shopInfo)),
-      ).subscribe();
+        switchMap(shopInfo => this.startRedeemWithLoadingPopover(shopInfo))
+      )
+      .subscribe();
   }
 
   cancel() {
@@ -127,9 +129,11 @@ export class RewardComponent implements OnInit, OnDestroy {
   private showShopInfoAndFilterCancel() {
     return (source: Observable<ShopInfo>) => {
       return source.pipe(
-        switchMap(shopInfo => forkJoin([this.showShopInfo(shopInfo), of(shopInfo)])),
+        switchMap(shopInfo =>
+          forkJoin([this.showShopInfo(shopInfo), of(shopInfo)])
+        ),
         filter(([data, _]) => data?.data?.redeem),
-        map(([_, shopInfo]) => shopInfo),
+        map(([_, shopInfo]) => shopInfo)
       );
     };
   }
@@ -143,22 +147,28 @@ export class RewardComponent implements OnInit, OnDestroy {
           try {
             shopInfo = JSON.parse(data);
           } catch (err) {
-            const errorMessage = (
-              this.translateService.instant('error.error') + ': ' + this.translateService.instant('error.QRInvalidJSON')
-            );
-            this.toastService.showToast(errorMessage, 'danger', 3000).subscribe();
+            const errorMessage =
+              this.translateService.instant('error.error') +
+              ': ' +
+              this.translateService.instant('error.QRInvalidJSON');
+            this.toastService
+              .showToast(errorMessage, 'danger', 3000)
+              .subscribe();
             return null;
           }
           if (!(shopInfo?.UUID && shopInfo?.shopName && shopInfo?.shopBranch)) {
-            const errorMessage = (
-              this.translateService.instant('error.error') + ': ' + this.translateService.instant('error.QRInvalidShop')
-            );
-            this.toastService.showToast(errorMessage, 'danger', 3000).subscribe();
+            const errorMessage =
+              this.translateService.instant('error.error') +
+              ': ' +
+              this.translateService.instant('error.QRInvalidShop');
+            this.toastService
+              .showToast(errorMessage, 'danger', 3000)
+              .subscribe();
             return null;
           }
           return shopInfo;
         }),
-        filter(data => data != null),
+        filter(data => data != null)
       );
     };
   }
@@ -168,27 +178,32 @@ export class RewardComponent implements OnInit, OnDestroy {
       formats: 'QR_CODE',
       disableSuccessBeep: true,
     };
-    return defer(() => this.barcodeScanner.scan(options))
-      .pipe(
-        map(barcodeData => barcodeData?.text),
-        filter(text => text != null),
-        map(text => text.replace('\\', '')),
-      );
+    return defer(() => this.barcodeScanner.scan(options)).pipe(
+      map(barcodeData => barcodeData?.text),
+      filter(text => text != null),
+      map(text => text.replace('\\', ''))
+    );
   }
 
   private getQRTextForWeb(): Observable<string> {
-    return this.modalService.showModal(QrScannerComponent)
-      .pipe(
-        map(data => data?.data),
-      );
+    return this.modalService
+      .showModal(QrScannerComponent)
+      .pipe(map(data => data?.data));
   }
 
   private startRedeemWithLoadingPopover(shopInfo: ShopInfo) {
-    return combineLatest([this.showRedeeming(), this.rewardService.redeem(shopInfo.UUID)])
-      .pipe(
-        switchMap(([popover, _]) => popover.dismiss()),
-        switchMap(() => forkJoin([this.showRedeemSuccess(shopInfo), this.rewardService.getBalance()])),
-      );
+    return combineLatest([
+      this.showRedeeming(),
+      this.rewardService.redeem(shopInfo.UUID),
+    ]).pipe(
+      switchMap(([popover, _]) => popover.dismiss()),
+      switchMap(() =>
+        forkJoin([
+          this.showRedeemSuccess(shopInfo),
+          this.rewardService.getBalance(),
+        ])
+      )
+    );
   }
 
   private showShopInfo(shopInfo: ShopInfo): Observable<any> {
@@ -209,12 +224,13 @@ export class RewardComponent implements OnInit, OnDestroy {
     });
   }
 
-  private showRedeemSuccess(shopInfo: ShopInfo): Observable<HTMLIonPopoverElement> {
+  private showRedeemSuccess(
+    shopInfo: ShopInfo
+  ): Observable<HTMLIonPopoverElement> {
     return this.popoverService.showPopover({
       i18nTitle: 'title.redeemSuccess',
       i18nMessage: `${shopInfo.shopName}\n${shopInfo.shopBranch} 折扣 20 元`,
       icon: PopoverIcon.CHECK,
     });
   }
-
 }

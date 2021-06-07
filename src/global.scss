@@ -10,42 +10,42 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "~@ionic/angular/css/core.css";
+@import '~@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import "~@ionic/angular/css/normalize.css";
-@import "~@ionic/angular/css/structure.css";
-@import "~@ionic/angular/css/typography.css";
-@import "~@ionic/angular/css/display.css";
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+@import '~@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
-@import "~@ionic/angular/css/text-alignment.css";
-@import "~@ionic/angular/css/text-transformation.css";
-@import "~@ionic/angular/css/flex-utils.css";
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
 
 @font-face {
-  font-family: "NotoSans-Regular";
-  src: url("./assets/fonts/NotoSans-Regular.ttf") format("truetype");
+  font-family: 'NotoSans-Regular';
+  src: url('./assets/fonts/NotoSans-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-  font-family: "NotoSans-Bold";
-  src: url("./assets/fonts/NotoSans-Bold.ttf") format("truetype");
+  font-family: 'NotoSans-Bold';
+  src: url('./assets/fonts/NotoSans-Bold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
-app-header{
- color: #8EC3C3;
+app-header {
+  color: #8ec3c3;
 }
 
 html {
   width: 100vw;
   height: 100vh;
-    background-image: linear-gradient(to bottom, #8EC3C3 50%, #fff 50%);
+  background-image: linear-gradient(to bottom, #8ec3c3 50%, #fff 50%);
   background-color: #c38ea7;
   margin-top: 0px !important; /* Status bar height on iOS 10 */
 
@@ -57,7 +57,7 @@ html {
 body {
   width: 100vw;
   height: 100vh;
-  background-color: #8EC3C3;
+  background-color: #8ec3c3;
   // background-image: linear-gradient(to bottom, #8EC3C3 50%, #fff 50%);
   // margin-top: 0px !important; /* Status bar height on iOS 10 */
 
@@ -119,7 +119,8 @@ body {
   --font-size-2: 18pt;
   --font-size-3: 14pt;
   --font-weight-heavy: 500;
-  --ion-font-family: "NotoSans-Regular", "Roboto", "Helvetica-Neue", "sans-serif";
+  --ion-font-family: 'NotoSans-Regular', 'Roboto', 'Helvetica-Neue',
+    'sans-serif';
 }
 
 ion-text {

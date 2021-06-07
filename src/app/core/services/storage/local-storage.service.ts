@@ -8,10 +8,10 @@ import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor() { }
+  constructor() {}
 
   /**
    * Get stored data via Capacitor Storage plugin
@@ -23,7 +23,9 @@ export class LocalStorageService {
   getData<T>(key: string, defaultData: T): Observable<T> {
     return defer(() => Storage.get({ key })).pipe(
       map(raw => raw.value),
-      map(value => (value && value !== '[null]') ? JSON.parse(value) : defaultData),
+      map(value =>
+        value && value !== '[null]' ? JSON.parse(value) : defaultData
+      )
     );
   }
 
@@ -40,8 +42,6 @@ export class LocalStorageService {
         key,
         value: JSON.stringify(data),
       })
-    ).pipe(
-      map(() => data),
-    );
+    ).pipe(map(() => data));
   }
 }

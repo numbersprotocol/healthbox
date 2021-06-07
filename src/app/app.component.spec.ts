@@ -6,7 +6,6 @@ import { Platform } from '@ionic/angular';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-
   let platformIsSpy, platformSpy;
 
   beforeEach(async(() => {
@@ -17,9 +16,7 @@ describe('AppComponent', () => {
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [],
-      providers: [
-        { provide: Platform, useValue: platformSpy },
-      ],
+      providers: [{ provide: Platform, useValue: platformSpy }],
     }).compileComponents();
   }));
 

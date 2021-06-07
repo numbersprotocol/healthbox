@@ -9,8 +9,8 @@ describe('EulaEnComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EulaEnComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [EulaEnComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EulaEnComponent);

@@ -11,7 +11,7 @@ describe('ResetEmailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ResetEmailComponent],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ResetEmailComponent);

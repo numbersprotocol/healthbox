@@ -21,8 +21,6 @@ import { TabDataPage } from './tab-data.page';
     CoreModule,
     OverviewModule,
   ],
-  declarations: [
-    TabDataPage,
-  ]
+  declarations: [TabDataPage],
 })
-export class TabDataPageModule { }
+export class TabDataPageModule {}

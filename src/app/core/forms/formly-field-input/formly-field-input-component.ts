@@ -6,6 +6,4 @@ import { FieldType } from '@ngx-formly/core';
   templateUrl: './formly-field-input-component.html',
   styleUrls: ['./formly-field-input-component.scss'],
 })
-export class FormlyFieldInputComponent extends FieldType {
-
-}
+export class FormlyFieldInputComponent extends FieldType {}

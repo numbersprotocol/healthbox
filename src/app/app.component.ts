@@ -17,24 +17,23 @@ const { SplashScreen, StatusBar } = Plugins;
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-
   constructor(
     private readonly dataStore: DataStoreService,
     private readonly dataTemplateService: DataTemplateService,
     private readonly platform: Platform,
     private readonly router: Router,
     private readonly languageService: LanguageService,
-    private readonly styleService: StyleService,
+    private readonly styleService: StyleService
   ) {
     this.setStatusBarStyle().subscribe();
     this.dataInitialized()
       .pipe(
         switchMap(() => this.languageService.init()),
         switchMap(() => this.migrateUserData()),
-        switchMap(() => this.styleService.updateFontSize()),
+        switchMap(() => this.styleService.updateFontSize())
       )
       .subscribe(userData => {
         if (userData.newUser) {
@@ -45,15 +44,16 @@ export class AppComponent {
   }
 
   private setStatusBarStyle(): Observable<void> {
-    const setStyle$ = defer(() => StatusBar.setStyle({ style: StatusBarStyle.Light })).pipe(first());
-    return (this.platform.is('hybrid')) ? setStyle$ : of(null);
+    const setStyle$ = defer(() =>
+      StatusBar.setStyle({ style: StatusBarStyle.Light })
+    ).pipe(first());
+    return this.platform.is('hybrid') ? setStyle$ : of(null);
   }
 
   private dataInitialized(): Observable<any> {
-    return this.dataTemplateService.initialize()
-      .pipe(
-        switchMap(() => this.dataStore.initialize()),
-      );
+    return this.dataTemplateService
+      .initialize()
+      .pipe(switchMap(() => this.dataStore.initialize()));
   }
 
   private migrateUserData() {
@@ -68,7 +68,8 @@ export class AppComponent {
           if (userData?.recordPreset) {
             data.dataTemplateName = userData.recordPreset;
           } else {
-            data.dataTemplateName = this.dataTemplateService.dataTemplateNames[0];
+            data.dataTemplateName =
+              this.dataTemplateService.dataTemplateNames[0];
           }
         }
         if (!userData.fontSize) {
@@ -76,10 +77,9 @@ export class AppComponent {
         }
         return data;
       }),
-      switchMap(data => this.dataStore.updateUserData(data)),
+      switchMap(data => this.dataStore.updateUserData(data))
     );
   }
-
 }
 
 interface UserDataPatch {

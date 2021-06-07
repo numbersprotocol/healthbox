@@ -9,8 +9,8 @@ describe('AnimationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AnimationComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [AnimationComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AnimationComponent);

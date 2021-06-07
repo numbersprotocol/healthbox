@@ -7,21 +7,23 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '@shared/services/toast.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ErrorHandlerService implements ErrorHandler {
-
   constructor(
     private readonly toastService: ToastService,
-    private readonly translateService: TranslateService,
-  ) { }
+    private readonly translateService: TranslateService
+  ) {}
 
   handleError(error: any) {
     const isHttpError = error?.error?.message != null;
-    const message = (isHttpError) ? error.error.message : error.message;
+    const message = isHttpError ? error.error.message : error.message;
     const i18nMessage = this.translateService.instant(message);
-    const debugMessage = `Code: ${error.status}\n` + `Message: ${i18nMessage}\n` + `Stack: ${error.stack}`;
-    const userMessage = (isHttpError) ? '' : i18nMessage;
+    const debugMessage =
+      `Code: ${error.status}\n` +
+      `Message: ${i18nMessage}\n` +
+      `Stack: ${error.stack}`;
+    const userMessage = isHttpError ? '' : i18nMessage;
     console.error(debugMessage);
     if (userMessage.length > 0) {
       this.toastService.showToast(userMessage, 'danger').subscribe();

@@ -1,4 +1,4 @@
 export interface RecordFieldValueRange {
-    max: number;
-    min: number;
+  max: number;
+  min: number;
 }

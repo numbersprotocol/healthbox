@@ -24,8 +24,8 @@ fdescribe('getData', () => {
       key: 'user',
       value: JSON.stringify({
         id: 1,
-        name: 'Max'
-      })
+        name: 'Max',
+      }),
     });
 
     const expectedData = Object({ id: 1, name: 'Max' });
@@ -42,13 +42,11 @@ fdescribe('setData', () => {
   it('should set data', async () => {
     const service: LocalStorageService = TestBed.inject(LocalStorageService);
 
-    const data = {key: 'red', value: '#f00'};
+    const data = { key: 'red', value: '#f00' };
 
     service.setData(data, 'string').subscribe(async x => {
-      const {value} = await Storage.get({key: 'string'});
+      const { value } = await Storage.get({ key: 'string' });
       expect(value).toEqual(JSON.stringify(x));
     });
   });
 });
-
-

@@ -15,34 +15,38 @@ export class DailyRecordsComponent implements OnInit {
   @Input() date: string;
   selected: number;
 
-  records$ = this.dataStore.recordsByDate$
-    .pipe(
-      map(recordsByDate => recordsByDate[this.date]),
-    );
+  records$ = this.dataStore.recordsByDate$.pipe(
+    map(recordsByDate => recordsByDate[this.date])
+  );
 
-  constructor(
-    private readonly dataStore: DataStoreService,
-  ) { }
+  constructor(private readonly dataStore: DataStoreService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   getFieldsCount(record: Record): number {
-    return record.fields.filter(field => (field.value !== null && field.value !== '')).length;
+    return record.fields.filter(
+      field => field.value !== null && field.value !== ''
+    ).length;
   }
 
   getFirstSummaryField(record: Record) {
-    return record.fields.find(field => field.name === this.dataStore.getKeyFieldName(record));
+    return record.fields.find(
+      field => field.name === this.dataStore.getKeyFieldName(record)
+    );
   }
 
   getAvailableFields(record: Record) {
-    return record.fields.filter(field =>
-      field.type !== RecordFieldType.photo && field.value != null && field.value !== '' && field.value !== false
+    return record.fields.filter(
+      field =>
+        field.type !== RecordFieldType.photo &&
+        field.value != null &&
+        field.value !== '' &&
+        field.value !== false
     );
   }
 
   isSelected(record: Record): boolean {
-    return (record.timestamp === this.selected);
+    return record.timestamp === this.selected;
   }
 
   selectRecord(record?: Record): void {
@@ -52,5 +56,4 @@ export class DailyRecordsComponent implements OnInit {
     }
     this.selected = record.timestamp;
   }
-
 }

@@ -10,7 +10,7 @@ import { FileSystemService } from '../storage/file-system.service';
 import { LocalStorageService } from '../storage/local-storage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RecordRepositoryService {
   RECORD_META_KEY = 'records';
@@ -18,19 +18,18 @@ export class RecordRepositoryService {
   constructor(
     private readonly fileSystem: FileSystemService,
     private readonly ledger: LedgerService,
-    private readonly localStorage: LocalStorageService,
-  ) { }
+    private readonly localStorage: LocalStorageService
+  ) {}
 
   get(meta: Meta): Observable<Record> {
     return this.fileSystem.getJsonData(meta.path);
   }
 
   getAll(): Observable<Record[]> {
-    return this.getMetas()
-      .pipe(
-        switchMap(metas => forkJoin(metas.map(meta => this.get(meta)))),
-        defaultIfEmpty([]),
-      );
+    return this.getMetas().pipe(
+      switchMap(metas => forkJoin(metas.map(meta => this.get(meta)))),
+      defaultIfEmpty([])
+    );
   }
 
   getJson(meta: Meta): Observable<string> {
@@ -38,71 +37,79 @@ export class RecordRepositoryService {
   }
 
   getJsonAll(): Observable<string[]> {
-    return this.getMetas()
-      .pipe(
-        switchMap(metas => forkJoin(metas.map(meta => this.getJson(meta))))
-      );
+    return this.getMetas().pipe(
+      switchMap(metas => forkJoin(metas.map(meta => this.getJson(meta))))
+    );
   }
 
   getTransactionHashes(): Observable<string[]> {
-    return this.getMetas()
-      .pipe(
-        map(metas => metas.map(meta => meta.transactionHash)),
-      );
+    return this.getMetas().pipe(
+      map(metas => metas.map(meta => meta.transactionHash))
+    );
   }
 
   delete(record: Record): Observable<Record[]> {
-    return this.getMetas()
-      .pipe(
-        switchMap(metas => this.deleteRecordAndDeleteMeta(metas, record.timestamp)),
-        switchMap(() => this.getAll()),
-      );
+    return this.getMetas().pipe(
+      switchMap(metas =>
+        this.deleteRecordAndDeleteMeta(metas, record.timestamp)
+      ),
+      switchMap(() => this.getAll())
+    );
   }
 
   save(record: Record, register = true): Observable<Record[]> {
-    return this.saveRecordAndCreateMeta(record)
-      .pipe(
-        switchMap(meta => forkJoin([
+    return this.saveRecordAndCreateMeta(record).pipe(
+      switchMap(meta =>
+        forkJoin([
           this.getMetas(),
-          (register) ? this.attachTransactionHash(meta) : of(meta),
-        ])),
-        map(([metas, meta]) => [...metas, meta].sort((a, b) => a.timestamp - b.timestamp)),
-        switchMap(metas => this.saveMetas(metas)),
-        switchMap(() => this.getAll()),
-      );
+          register ? this.attachTransactionHash(meta) : of(meta),
+        ])
+      ),
+      map(([metas, meta]) =>
+        [...metas, meta].sort((a, b) => a.timestamp - b.timestamp)
+      ),
+      switchMap(metas => this.saveMetas(metas)),
+      switchMap(() => this.getAll())
+    );
   }
 
   private attachTransactionHash(meta: Meta): Observable<Meta> {
-    return this.ledger.createTransactionHash(meta.hash)
-      .pipe(
-        map(transactionHash => ({ ...meta, transactionHash })),
-      );
+    return this.ledger
+      .createTransactionHash(meta.hash)
+      .pipe(map(transactionHash => ({ ...meta, transactionHash })));
   }
 
-  private createMetaFromPath(timestamp: number, path: string): Observable<Meta> {
-    return this.fileSystem.getFileHash(path)
-      .pipe(
-        map(hash => ({ timestamp, path, hash }) as Meta),
-      );
+  private createMetaFromPath(
+    timestamp: number,
+    path: string
+  ): Observable<Meta> {
+    return this.fileSystem
+      .getFileHash(path)
+      .pipe(map(hash => ({ timestamp, path, hash } as Meta)));
   }
 
-  private deleteRecordAndDeleteMeta(metas: Meta[], timestamp: number): Observable<Meta[]> {
+  private deleteRecordAndDeleteMeta(
+    metas: Meta[],
+    timestamp: number
+  ): Observable<Meta[]> {
     const meta = metas.find(el => el.timestamp === timestamp);
-    const deleteRecord$ = (meta) ? this.fileSystem.deleteJsonData(meta.path) : of();
+    const deleteRecord$ = meta
+      ? this.fileSystem.deleteJsonData(meta.path)
+      : of();
     const metaIdx = metas.findIndex(el => el.timestamp === timestamp);
     if (metaIdx !== -1) {
       metas.splice(metaIdx, 1);
     }
-    return deleteRecord$
-      .pipe(
-        switchMap(() => this.saveMetas(metas)),
-      );
+    return deleteRecord$.pipe(switchMap(() => this.saveMetas(metas)));
   }
 
   private saveRecordAndCreateMeta(record: Record): Observable<Meta> {
-    return this.fileSystem.saveJsonData(record)
+    return this.fileSystem
+      .saveJsonData(record)
       .pipe(
-        switchMap(filename => this.createMetaFromPath(record.timestamp, filename)),
+        switchMap(filename =>
+          this.createMetaFromPath(record.timestamp, filename)
+        )
       );
   }
 
@@ -113,5 +120,4 @@ export class RecordRepositoryService {
   private saveMetas(metas: Meta[]): Observable<Meta[]> {
     return this.localStorage.setData(metas, this.RECORD_META_KEY);
   }
-
 }

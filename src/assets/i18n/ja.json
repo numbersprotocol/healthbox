@@ -80,9 +80,9 @@
     "medium": "中",
     "large": "大",
     "veryLarge": "Very Large",
-    "locationInfo":"位置情報を収集",
-    "enable":"有効にする",
-    "disable":"無効にする"
+    "locationInfo": "位置情報を収集",
+    "enable": "有効にする",
+    "disable": "無効にする"
   },
   "description": {
     "addingDataAndVerifiableInformation": "新しい記録と検証データを追加...",

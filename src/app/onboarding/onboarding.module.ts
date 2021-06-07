@@ -18,12 +18,8 @@ import { OnboardingPage } from './onboarding.page';
     IonicModule,
     SharedModule,
     TranslateModule,
-    OnboardingPageRoutingModule
+    OnboardingPageRoutingModule,
   ],
-  declarations: [
-    EulaEnComponent,
-    EulaZhComponent,
-    OnboardingPage,
-  ]
+  declarations: [EulaEnComponent, EulaZhComponent, OnboardingPage],
 })
-export class OnboardingPageModule { }
+export class OnboardingPageModule {}

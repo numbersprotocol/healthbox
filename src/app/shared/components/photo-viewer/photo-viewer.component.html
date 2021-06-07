@@ -1,5 +1,10 @@
-<app-header [headerTitle]="'title.photoViewer' | translate" showDismissButton="true" (dismissClicked)="cancel()"
-  showDeleteButton="true" (deleteClicked)="delete()">
+<app-header
+  [headerTitle]="'title.photoViewer' | translate"
+  showDismissButton="true"
+  (dismissClicked)="cancel()"
+  showDeleteButton="true"
+  (deleteClicked)="delete()"
+>
 </app-header>
 <ion-content>
   <ion-list>
@@ -24,7 +29,10 @@
   </ion-list>
   <ng-container *ngFor="let field of record.fields">
     <ng-container *ngIf="field.type === 'photo' && field.value">
-      <ion-img [src]="'data:image/jpeg;base64,' + field.value" style="width: 100%;"></ion-img>
+      <ion-img
+        [src]="'data:image/jpeg;base64,' + field.value"
+        style="width: 100%"
+      ></ion-img>
     </ng-container>
   </ng-container>
 </ion-content>

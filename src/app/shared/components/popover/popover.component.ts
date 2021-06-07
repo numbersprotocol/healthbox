@@ -4,7 +4,8 @@ import { FormGroup } from '@angular/forms';
 import { PopoverController } from '@ionic/angular';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import {
-  PopoverButtonSet, PopoverIcon,
+  PopoverButtonSet,
+  PopoverIcon,
 } from '@shared/services/popover.service';
 
 @Component({
@@ -13,7 +14,6 @@ import {
   styleUrls: ['./popover.component.scss'],
 })
 export class PopoverComponent implements OnInit {
-
   @Input() i18nTitle: string;
   @Input() icon?: PopoverIcon;
   @Input() i18nMessage?: string;
@@ -27,9 +27,7 @@ export class PopoverComponent implements OnInit {
   @Input() formModel?: {};
   @Input() formFields?: FormlyFieldConfig[];
 
-  constructor(
-    private readonly popoverCtrl: PopoverController,
-  ) { }
+  constructor(private readonly popoverCtrl: PopoverController) {}
 
   ngOnInit() {
     this.iconPath = this.getIconPath(this.icon);
@@ -52,5 +50,4 @@ export class PopoverComponent implements OnInit {
   getIconPath(icon: PopoverIcon): string {
     return `../../../../assets/alert/Alert_icon_${icon}.svg`;
   }
-
 }

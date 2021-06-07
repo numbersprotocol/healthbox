@@ -9,8 +9,8 @@ describe('SummaryCardsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SummaryCardsComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [SummaryCardsComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SummaryCardsComponent);

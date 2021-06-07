@@ -19,36 +19,31 @@ const { Clipboard } = Plugins;
   styleUrls: ['./share.page.scss'],
 })
 export class SharePage implements OnInit, OnDestroy {
-
   destroy$ = new Subject();
   copyTrigger$ = new Subject<string>();
-  recordCount$ = this.dataStore.records$
-    .pipe(
-      map(records => records.length),
-    );
-  sharedLinks$ = this.dataStore.userData$
-    .pipe(
-      map(userData => userData.sharedLinks),
-      filter(sharedLinks => sharedLinks != null),
-      map(sharedLinks => sharedLinks.filter(link => link != null).reverse()),
-    );
+  recordCount$ = this.dataStore.records$.pipe(map(records => records.length));
+  sharedLinks$ = this.dataStore.userData$.pipe(
+    map(userData => userData.sharedLinks),
+    filter(sharedLinks => sharedLinks != null),
+    map(sharedLinks => sharedLinks.filter(link => link != null).reverse())
+  );
   uploadStatus$ = this.uploadService.uploadStatus$;
-  progress$ = this.uploadStatus$
-    .pipe(
-      filter(uploadStatus => uploadStatus?.done != null && uploadStatus?.total != null),
-      map(uploadStatus => uploadStatus.done / uploadStatus.total),
-    );
-  progressPercentage$ = this.progress$
-    .pipe(
-      map(progress => Math.floor(progress * 100)),
-    );
+  progress$ = this.uploadStatus$.pipe(
+    filter(
+      uploadStatus => uploadStatus?.done != null && uploadStatus?.total != null
+    ),
+    map(uploadStatus => uploadStatus.done / uploadStatus.total)
+  );
+  progressPercentage$ = this.progress$.pipe(
+    map(progress => Math.floor(progress * 100))
+  );
 
   constructor(
     private readonly dataStore: DataStoreService,
     private readonly toastService: ToastService,
     private readonly translateService: TranslateService,
-    private readonly uploadService: UploadService,
-  ) { }
+    private readonly uploadService: UploadService
+  ) {}
 
   ngOnInit() {
     this.copyHandler().subscribe();
@@ -60,12 +55,11 @@ export class SharePage implements OnInit, OnDestroy {
   }
 
   copyHandler() {
-    return this.copyTrigger$
-      .pipe(
-        switchMap(url => Clipboard.write({ string: url })),
-        switchMap(() => this.showLinkCopiedToast()),
-        takeUntil(this.destroy$),
-      );
+    return this.copyTrigger$.pipe(
+      switchMap(url => Clipboard.write({ string: url })),
+      switchMap(() => this.showLinkCopiedToast()),
+      takeUntil(this.destroy$)
+    );
   }
 
   onUploadButtonClicked() {
@@ -77,10 +71,12 @@ export class SharePage implements OnInit, OnDestroy {
   }
 
   showLinkCopiedToast() {
-    return this.translateService.get('description.linkCopied')
+    return this.translateService
+      .get('description.linkCopied')
       .pipe(
-        switchMap(message => this.toastService.showToast(message, 'secondary', 3000)),
+        switchMap(message =>
+          this.toastService.showToast(message, 'secondary', 3000)
+        )
       );
   }
-
 }

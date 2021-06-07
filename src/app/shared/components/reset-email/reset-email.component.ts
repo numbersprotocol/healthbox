@@ -11,27 +11,19 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./reset-email.component.scss'],
 })
 export class ResetEmailComponent implements OnInit {
+  constructor(private readonly modalCtrl: ModalController) {}
 
-  constructor(
-    private readonly modalCtrl: ModalController,
-  ) { }
-
-  ngOnInit() { }
+  ngOnInit() {}
 
   cancel() {
     defer(() => this.modalCtrl.dismiss())
-      .pipe(
-        repeat(2),
-        take(2),
-      ).subscribe();
+      .pipe(repeat(2), take(2))
+      .subscribe();
   }
 
   onSignup() {
     defer(() => this.modalCtrl.dismiss({ email_updated: true }))
-      .pipe(
-        take(1),
-      ).subscribe();
+      .pipe(take(1))
+      .subscribe();
   }
-
-
 }

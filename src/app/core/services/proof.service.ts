@@ -10,27 +10,24 @@ import { Proof } from '../interfaces/proof';
 import { GeolocationService } from './geolocation.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProofService {
-  enableGeolocation = 'disable'; 
+  enableGeolocation = 'disable';
 
-  constructor(
-    private readonly geolocationService: GeolocationService,
-  ) { }
+  constructor(private readonly geolocationService: GeolocationService) {}
 
   async setLocationInfoCollection(enable: string) {
-    this.enableGeolocation=enable;
+    this.enableGeolocation = enable;
   }
 
   createProof(): Observable<Proof> {
-    return this.geolocationService.getPosition()
-      .pipe(
-        map(geolocationPosition => {
-          const location = this.getLocationProof(geolocationPosition);
-          return { timestamp: Date.now(), location } as Proof;
-        })
-      );
+    return this.geolocationService.getPosition().pipe(
+      map(geolocationPosition => {
+        const location = this.getLocationProof(geolocationPosition);
+        return { timestamp: Date.now(), location } as Proof;
+      })
+    );
   }
 
   createProofWithoutLocation(): Proof {
@@ -42,14 +39,17 @@ export class ProofService {
    *  manually copy each property of the GeolocationPosition
    */
   private getLocationProof(position: GeolocationPosition): LocationProof {
-    return position && {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
-      accuracy: position.coords.accuracy,
-      altitude: position.coords.altitude,
-      altitudeAccuracy: position.coords.altitudeAccuracy,
-      heading: position.coords.heading,
-      speed: position.coords.speed,
-    } as LocationProof;
+    return (
+      position &&
+      ({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        accuracy: position.coords.accuracy,
+        altitude: position.coords.altitude,
+        altitudeAccuracy: position.coords.altitudeAccuracy,
+        heading: position.coords.heading,
+        speed: position.coords.speed,
+      } as LocationProof)
+    );
   }
 }

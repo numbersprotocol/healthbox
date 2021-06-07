@@ -9,8 +9,8 @@ describe('IonCenterItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IonCenterItemComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [IonCenterItemComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(IonCenterItemComponent);

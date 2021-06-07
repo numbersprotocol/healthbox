@@ -9,8 +9,8 @@ describe('ProofItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProofItemComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ProofItemComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProofItemComponent);

@@ -22,4 +22,4 @@ import { DailySummaryComponent } from './daily-summary.component';
   declarations: [DailySummaryComponent],
   exports: [DailySummaryComponent],
 })
-export class DailySummaryModule { }
+export class DailySummaryModule {}

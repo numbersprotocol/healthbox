@@ -18,8 +18,6 @@ import { TabsPage } from './tabs.page';
     SharedModule,
     TranslateModule,
   ],
-  declarations: [
-    TabsPage,
-  ],
+  declarations: [TabsPage],
 })
-export class TabsPageModule { }
+export class TabsPageModule {}

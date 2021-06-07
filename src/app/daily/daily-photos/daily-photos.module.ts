@@ -7,12 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { DailyPhotosComponent } from './daily-photos.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule],
   declarations: [DailyPhotosComponent],
   exports: [DailyPhotosComponent],
 })
-export class DailyPhotosModule { }
+export class DailyPhotosModule {}

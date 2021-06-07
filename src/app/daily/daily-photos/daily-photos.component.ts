@@ -26,28 +26,28 @@ export class DailyPhotosComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   @Input() date: string;
-  records$ = this.dataStore.recordsByDate$
-    .pipe(
-      map(recordsByDate => recordsByDate[this.date]),
-      map(records => {
-        if (records) {
-          return records.filter(record =>
-            record.fields.find(field => field.type === RecordFieldType.photo && field.value)
-          );
-        } else {
-          return records;
-        }
-      })
-    );
+  records$ = this.dataStore.recordsByDate$.pipe(
+    map(recordsByDate => recordsByDate[this.date]),
+    map(records => {
+      if (records) {
+        return records.filter(record =>
+          record.fields.find(
+            field => field.type === RecordFieldType.photo && field.value
+          )
+        );
+      } else {
+        return records;
+      }
+    })
+  );
 
   constructor(
     private readonly dataStore: DataStoreService,
     private readonly modalService: ModalService,
-    private readonly router: Router,
-  ) { }
+    private readonly router: Router
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -55,12 +55,13 @@ export class DailyPhotosComponent implements OnInit, OnDestroy {
   }
 
   showPhotoViewer(record: Record) {
-    this.modalService.showPhotoViewerModal(record)
+    this.modalService
+      .showPhotoViewerModal(record)
       .pipe(
         switchMap(() => this.records$),
-        switchMap(records => (records) ? of() : this.router.navigate(['/'])),
-        takeUntil(this.destroy$),
-      ).subscribe();
+        switchMap(records => (records ? of() : this.router.navigate(['/']))),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
-
 }

@@ -7,16 +7,10 @@ import { DataStoreService } from '@core/services/store/data-store.service';
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss'],
 })
-
 export class OverviewComponent implements OnInit {
-
   summaryByDate$ = this.dataStore.summaryByDate$;
 
-  constructor(
-    private readonly dataStore: DataStoreService,
-  ) {
-  }
+  constructor(private readonly dataStore: DataStoreService) {}
 
-  ngOnInit() { }
-
+  ngOnInit() {}
 }

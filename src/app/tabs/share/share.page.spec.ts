@@ -9,8 +9,8 @@ describe('SharePage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SharePage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [SharePage],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SharePage);

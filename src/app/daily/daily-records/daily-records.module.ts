@@ -8,13 +8,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DailyRecordsComponent } from './daily-records.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    TranslateModule,
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, TranslateModule],
   declarations: [DailyRecordsComponent],
   exports: [DailyRecordsComponent],
 })
-export class DailyRecordsModule { }
+export class DailyRecordsModule {}

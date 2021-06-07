@@ -29,11 +29,8 @@ export function playerFactory() {
   return player;
 }
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -42,22 +39,21 @@ export function playerFactory() {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (LanguageLoader),
+        useFactory: LanguageLoader,
         deps: [HttpClient],
-      }
+      },
     }),
     CoreModule,
     SharedModule,
     LottieModule.forRoot({ player: playerFactory }),
     ReactiveFormsModule,
     FormlyModule.forRoot(),
-    FormlyIonicModule
+    FormlyIonicModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: ErrorHandler, useClass: ErrorHandlerService },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
-
+export class AppModule {}

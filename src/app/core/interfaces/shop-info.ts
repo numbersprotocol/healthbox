@@ -1,5 +1,5 @@
 export interface ShopInfo {
-    UUID: string;
-    shopName: string;
-    shopBranch: string;
+  UUID: string;
+  shopName: string;
+  shopBranch: string;
 }

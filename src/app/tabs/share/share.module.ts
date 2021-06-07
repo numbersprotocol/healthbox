@@ -18,6 +18,6 @@ import { SharePage } from './share.page';
     CoreModule,
     TranslateModule,
   ],
-  declarations: [SharePage]
+  declarations: [SharePage],
 })
-export class SharePageModule { }
+export class SharePageModule {}

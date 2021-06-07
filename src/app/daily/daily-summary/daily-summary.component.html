@@ -3,22 +3,41 @@
     <ion-row>
       <ion-col size="5" class="ion-align-items-stretch">
         <ion-row class="ion-justify-content-center">
-          <ion-label color="dark">{{ dailySummary.date | date: 'MMM' }}</ion-label>
+          <ion-label color="dark">{{
+            dailySummary.date | date: 'MMM'
+          }}</ion-label>
         </ion-row>
         <ion-row class="ion-justify-content-center">
-          <ion-label style="font-size: 32px;" color="dark">{{ dailySummary.date | date: 'dd' }}</ion-label>
+          <ion-label style="font-size: 32px" color="dark">{{
+            dailySummary.date | date: 'dd'
+          }}</ion-label>
         </ion-row>
         <ion-row class="ion-justify-content-center">
-          <ion-label color="primary"> DAY {{ dailySummary.dayCount }}</ion-label>
+          <ion-label color="primary">
+            DAY {{ dailySummary.dayCount }}</ion-label
+          >
         </ion-row>
-        <ion-row *ngIf="dailySummary.keyData" class="ion-justify-content-center">
+        <ion-row
+          *ngIf="dailySummary.keyData"
+          class="ion-justify-content-center"
+        >
           <div>
-            <ion-label class="ion-text-center" style="font-size: 12px;">
+            <ion-label class="ion-text-center" style="font-size: 12px">
               {{ 'title.' + dailySummary.keyData.dataClass | translate }}
-              {{ 'preset.' + dailySummary.templateName + '.' + dailySummary.keyData.name | translate }}:
+              {{
+                'preset.' +
+                  dailySummary.templateName +
+                  '.' +
+                  dailySummary.keyData.name | translate
+              }}:
               <h3>
                 {{ dailySummary.keyData.value }}
-                {{ 'preset.' + dailySummary.templateName + '.unit.' + dailySummary.keyData.unit | translate }}
+                {{
+                  'preset.' +
+                    dailySummary.templateName +
+                    '.unit.' +
+                    dailySummary.keyData.unit | translate
+                }}
               </h3>
             </ion-label>
           </div>
@@ -29,24 +48,43 @@
       </ion-col>
     </ion-row>
     <ion-row hidden>
-      <ion-label class="ion-text-center" style="font-size: 16px; width: 50vw;">
-        {{ 'preset.' + dailySummary.templateName + '.dataGroup.' + '' | translate }}:
-        <ng-container (click)="selectedSymptoms=!selectedSymptoms"
-          *ngFor="let summary of dailySummary.summaries ; let isLast = last">
-          {{ summary }}{{isLast ? '' : ('splitter' | translate) }} ...
+      <ion-label class="ion-text-center" style="font-size: 16px; width: 50vw">
+        {{
+          'preset.' + dailySummary.templateName + '.dataGroup.' + ''
+            | translate
+        }}:
+        <ng-container
+          (click)="selectedSymptoms = !selectedSymptoms"
+          *ngFor="let summary of dailySummary.summaries; let isLast = last"
+        >
+          {{ summary }}{{ isLast ? '' : ('splitter' | translate) }} ...
         </ng-container>
-        <img class="presence-preview" *ngIf="!selectedSymptoms" (click)="selectedSymptoms=true"
-          src="../../../../assets/ui/symptoms_on.svg">
-        <img class="presence-preview" *ngIf="selectedSymptoms" (click)="selectedSymptoms=false"
-          src="../../../../assets/ui/symptoms_off.svg" />
+        <img
+          class="presence-preview"
+          *ngIf="!selectedSymptoms"
+          (click)="selectedSymptoms = true"
+          src="../../../../assets/ui/symptoms_on.svg"
+        />
+        <img
+          class="presence-preview"
+          *ngIf="selectedSymptoms"
+          (click)="selectedSymptoms = false"
+          src="../../../../assets/ui/symptoms_off.svg"
+        />
       </ion-label>
     </ion-row>
   </ion-grid>
-  <div class="presence-preview preview-popup" appClickOutsideSameClass (clickOutside)="onClickOutside()"
-    *ngIf="selectedSymptoms">
-    <ion-label class="ion-text-center" style="font-size: 12px;">
-      <ng-container *ngFor="let summary of dailySummary.summaries ; let isLast = last">
-        {{ summary }}{{isLast ? '' : ('splitter' | translate) }}
+  <div
+    class="presence-preview preview-popup"
+    appClickOutsideSameClass
+    (clickOutside)="onClickOutside()"
+    *ngIf="selectedSymptoms"
+  >
+    <ion-label class="ion-text-center" style="font-size: 12px">
+      <ng-container
+        *ngFor="let summary of dailySummary.summaries; let isLast = last"
+      >
+        {{ summary }}{{ isLast ? '' : ('splitter' | translate) }}
       </ng-container>
     </ion-label>
   </div>

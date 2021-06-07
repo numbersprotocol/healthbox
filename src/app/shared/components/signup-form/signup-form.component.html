@@ -8,9 +8,17 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-label position="floating">{{ 'title.email' | translate }}</ion-label>
-          <ion-input formControlName="email" autocapitalize="on" autocomplete="on" clearInput inputmode="email"
-            type="email">
+          <ion-label position="floating">{{
+            'title.email' | translate
+          }}</ion-label>
+          <ion-input
+            formControlName="email"
+            autocapitalize="on"
+            autocomplete="on"
+            clearInput
+            inputmode="email"
+            type="email"
+          >
           </ion-input>
         </ion-item>
       </ion-col>
@@ -18,15 +26,24 @@
     <ion-row>
       <ion-col>
         <ion-item lines="none">
-          <ion-checkbox formControlName="agreeTermsAndConditions" slot="start"></ion-checkbox>
-          <ion-label class="long">{{ 'title.agreeTheTermsAndConditions' | translate }}</ion-label>
+          <ion-checkbox
+            formControlName="agreeTermsAndConditions"
+            slot="start"
+          ></ion-checkbox>
+          <ion-label class="long">{{
+            'title.agreeTheTermsAndConditions' | translate
+          }}</ion-label>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button type="submit" [disabled]="!signupForm.valid || !confirmButtonEnabled">
-          {{ 'title.confirm' | translate }}</ion-button>
+        <ion-button
+          type="submit"
+          [disabled]="!signupForm.valid || !confirmButtonEnabled"
+        >
+          {{ 'title.confirm' | translate }}</ion-button
+        >
       </ion-col>
     </ion-row>
   </ion-grid>

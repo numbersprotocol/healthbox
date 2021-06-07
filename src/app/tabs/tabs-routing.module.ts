@@ -14,43 +14,48 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('./tab-data/tab-data.module').then(m => m.TabDataPageModule)
+              import('./tab-data/tab-data.module').then(
+                m => m.TabDataPageModule
+              ),
           },
           {
             path: 'daily/:date',
             loadChildren: () =>
-              import('../daily/daily.module').then(m => m.DailyPageModule)
-          }
-        ]
+              import('../daily/daily.module').then(m => m.DailyPageModule),
+          },
+        ],
       },
       {
         path: 'share',
-        loadChildren: () => import('./share/share.module').then(m => m.SharePageModule)
+        loadChildren: () =>
+          import('./share/share.module').then(m => m.SharePageModule),
       },
       {
         path: 'settings',
-        loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule)
+        loadChildren: () =>
+          import('./settings/settings.module').then(m => m.SettingsPageModule),
       },
       {
         path: '',
         redirectTo: '/tabs/tab-data',
-        pathMatch: 'full'
-      }
-    ]
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     path: '',
     redirectTo: '/tabs/tab-data',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'share',
-    loadChildren: () => import('./share/share.module').then(m => m.SharePageModule)
-  }
+    loadChildren: () =>
+      import('./share/share.module').then(m => m.SharePageModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TabsPageRoutingModule { }
+export class TabsPageRoutingModule {}

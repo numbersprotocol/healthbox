@@ -1,10 +1,9 @@
 ---
 name: Feature request
 about: Create a new Feature request to help App become better
-title: "[FR] "
+title: '[FR] '
 labels: ''
 assignees: ''
-
 ---
 
 **Concept**

@@ -14,12 +14,9 @@ export class HeaderComponent implements OnInit {
   @Output() dismissClicked = new EventEmitter<boolean>();
   @Output() deleteClicked = new EventEmitter<boolean>();
 
-  constructor(
-    private readonly location: Location,
-  ) { }
+  constructor(private readonly location: Location) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onBackButtonClick() {
     this.location.back();
@@ -32,5 +29,4 @@ export class HeaderComponent implements OnInit {
   onDismissButtonClick() {
     this.dismissClicked.emit(true);
   }
-
 }

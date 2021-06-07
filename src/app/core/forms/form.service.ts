@@ -12,16 +12,20 @@ export const enum UserDataFormField {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormService {
+  constructor(private readonly translate: TranslateService) {}
 
-  constructor(
-    private readonly translate: TranslateService,
-  ) { }
-
-  createFormFieldsByRecordField(field: RecordField, templateName: string): FormlyFieldConfig[] {
-    const unit = (field.valueUnit) ? this.translate.instant('preset.' + templateName + '.unit.' + field.valueUnit) : '';
+  createFormFieldsByRecordField(
+    field: RecordField,
+    templateName: string
+  ): FormlyFieldConfig[] {
+    const unit = field.valueUnit
+      ? this.translate.instant(
+          'preset.' + templateName + '.unit.' + field.valueUnit
+        )
+      : '';
     const formFields: FormlyFieldConfig[] = [
       {
         key: field.name,
@@ -39,25 +43,27 @@ export class FormService {
         },
         validators: {
           required: {
-            expression: (c) => c.value != null,
+            expression: c => c.value != null,
             message: (error, currentField: FormlyFieldConfig) =>
               this.translate.instant('description.notInputYet'),
           },
         },
-      }
+      },
     ];
     if (field.valueRange) {
       formFields[0].validators.min = {
-        expression: (c) => c.value >= field.valueRange.min,
+        expression: c => c.value >= field.valueRange.min,
         message: (error, currentField: FormlyFieldConfig) =>
-          this.translate.instant('description.mustBeNoSmallerThan', { min: field.valueRange.min }
-          ),
+          this.translate.instant('description.mustBeNoSmallerThan', {
+            min: field.valueRange.min,
+          }),
       };
       formFields[0].validators.max = {
-        expression: (c) => c.value <= field.valueRange.max,
+        expression: c => c.value <= field.valueRange.max,
         message: (error, currentField: FormlyFieldConfig) =>
-          this.translate.instant('description.mustBeNoLargerThan', { max: field.valueRange.max }
-          ),
+          this.translate.instant('description.mustBeNoLargerThan', {
+            max: field.valueRange.max,
+          }),
       };
     }
     return formFields;
@@ -140,4 +146,3 @@ export class FormService {
     }
   }
 }
-

@@ -33,4 +33,4 @@ export function playerFactory() {
   ],
   exports: [OverviewComponent],
 })
-export class OverviewModule { }
+export class OverviewModule {}

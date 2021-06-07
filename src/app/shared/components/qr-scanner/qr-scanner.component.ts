@@ -1,5 +1,9 @@
 import {
-  AfterViewInit, Component, ElementRef, OnDestroy, OnInit,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 
@@ -15,7 +19,6 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./qr-scanner.component.scss'],
 })
 export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
-
   @ViewChild('video') video: ElementRef;
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('fileinput') fileinput: ElementRef;
@@ -29,16 +32,12 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
   dismissHandler$ = new Subject<string>();
   destroy$ = new Subject();
 
-  constructor(
-    private readonly modalCtrl: ModalController,
-  ) { }
+  constructor(private readonly modalCtrl: ModalController) {}
 
   ngOnInit() {
     this.dismissHandler$
-      .pipe(
-        debounceTime(50),
-        takeUntil(this.destroy$),
-      ).subscribe(data => this.modalCtrl.dismiss(data));
+      .pipe(debounceTime(50), takeUntil(this.destroy$))
+      .subscribe(data => this.modalCtrl.dismiss(data));
   }
 
   ngOnDestroy() {
@@ -62,9 +61,11 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   startScan() {
-    defer(() => navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'environment' }
-    }))
+    defer(() =>
+      navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' },
+      })
+    )
       .pipe(
         tap(cameraStream => {
           this.setVideoSource(cameraStream);
@@ -72,8 +73,9 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
           this.cameraStreamReady = true;
           requestAnimationFrame(this.scan.bind(this));
         }),
-        takeUntil(this.destroy$),
-      ).subscribe();
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
 
   private setVideoSource(source: MediaStream): void {
@@ -101,7 +103,7 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
         this.canvasElement.height
       );
       const code = jsQR(imageData.data, imageData.width, imageData.height, {
-        inversionAttempts: 'dontInvert'
+        inversionAttempts: 'dontInvert',
       });
 
       if (code) {

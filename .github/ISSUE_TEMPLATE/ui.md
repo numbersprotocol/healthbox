@@ -1,10 +1,9 @@
 ---
 name: UI Update
 about: Create a new UI update
-title: "[UI Update] "
+title: '[UI Update] '
 labels: ''
 assignees: ''
-
 ---
 
 **Update Purpose**
@@ -17,4 +16,3 @@ Put images or link to the contents of suggestions
 **More Description (if any)**
 
 Put more description here to help developers understand
-

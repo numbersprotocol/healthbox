@@ -1,4 +1,8 @@
-<app-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true" (dismissClicked)="onClickCancel()">
+<app-header
+  [headerTitle]="'title.dailyRecord' | translate"
+  showDismissButton="true"
+  (dismissClicked)="onClickCancel()"
+>
 </app-header>
 <ion-content *ngIf="templateName$ | async as templateName">
   <ion-list *ngIf="fieldGroups$ | async as fieldGroups">
@@ -6,35 +10,72 @@
     <ng-container *ngFor="let fieldGroup of fieldGroups">
       <ion-item-divider>
         <ion-label>
-          {{ 'preset.' + templateName + '.dataGroup.' + fieldGroup.name | translate }}
+          {{
+            'preset.' + templateName + '.dataGroup.' + fieldGroup.name
+              | translate
+          }}
         </ion-label>
       </ion-item-divider>
-      <ion-item *ngFor="let field of fieldGroup.fields" button (click)="onClickEdit(field, templateName)">
+      <ion-item
+        *ngFor="let field of fieldGroup.fields"
+        button
+        (click)="onClickEdit(field, templateName)"
+      >
         <ion-icon [name]="field.icon" slot="start"></ion-icon>
         <ion-label>
           <h3>{{ 'preset.' + templateName + '.' + field.name | translate }}</h3>
-          <ion-text *ngIf="field.type === recordFieldType.string || field.type === recordFieldType.number">
-            {{ (field.value) ? field.value : 'title.noData' | translate }}
+          <ion-text
+            *ngIf="
+              field.type === recordFieldType.string ||
+              field.type === recordFieldType.number
+            "
+          >
+            {{ field.value ? field.value : ('title.noData' | translate) }}
             <ng-container *ngIf="field.value && field.valueUnit">
-              {{ 'preset.' + templateName + '.unit.' + field.valueUnit | translate }}</ng-container>
+              {{
+                'preset.' + templateName + '.unit.' + field.valueUnit
+                  | translate
+              }}</ng-container
+            >
           </ion-text>
         </ion-label>
-        <ion-toggle *ngIf="field.type === recordFieldType.boolean" [checked]="field.value"></ion-toggle>
-        <ion-icon size="large" name="pencil-outline"
-          *ngIf="field.type === recordFieldType.string || field.type === recordFieldType.number"></ion-icon>
+        <ion-toggle
+          *ngIf="field.type === recordFieldType.boolean"
+          [checked]="field.value"
+        ></ion-toggle>
+        <ion-icon
+          size="large"
+          name="pencil-outline"
+          *ngIf="
+            field.type === recordFieldType.string ||
+            field.type === recordFieldType.number
+          "
+        ></ion-icon>
         <ng-container *ngIf="field.type === recordFieldType.photo">
           <ion-thumbnail *ngIf="field.value">
             <ion-img [src]="'data:image/jpeg;base64,' + field.value"></ion-img>
           </ion-thumbnail>
-          <ion-text *ngIf="!field.value">{{ 'title.takePhoto' | translate }}</ion-text>
+          <ion-text *ngIf="!field.value">{{
+            'title.takePhoto' | translate
+          }}</ion-text>
         </ng-container>
-        <ion-select *ngIf="field.type === recordFieldType.option" [value]="field.value || field.options[0]"
-          (ionChange)="onOptionChanged($event, field)" [cancelText]="'title.cancel' | translate"
-          [okText]="'title.confirm' | translate">
-          <ion-select-option *ngFor="let option of field.options" [value]="option">
+        <ion-select
+          *ngIf="field.type === recordFieldType.option"
+          [value]="field.value || field.options[0]"
+          (ionChange)="onOptionChanged($event, field)"
+          [cancelText]="'title.cancel' | translate"
+          [okText]="'title.confirm' | translate"
+        >
+          <ion-select-option
+            *ngFor="let option of field.options"
+            [value]="option"
+          >
             {{ 'preset.' + templateName + '.options.' + option | translate }}
             <ng-container *ngIf="option !== field.options[0]">-</ng-container>
-            {{ 'preset.' + templateName + '.optionDescriptions.' + option | translate }}
+            {{
+              'preset.' + templateName + '.optionDescriptions.' + option
+                | translate
+            }}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -45,10 +86,14 @@
   <ion-grid fixed class="ion-text-center">
     <ion-row>
       <ion-col class="R">
-        <ion-button size="large" fill="outline" (click)="onClickClear()">{{ 'title.clear' | translate }}</ion-button>
+        <ion-button size="large" fill="outline" (click)="onClickClear()">{{
+          'title.clear' | translate
+        }}</ion-button>
       </ion-col>
       <ion-col class="L">
-        <ion-button size="large" (click)="onClickSubmit()">{{ 'title.submit' | translate }}</ion-button>
+        <ion-button size="large" (click)="onClickSubmit()">{{
+          'title.submit' | translate
+        }}</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

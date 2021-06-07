@@ -13,11 +13,7 @@ describe('AddRecordComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AddRecordComponent],
-      imports: [
-        IonicModule.forRoot(),
-        RouterModule.forRoot([]),
-        FormsModule,
-      ]
+      imports: [IonicModule.forRoot(), RouterModule.forRoot([]), FormsModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AddRecordComponent);

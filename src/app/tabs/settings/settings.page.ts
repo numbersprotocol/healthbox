@@ -2,12 +2,25 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
-  combineLatest, concat, forkJoin, Observable, of,
-  Subject, timer,
+  combineLatest,
+  concat,
+  forkJoin,
+  Observable,
+  of,
+  Subject,
+  timer,
 } from 'rxjs';
 import {
-  buffer, debounceTime, filter, first, map,
-  mergeMap, switchMap, take, takeUntil, tap,
+  buffer,
+  debounceTime,
+  filter,
+  first,
+  map,
+  mergeMap,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
 } from 'rxjs/operators';
 import { UserData } from 'src/app/core/interfaces/user-data';
 
@@ -21,7 +34,8 @@ import { UtilityService } from '@core/services/utility.service';
 import { IonContent, IonDatetime } from '@ionic/angular';
 import { LoadingService } from '@shared/services/loading.service';
 import {
-  PopoverButtonSet, PopoverService,
+  PopoverButtonSet,
+  PopoverService,
 } from '@shared/services/popover.service';
 import { ToastService } from '@shared/services/toast.service';
 
@@ -36,9 +50,8 @@ const { Browser } = Plugins;
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit, OnDestroy {
-    
   @ViewChild(IonContent) content: IonContent;
-  enableGeolocation = this.proofService.enableGeolocation
+  enableGeolocation = this.proofService.enableGeolocation;
   fakeDataDays = 1;
   private readonly destroy$ = new Subject();
 
@@ -49,7 +62,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   readonly dataTemplateNames = this.dataTemplateService.dataTemplateNames;
   // Supported sizes: ['small', 'medium', 'large', 'veryLarge'];
   readonly fontSizes = ['small', 'large'];
-  readonly enableLocationOption = ['disable','enable'];
+  readonly enableLocationOption = ['disable', 'enable'];
   showSelects = true;
 
   userData$: Observable<UserData> = this.dataStore.userData$;
@@ -57,30 +70,34 @@ export class SettingsPage implements OnInit, OnDestroy {
   showDeveloperOptions = false;
   private readonly versionClick = new Subject<boolean>();
   versionClick$ = this.versionClick.pipe(
-    buffer(this.versionClick
-      .pipe(debounceTime(500))
-    ),
+    buffer(this.versionClick.pipe(debounceTime(500))),
     map(stream => stream.length),
     filter(length => length >= 5), // Only when 5 click events emits, interval of each < 500
-    tap(() => this.showDeveloperOptions = true),
+    tap(() => (this.showDeveloperOptions = true))
   );
 
   private readonly updateFromPopover = new Subject<UserDataFormField>();
-  updateFromPopover$ = this.updateFromPopover
-    .pipe(
-      switchMap(field => forkJoin([this.dataStore.userData$.pipe(take(1)), of(field)])),
-      switchMap(([userData, field]) => this.showPopoverToEditField(userData, field)),
-      switchMap(data => this.dataStore.updateUserData(data)),
-      takeUntil(this.destroy$),
-    );
+  updateFromPopover$ = this.updateFromPopover.pipe(
+    switchMap(field =>
+      forkJoin([this.dataStore.userData$.pipe(take(1)), of(field)])
+    ),
+    switchMap(([userData, field]) =>
+      this.showPopoverToEditField(userData, field)
+    ),
+    switchMap(data => this.dataStore.updateUserData(data)),
+    takeUntil(this.destroy$)
+  );
 
   private readonly updateFromPage = new Subject<UserDataPatch>();
-  updateFromPage$ = this.updateFromPage
-    .pipe(
-      switchMap(data => (data.language) ? this.languageService.set(data.language) : this.dataStore.updateUserData(data)),
-      switchMap(() => this.dataStore.flushRecord()),
-      takeUntil(this.destroy$),
-    );
+  updateFromPage$ = this.updateFromPage.pipe(
+    switchMap(data =>
+      data.language
+        ? this.languageService.set(data.language)
+        : this.dataStore.updateUserData(data)
+    ),
+    switchMap(() => this.dataStore.flushRecord()),
+    takeUntil(this.destroy$)
+  );
 
   constructor(
     private readonly dataStore: DataStoreService,
@@ -93,8 +110,8 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly toastService: ToastService,
     private readonly styleService: StyleService,
     private readonly utilityService: UtilityService,
-    private readonly proofService: ProofService,
-  ) { }
+    private readonly proofService: ProofService
+  ) {}
 
   ngOnInit() {
     this.updateFromPopover$.subscribe();
@@ -106,20 +123,25 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   onResetAccountClicked(): void {
-    this.popoverService.showPopover({
-      i18nTitle: 'title.resetAccount',
-      i18nMessage: 'description.resetAccount',
-      i18nExtraMessage: 'description.resetAccountEraseWarning',
-      buttonSet: PopoverButtonSet.CONFIRM,
-      dataOnConfirm: { reset: true },
-      dataOnCancel: { reset: false },
-    }).pipe(
-      filter(data => data?.data?.reset),
-      mergeMap(() => this.eraseAccountWithLoading()),
-      mergeMap(() => this.languageService.init()),
-      mergeMap(() => this.router.navigate(['/onboarding'], { replaceUrl: true })),
-      takeUntil(this.destroy$),
-    ).subscribe();
+    this.popoverService
+      .showPopover({
+        i18nTitle: 'title.resetAccount',
+        i18nMessage: 'description.resetAccount',
+        i18nExtraMessage: 'description.resetAccountEraseWarning',
+        buttonSet: PopoverButtonSet.CONFIRM,
+        dataOnConfirm: { reset: true },
+        dataOnCancel: { reset: false },
+      })
+      .pipe(
+        filter(data => data?.data?.reset),
+        mergeMap(() => this.eraseAccountWithLoading()),
+        mergeMap(() => this.languageService.init()),
+        mergeMap(() =>
+          this.router.navigate(['/onboarding'], { replaceUrl: true })
+        ),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
 
   onChangeDateOfBirthPicker(): void {
@@ -129,11 +151,12 @@ export class SettingsPage implements OnInit, OnDestroy {
   onChangeLanguage(event: CustomEvent): void {
     this.updateFromPage.next({ language: event.detail.value });
     this.showSelects = false;
-    timer(50).
-      pipe(
+    timer(50)
+      .pipe(
         first(),
-        tap(() => this.showSelects = true)
-      ).subscribe();
+        tap(() => (this.showSelects = true))
+      )
+      .subscribe();
   }
 
   onClickAboutItem(): void {
@@ -165,40 +188,44 @@ export class SettingsPage implements OnInit, OnDestroy {
   // Dirty nested subscription since finalize operator unable to work in thi case.
   onMagicButtonClicked(days: number): void {
     const count = days * 10;
-    this.utilityService.gen(days)
-      .subscribe(
-        () => { },
-        () => { },
-        () => this.toastService.showToast(`已產生 ${count} 筆資料`, 'primary')
-          .pipe(
-            takeUntil(this.destroy$),
-          ).subscribe()
-      );
+    this.utilityService.gen(days).subscribe(
+      () => {},
+      () => {},
+      () =>
+        this.toastService
+          .showToast(`已產生 ${count} 筆資料`, 'primary')
+          .pipe(takeUntil(this.destroy$))
+          .subscribe()
+    );
   }
 
   private eraseAccountWithLoading() {
     return combineLatest([
       this.showEraseAccountLoading(),
-      concat(this.dataStore.deleteAllRecords(), this.dataStore.deleteUserData()),
-    ])
-      .pipe(
-        mergeMap(([loading, _]) => loading.dismiss()),
-      );
+      concat(
+        this.dataStore.deleteAllRecords(),
+        this.dataStore.deleteUserData()
+      ),
+    ]).pipe(mergeMap(([loading, _]) => loading.dismiss()));
   }
 
   private showEraseAccountLoading(): Observable<HTMLIonLoadingElement> {
     return this.loadingService.showLoading('title.erasingAccount');
   }
 
-  private showPopoverToEditField(userData: UserData, field: UserDataFormField): Observable<UserData> {
-    return this.popoverService.showPopover({
-      i18nTitle: `title.edit${field}`,
-      formModel: Object.assign({}, userData),
-      formFields: this.formService.createFormFieldsByUserData(field),
-    })
+  private showPopoverToEditField(
+    userData: UserData,
+    field: UserDataFormField
+  ): Observable<UserData> {
+    return this.popoverService
+      .showPopover({
+        i18nTitle: `title.edit${field}`,
+        formModel: Object.assign({}, userData),
+        formFields: this.formService.createFormFieldsByUserData(field),
+      })
       .pipe(
         map(result => result.data),
-        filter(data => (data)),
+        filter(data => data)
       );
   }
 
@@ -206,7 +233,6 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }
 
 export interface UserDataPatch {

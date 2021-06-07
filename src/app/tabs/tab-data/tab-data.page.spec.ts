@@ -14,15 +14,13 @@ describe('tabDataPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        TabDataPage,
-      ],
+      declarations: [TabDataPage],
       imports: [
         IonicModule.forRoot(),
         RouterModule.forRoot([]),
         CoreModule,
-        OverviewModule
-      ]
+        OverviewModule,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TabDataPage);

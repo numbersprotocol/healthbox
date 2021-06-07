@@ -2,8 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
 import {
-  catchError, filter, map, mergeMap, switchMap,
-  take, takeUntil, tap,
+  catchError,
+  filter,
+  map,
+  mergeMap,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
 } from 'rxjs/operators';
 
 import { Record } from '@core/classes/record';
@@ -19,7 +25,9 @@ import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalController } from '@ionic/angular';
 import { LoadingService } from '@shared/services/loading.service';
 import {
-  PopoverButtonSet, PopoverIcon, PopoverService,
+  PopoverButtonSet,
+  PopoverIcon,
+  PopoverService,
 } from '@shared/services/popover.service';
 
 @Component({
@@ -32,45 +40,40 @@ export class AddRecordComponent implements OnInit, OnDestroy {
 
   private readonly record = new BehaviorSubject<Record>(new Record(Date.now()));
   record$: Observable<Record> = this.record;
-  fieldGroups$: Observable<FieldGroup[]> = this.record
-    .pipe(
-      map(record => {
-        const fieldGroups = [];
-        record.dataGroups.forEach(dataGroup => fieldGroups.push({
+  fieldGroups$: Observable<FieldGroup[]> = this.record.pipe(
+    map(record => {
+      const fieldGroups = [];
+      record.dataGroups.forEach(dataGroup =>
+        fieldGroups.push({
           name: dataGroup,
           fields: record.fields.filter(field => field.dataGroup === dataGroup),
-        }));
-        return fieldGroups;
-      }),
-    );
-  templateName$ = this.record
-    .pipe(
-      map(record => record.templateName),
-    );
+        })
+      );
+      return fieldGroups;
+    })
+  );
+  templateName$ = this.record.pipe(map(record => record.templateName));
   recordFieldType = RecordFieldType;
 
   private readonly edit = new Subject<[RecordField, string]>();
-  edit$ = this.edit
-    .pipe(
-      switchMap(([field, templateName]) => {
-        if (field.type === RecordFieldType.photo) {
-          return this.photoService.create()
-            .pipe(
-              catchError(() => of(null)),
-              filter(data => data !== null),
-              map(byteString => ({ [field.name]: byteString })),
-            );
-        } else {
-          return this.editField(field, templateName)
-            .pipe(
-              map(result => result.data),
-            );
-        }
-      }),
-      filter(data => (data)),
-      tap(data => this.updateRecordFields(data)),
-      takeUntil(this.destroy$),
-    );
+  edit$ = this.edit.pipe(
+    switchMap(([field, templateName]) => {
+      if (field.type === RecordFieldType.photo) {
+        return this.photoService.create().pipe(
+          catchError(() => of(null)),
+          filter(data => data !== null),
+          map(byteString => ({ [field.name]: byteString }))
+        );
+      } else {
+        return this.editField(field, templateName).pipe(
+          map(result => result.data)
+        );
+      }
+    }),
+    filter(data => data),
+    tap(data => this.updateRecordFields(data)),
+    takeUntil(this.destroy$)
+  );
 
   proofStatus = ProofStatus.LOADING;
 
@@ -82,9 +85,8 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     private readonly popoverService: PopoverService,
     private readonly recordService: RecordService,
     private readonly photoService: PhotoService,
-    private readonly proofService: ProofService,
-  ) {
-  }
+    private readonly proofService: ProofService
+  ) {}
 
   ngOnInit() {
     this.loadEmptyRecord();
@@ -114,12 +116,11 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   private createProof() {
-    if ( this.proofService.enableGeolocation == 'enable') {
-      return this.proofService.createProof()
-      .pipe(
+    if (this.proofService.enableGeolocation == 'enable') {
+      return this.proofService.createProof().pipe(
         tap(proof => this.updateRecordProof(proof)),
-        tap(() => this.proofStatus = ProofStatus.COMPLETE),
-        takeUntil(this.destroy$),
+        tap(() => (this.proofStatus = ProofStatus.COMPLETE)),
+        takeUntil(this.destroy$)
       );
     } else {
       const proof = this.proofService.createProofWithoutLocation();
@@ -136,7 +137,10 @@ export class AddRecordComponent implements OnInit, OnDestroy {
       i18nTitle: `preset.${templateName}.${field.name}`,
       i18nMessage: '',
       formModel,
-      formFields: this.formService.createFormFieldsByRecordField(field, templateName),
+      formFields: this.formService.createFormFieldsByRecordField(
+        field,
+        templateName
+      ),
     });
   }
 
@@ -149,57 +153,61 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   onClickSubmit() {
-    this.submitRecord().subscribe(() => { });
+    this.submitRecord().subscribe(() => {});
   }
 
   submitRecord(): Observable<any> {
-    return this.confirmAddEmptyRecord()
-      .pipe(
-        mergeMap(() => this.saveRecordWithLoading()),
-        mergeMap(() => this.showRecordSavedPopover()),
-        mergeMap(() => this.modalCtrl.dismiss()),
-        takeUntil(this.destroy$),
-      );
+    return this.confirmAddEmptyRecord().pipe(
+      mergeMap(() => this.saveRecordWithLoading()),
+      mergeMap(() => this.showRecordSavedPopover()),
+      mergeMap(() => this.modalCtrl.dismiss()),
+      takeUntil(this.destroy$)
+    );
   }
 
   private confirmAddEmptyRecord() {
     if (this.record.getValue().fields.find(field => field.value != null)) {
       return of(true);
     }
-    return this.popoverService.showPopover({
-      i18nTitle: '',
-      i18nMessage: 'description.confirmEmpty',
-      buttonSet: PopoverButtonSet.CONFIRM,
-      dataOnConfirm: true,
-      dataOnCancel: false,
-    })
-      .pipe(
-        filter(data => data?.data === true),
-      );
+    return this.popoverService
+      .showPopover({
+        i18nTitle: '',
+        i18nMessage: 'description.confirmEmpty',
+        buttonSet: PopoverButtonSet.CONFIRM,
+        dataOnConfirm: true,
+        dataOnCancel: false,
+      })
+      .pipe(filter(data => data?.data === true));
   }
 
   private saveRecordWithLoading(): Observable<any> {
     return forkJoin([
-      this.loadingService.showLoading('description.addingDataAndVerifiableInformation', 10000),
-      this.dataStore.pushRecord(this.record.getValue())
-    ])
-      .pipe(
-        mergeMap(([loading, _]) => loading.dismiss()),
-      );
+      this.loadingService.showLoading(
+        'description.addingDataAndVerifiableInformation',
+        10000
+      ),
+      this.dataStore.pushRecord(this.record.getValue()),
+    ]).pipe(mergeMap(([loading, _]) => loading.dismiss()));
   }
 
   private loadEmptyRecord() {
     this.dataStore.userData$
       .pipe(
         take(1),
-        switchMap(userData => this.recordService.create(userData.dataTemplateName)),
+        switchMap(userData =>
+          this.recordService.create(userData.dataTemplateName)
+        ),
         tap(record => this.record.next(record)),
-        takeUntil(this.destroy$),
-      ).subscribe();
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
 
   private showRecordSavedPopover(): Observable<any> {
-    return this.popoverService.showPopover({ i18nTitle: 'title.recordSaved', icon: PopoverIcon.CONFIRM }, 500);
+    return this.popoverService.showPopover(
+      { i18nTitle: 'title.recordSaved', icon: PopoverIcon.CONFIRM },
+      500
+    );
   }
 
   private updateRecordFields(data: any) {
@@ -215,7 +223,6 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     record.setProof(proof);
     this.record.next(record);
   }
-
 }
 
 interface FieldGroup {

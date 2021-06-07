@@ -18,10 +18,9 @@ import { LoadingService } from '../shared/services/loading.service';
   styleUrls: ['./onboarding.page.scss'],
 })
 export class OnboardingPage implements OnDestroy {
-
   signupForm = this.formBuilder.group({
     email: ['', [Validators.email, Validators.required]],
-    agreeTermsAndConditions: [false, Validators.requiredTrue]
+    agreeTermsAndConditions: [false, Validators.requiredTrue],
   });
   confirmButtonEnabled = true;
 
@@ -36,14 +35,13 @@ export class OnboardingPage implements OnDestroy {
     private readonly router: Router,
     private readonly translate: TranslateService,
     private readonly dataStore: DataStoreService,
-    public readonly languageService: LanguageService,
-  ) { }
+    public readonly languageService: LanguageService
+  ) {}
 
   onSignup() {
-    this.dataStore.updateUserData({ newUser: false })
-      .pipe(
-        takeUntil(this.destroy$),
-      )
+    this.dataStore
+      .updateUserData({ newUser: false })
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => this.router.navigate(['/'], { replaceUrl: true }));
   }
 

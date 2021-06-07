@@ -7,12 +7,13 @@ import { UserDataRepositoryService } from './user-data-repository.service';
 
 const { Storage } = Plugins;
 
-
 describe('UserDataRepositoryService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: UserDataRepositoryService = TestBed.inject(UserDataRepositoryService);
+    const service: UserDataRepositoryService = TestBed.inject(
+      UserDataRepositoryService
+    );
     expect(service).toBeTruthy();
   });
 });
@@ -20,8 +21,10 @@ describe('UserDataRepositoryService', () => {
 fdescribe('get() if no previous saved data', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should fail', (done) => {
-    const service: UserDataRepositoryService = TestBed.inject(UserDataRepositoryService);
+  it('should fail', done => {
+    const service: UserDataRepositoryService = TestBed.inject(
+      UserDataRepositoryService
+    );
 
     const user: UserData = {
       newUser: true,
@@ -43,8 +46,10 @@ fdescribe('save()', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
   afterEach(() => Storage.clear());
 
-  it('should save user data', (done) => {
-    const service: UserDataRepositoryService = TestBed.inject(UserDataRepositoryService);
+  it('should save user data', done => {
+    const service: UserDataRepositoryService = TestBed.inject(
+      UserDataRepositoryService
+    );
 
     const user: UserData = {
       newUser: true,
@@ -66,8 +71,10 @@ fdescribe('get() if there is saved data', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
   afterEach(() => Storage.clear());
 
-  it('should get user data', (done) => {
-    const service: UserDataRepositoryService = TestBed.inject(UserDataRepositoryService);
+  it('should get user data', done => {
+    const service: UserDataRepositoryService = TestBed.inject(
+      UserDataRepositoryService
+    );
 
     const user: UserData = {
       newUser: true,

@@ -19,12 +19,10 @@ interface StyleConfigCollection {
   veryLarge: StyleConfig[];
 }
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StyleService {
-
   // It is intended that small & medium has the same size, since there's only two size [small, large] in this version
   styleConfigCollection: StyleConfigCollection = {
     small: [
@@ -82,30 +80,34 @@ export class StyleService {
         variable: '--font-size-3',
         value: '22pt',
       },
-    ]
+    ],
   };
 
   constructor(
     private readonly dataStore: DataStoreService,
     private readonly domCtrl: DomController,
-    @Inject(DOCUMENT) private readonly document: Document,
-  ) { }
+    @Inject(DOCUMENT) private readonly document: Document
+  ) {}
 
   setFontSize(fontSize: string): void {
     this.domCtrl.write(() => {
-      const styleConfigs: StyleConfig[] = this.styleConfigCollection[fontSize] || [];
+      const styleConfigs: StyleConfig[] =
+        this.styleConfigCollection[fontSize] || [];
       styleConfigs.forEach(styleConfig => {
-        this.document.documentElement.style.setProperty(styleConfig.variable, styleConfig.value, 'important');
+        this.document.documentElement.style.setProperty(
+          styleConfig.variable,
+          styleConfig.value,
+          'important'
+        );
       });
     });
   }
 
   updateFontSize(): Observable<any> {
-    return this.dataStore.userData$
-      .pipe(
-        map(userData => userData.fontSize),
-        filter(fontSize => fontSize != null),
-        tap(fontSize => this.setFontSize(fontSize)),
-      );
+    return this.dataStore.userData$.pipe(
+      map(userData => userData.fontSize),
+      filter(fontSize => fontSize != null),
+      tap(fontSize => this.setFontSize(fontSize))
+    );
   }
 }
