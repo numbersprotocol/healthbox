@@ -2,7 +2,7 @@
   "splitter": "、",
   "title": {
     "QRScanner": "掃描 QR 條碼",
-    "about": "關於我們",
+    "about": "聯絡我們",
     "accountInfo": "帳號資訊",
     "accumulated": "累積",
     "addNewData": "新增紀錄",
@@ -78,7 +78,10 @@
     "small": "小",
     "medium": "中",
     "large": "大",
-    "veryLarge": "特大"
+    "veryLarge": "特大",
+    "locationInfo":"收集位置資訊",
+    "enable":"啟用",
+    "disable":"禁用"
   },
   "description": {
     "addingDataAndVerifiableInformation": "新增資料與驗證資訊中...",

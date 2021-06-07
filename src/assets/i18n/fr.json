@@ -79,7 +79,10 @@
     "small": "Petit",
     "medium": "Moyenne",
     "large": "Grande",
-    "veryLarge": "Very Large"
+    "veryLarge": "Very Large",
+    "locationInfo":"Recueillir des informations de localisation",
+    "enable":"Activer",
+    "disable":"Désactiver"
   },
   "description": {
     "addingDataAndVerifiableInformation": "Ajout de nouvelles données et informations d'intégrité",

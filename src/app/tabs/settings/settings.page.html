@@ -3,26 +3,7 @@
   <ng-container *ngIf="versionClick$ | async"></ng-container>
   <ng-container *ngIf="userData$ | async as userDataView">
     <ion-list>
-      <ion-item-divider>
-        <ion-label>
-          {{ 'title.accountInfo' | translate }}
-        </ion-label>
-      </ion-item-divider>
-
-      <ion-item>
-        <ion-icon name="mail-outline" slot="start"></ion-icon>
-        <ion-label>
-          <h3>{{ 'title.email' | translate }}</h3>
-          <h3 *ngIf="userDataView.email">{{ userDataView.email }}</h3>
-          <p *ngIf="!userDataView.email">{{ 'title.notSet' | translate }}</p>
-        </ion-label>
-      </ion-item>
-
-      <ion-item (click)="onResetAccountClicked()" button>
-        <ion-icon name="refresh-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.resetAccount' | translate }}</ion-label>
-      </ion-item>
-
+      
       <ion-item-divider>
         <ion-label>
           {{ 'title.profile' | translate }}
@@ -92,14 +73,25 @@
         <ion-label class="font-l1">
           <h3 class="font-l1">{{ 'title.fontSize' | translate }}</h3>
         </ion-label>
-        <ion-select *ngIf="showSelects" [value]="userDataView.fontSize" (ionChange)="fontSizeSelected($event)"
+        <ion-select [value]="(userDataView.fontSize) ? userDataView.fontSize : fontSizes[0]" (ionChange)="fontSizeSelected($event)"
           [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
           <ion-select-option *ngFor="let fontsize of fontSizes" [value]="fontsize">
             {{ 'title.' + fontsize | translate }}
           </ion-select-option>
         </ion-select>
       </ion-item>
-
+      <ion-item lines="inset">
+        <ion-icon name="location-outline" slot="start"></ion-icon>
+        <ion-label>
+          <h3>{{ 'title.locationInfo' | translate }}</h3>
+        </ion-label>
+        <ion-select  [value]="(userDataView.enableLocation) ? userDataView.enableLocation : enableLocationOption[0]" (ionChange)="locationSelected($event)"
+        [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
+        <ion-select-option *ngFor="let Option of enableLocationOption" [value]="Option">
+          {{ 'title.' + Option | translate }}
+        </ion-select-option>
+      </ion-select>
+      </ion-item>
       <ion-item-divider>
         <ion-label>
           {{ 'title.otherInfo' | translate }}

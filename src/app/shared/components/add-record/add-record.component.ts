@@ -114,12 +114,19 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   private createProof() {
-    return this.proofService.createProof()
+    if ( this.proofService.enableGeolocation == 'enable') {
+      return this.proofService.createProof()
       .pipe(
         tap(proof => this.updateRecordProof(proof)),
         tap(() => this.proofStatus = ProofStatus.COMPLETE),
         takeUntil(this.destroy$),
       );
+    } else {
+      const proof = this.proofService.createProofWithoutLocation();
+      this.updateRecordProof(proof);
+      this.proofStatus = ProofStatus.COMPLETE;
+      return of(undefined);
+    }
   }
 
   private editField(field: RecordField, templateName: string): Observable<any> {
