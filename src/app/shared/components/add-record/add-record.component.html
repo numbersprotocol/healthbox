@@ -12,7 +12,7 @@
       <ion-item *ngFor="let field of fieldGroup.fields" button (click)="onClickEdit(field, templateName)">
         <ion-icon [name]="field.icon" slot="start"></ion-icon>
         <ion-label>
-          <h3>{{ 'preset.' + templateName + '.' + field.name | translate }}</h3>
+          <h3  class="marquee">{{ 'preset.' + templateName + '.' + field.name | translate }}</h3>
           <ion-text *ngIf="field.type === recordFieldType.string || field.type === recordFieldType.number">
             {{ (field.value) ? field.value : 'title.noData' | translate }}
             <ng-container *ngIf="field.value && field.valueUnit">

@@ -21,6 +21,7 @@
       "dom"
     ],
     "paths": {
+      "@iota/client": ["node_modules/@iota/client/build/Release"],
       "@core/*": [
         "src/app/core/*"
       ],

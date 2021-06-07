@@ -1,0 +1,42 @@
+/* Make it a marquee */
+.select-text {
+  display: block;
+  width: 160%;
+  position: relative;
+  top:0;
+  animation: marquee 5s linear infinite;
+}
+
+.fullSelect {
+  max-width: 100% !important;
+}
+
+.marquee {
+  // // width: 200px;
+  // margin: 0 auto;
+  // overflow: hidden;
+  // white-space: nowrap;
+  // box-sizing: border-box;
+  // // animation: pulse 5s infinite;
+  // animation: marquee 20s linear infinite;
+  display: block;
+  width: 160%;
+  position: relative;
+  top:0;
+  animation: marquee 5s linear infinite;
+}
+
+.marquee:hover {
+animation-play-state: paused
+}
+
+/* Make it move */
+@keyframes marquee {
+  // 0%   { text-indent: 30em }
+  0% { left: 0; }
+  100% { left: -100%; }
+}                                                                                                                                                                                                                   
+     
+.decision {
+  text-overflow: initial;
+}

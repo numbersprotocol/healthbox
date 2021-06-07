@@ -2,7 +2,8 @@
 <ion-content>
   <ng-container *ngIf="versionClick$ | async"></ng-container>
   <ng-container *ngIf="userData$ | async as userDataView">
-    <marquee>聖誕快樂VS中秋佳節</marquee>
+    <marquee>marquee test.... marquee test....</marquee>
+    <p class="marquee">marquee test.... marquee test....</p>
     <ion-list>
       
       <ion-item-divider>
@@ -27,7 +28,7 @@
         <ion-icon name="calendar-outline" slot="start">
         </ion-icon>
         <ion-label>
-          <h3>{{ 'title.dateOfBirth' | translate }}</h3>
+          <h3 class="marquee">{{ 'title.dateOfBirth' | translate }}</h3>
         </ion-label>
         <h3 *ngIf="!userDataView.dateOfBirth">{{ 'title.notSet' | translate }}</h3>
         <ion-datetime [hidden]="!userDataView.dateOfBirth" #dateOfBirthPicker [value]="userDataView.dateOfBirth"
@@ -37,20 +38,14 @@
 
       <ion-item-divider>
         <ion-label>
-          <marquee>{{ 'title.userSettings' | translate }}</marquee>
+          {{ 'title.userSettings' | translate }}
         </ion-label>
-        <marquee>{{ 'title.userSettings' | translate }}</marquee>
-        <marquee> <h3> {{ 'title.language' | translate }}</h3></marquee>
       </ion-item-divider>
-
       <ion-item lines="inset">
         <ion-icon name="language-outline" slot="start"></ion-icon>
         <ion-label>
-          <h3>  <marquee>{{ 'title.language' | translate }}</marquee></h3>
-        </ion-label>
-        <h3>  <marquee>{{ 'title.language' | translate }}</marquee></h3>
-
-        
+          <h3 class="marquee">{{ 'title.language' | translate }} {{ 'title.language' | translate }} </h3>
+        </ion-label>        
         <ion-select [value]="userDataView.language" (ionChange)="onChangeLanguage($event)"
           [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
           <ion-select-option *ngFor="let language of languages" [value]="language">
@@ -65,11 +60,11 @@
         <ion-label>
           <h3>{{ 'title.selectRecordMode' | translate }}</h3>
         </ion-label>
-        <ion-select *ngIf="showSelects"
+        <ion-select  class="fullSelect" *ngIf="showSelects"
           [value]="(userDataView.dataTemplateName) ? userDataView.dataTemplateName : dataTemplateNames[0]"
           (ionChange)="presetSelected($event)" [cancelText]="'title.cancel' | translate"
           [okText]="'title.confirm' | translate">
-          <ion-select-option *ngFor="let preset of dataTemplateNames" [value]="preset">
+          <ion-select-option  *ngFor="let preset of dataTemplateNames" [value]="preset">
             {{ 'preset.' + preset + '.presetName' | translate }}
           </ion-select-option>
         </ion-select>
@@ -89,8 +84,8 @@
       </ion-item>
       <ion-item lines="inset">
         <ion-icon name="location-outline" slot="start"></ion-icon>
-        <ion-label>
-          <h3>{{ 'title.locationInfo' | translate }}</h3>
+        <ion-label class="decision">
+          <h3 class="marquee">{{ 'title.locationInfo' | translate }}</h3>
         </ion-label>
         <ion-select  [value]="(userDataView.enableLocation) ? userDataView.enableLocation : enableLocationOption[0]" (ionChange)="locationSelected($event)"
         [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">

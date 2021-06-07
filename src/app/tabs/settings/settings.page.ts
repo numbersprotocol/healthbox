@@ -28,6 +28,8 @@ import { ToastService } from '@shared/services/toast.service';
 import { version } from '../../../../package.json';
 import { ProofService } from '@core/services/proof.service';
 import { WebCryptoApiSignatureProvider } from '../../core/services/web-crypto-api-signature-rovider.service'
+import { sendMessage } from '@numbersprotocol/niota'
+
 
 const { Browser } = Plugins;
 
@@ -83,7 +85,10 @@ export class SettingsPage implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
     );
     readonly publicKey$ = this.webCryptoApiSignatureProvider.publicKey$;
-    readonly privateKey$ = this.webCryptoApiSignatureProvider.privateKey$;
+  readonly privateKey$ = this.webCryptoApiSignatureProvider.privateKey$;
+  horizontalText = `this is the text to show scroll horizontal, 
+  and default is scroll horizontal. you don't need to set the direction`;
+  
   constructor(
     private readonly dataStore: DataStoreService,
     private readonly dataTemplateService: DataTemplateService,
@@ -102,6 +107,10 @@ export class SettingsPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.updateFromPopover$.subscribe();
     this.updateFromPage$.subscribe();
+    setTimeout(() => {
+      this.horizontalText = `this is the text to show that text could be refreshed. 
+      but this feature support horizontal scroll only!`;
+    }, 5000);
   }
 
   onClickNameItem(): void {
@@ -141,8 +150,14 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   onClickAboutItem(): void {
     this.webCryptoApiSignatureProvider.initialize();
-
-    // console.log("webCryptoApiSignatureProvider.getPrivateKey");
+    let index = "Lifebox"
+    let rawMsg = { "hash": "TTEVBMMPUEOTSEIXPVCTFEVEWCWBMXTULBACGFRQK9TRGJEIIMCLBKW9CXWMNPDX" };
+    let signature = "4382440611608ed43b44275c7e7eb285b926e8c17a20s00beecbb86b4a2d13da3";
+    
+    
+    
+    
+    console.log(sendMessage(index, rawMsg, signature));
     // console.log("getPublicKey",this.webCryptoApiSignatureProvider.getPublicKey());
     // console.log("getPublicKey",this.webCryptoApiSignatureProvider.getPrivateKey());
 

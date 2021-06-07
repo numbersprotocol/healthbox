@@ -17,3 +17,12 @@ ion-col {
         align-items: center;
         width: 50vw;
 }
+
+.marquee {
+        display: block;
+        width: 160%;
+        position: relative;
+        top:0;
+        animation: marquee 10s linear infinite;
+        text-overflow: initial;
+      }

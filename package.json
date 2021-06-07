@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "resources": "cordova-res ios && cordova-res android && node scripts/resources.js"
+    "resources": "cordova-res ios && cordova-res android && node scripts/resources.js",
+    "postinstall": "node patch.js"
   },
   "postinstall": "jetifier",
   "private": true,
@@ -36,7 +37,7 @@
     "@ngx-formly/schematics": "^5.10.3",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
-    "@numbersprotocol/niota": "^0.1.3",
+    "@numbersprotocol/niota": "^0.2.0",
     "@types/leaflet": "^1.5.19",
     "@types/openpgp": "^4.4.14",
     "@types/web3": "^1.2.2",
@@ -101,7 +102,6 @@
     "crypto": false,
     "os": false,
     "http": false,
-    "https": false,
-    "stream": false
+    "https": false
   }
 }
