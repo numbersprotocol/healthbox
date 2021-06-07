@@ -1,7 +1,5 @@
 const fs = require('fs')
 const file = './node_modules/@angular-devkit/build-angular/src/webpack/configs/browser.js';
-//此处为angular6的路径配置
-//angular4的路径配置为:./node_modules/@angular/cli/models/webpack-configs/browser.js
 
 fs.readFile(file, 'utf8', function (err, data) {
   if (err) {
