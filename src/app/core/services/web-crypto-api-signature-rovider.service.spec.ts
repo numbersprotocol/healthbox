@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WebCryptoApiSignatureRoviderService } from './web-crypto-api-signature-rovider.service';
+import { WebCryptoApiSignatureProvider } from './web-crypto-api-signature-rovider.service';
 
 describe('WebCryptoApiSignatureRoviderService', () => {
-  let service: WebCryptoApiSignatureRoviderService;
+  let service: WebCryptoApiSignatureProvider;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(WebCryptoApiSignatureRoviderService);
+    service = TestBed.inject(WebCryptoApiSignatureProvider);
   });
 
   it('should be created', () => {

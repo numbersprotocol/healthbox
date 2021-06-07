@@ -12,7 +12,6 @@ import {
   stringToBase64,
 } from './encoding';
 
-
 describe('EncodingService', () => {
   let service: EncodingService;
 
@@ -25,8 +24,6 @@ describe('EncodingService', () => {
     expect(service).toBeTruthy();
   });
 });
-
-
 
 describe('encoding', () => {
   it('should convert between base64 and ArrayBuffer', () => {
@@ -47,7 +44,6 @@ describe('encoding', () => {
       expected
     );
   });
-
 
   it('should convert between string and base64', () => {
     const str = 'hello';
