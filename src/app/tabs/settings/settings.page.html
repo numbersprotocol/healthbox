@@ -2,14 +2,9 @@
 <ion-content>
   <ng-container *ngIf="versionClick$ | async"></ng-container>
   <ng-container *ngIf="userData$ | async as userDataView">
-    <marquee>marquee test.... marquee test....</marquee>
-    <p class="marquee">marquee test.... marquee test....</p>
     <ion-list>
-      
       <ion-item-divider>
-        <ion-label>
-          {{ 'title.profile' | translate }}
-        </ion-label>
+        <ion-label> {{ 'title.profile' | translate }} </ion-label>
       </ion-item-divider>
 
       <ion-item (click)="onClickNameItem()" button>
@@ -19,40 +14,42 @@
           <h1 *ngIf="userDataView.firstName || userDataView.lastName">
             {{ userDataView.firstName + ' ' + userDataView.lastName }}
           </h1>
-          <h1 *ngIf="!userDataView.firstName && !userDataView.lastName">{{ 'title.notSet' | translate }}
+          <h1 *ngIf="!userDataView.firstName && !userDataView.lastName">
+            {{ 'title.notSet' | translate }}
           </h1>
         </ion-label>
       </ion-item>
 
       <ion-item (click)="dateOfBirthPicker.open()" lines="inset" button>
-        <ion-icon name="calendar-outline" slot="start">
-        </ion-icon>
+        <ion-icon name="calendar-outline" slot="start"> </ion-icon>
         <ion-label>
-          <h3 class="marquee">{{ 'title.dateOfBirth' | translate }}</h3>
+          <h3>{{ 'title.dateOfBirth' | translate }}</h3>
         </ion-label>
-        <h3 *ngIf="!userDataView.dateOfBirth">{{ 'title.notSet' | translate }}</h3>
+        <h3 *ngIf="!userDataView.dateOfBirth">
+          {{ 'title.notSet' | translate }}
+        </h3>
         <ion-datetime [hidden]="!userDataView.dateOfBirth" #dateOfBirthPicker [value]="userDataView.dateOfBirth"
           (ionChange)="onChangeDateOfBirthPicker()" [cancelText]="'title.cancel' | translate"
           [doneText]="'title.confirm' | translate"></ion-datetime>
       </ion-item>
 
       <ion-item-divider>
-        <ion-label>
-          {{ 'title.userSettings' | translate }}
-        </ion-label>
+        <ion-label> {{ 'title.userSettings' | translate }} </ion-label>
       </ion-item-divider>
       <ion-item lines="inset">
         <ion-icon name="language-outline" slot="start"></ion-icon>
         <ion-label>
-          <h3 class="marquee">{{ 'title.language' | translate }} {{ 'title.language' | translate }} </h3>
-        </ion-label>        
+          <h3>
+            {{ 'title.language' | translate }} {{ 'title.language' | translate
+            }}
+          </h3>
+        </ion-label>
         <ion-select [value]="userDataView.language" (ionChange)="onChangeLanguage($event)"
           [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
           <ion-select-option *ngFor="let language of languages" [value]="language">
-          {{ 'language.' + language | translate }}
+            {{ 'language.' + language | translate }}
           </ion-select-option>
         </ion-select>
-       
       </ion-item>
 
       <ion-item lines="inset">
@@ -60,11 +57,11 @@
         <ion-label>
           <h3>{{ 'title.selectRecordMode' | translate }}</h3>
         </ion-label>
-        <ion-select  class="fullSelect" *ngIf="showSelects"
+        <ion-select class="fullSelect" *ngIf="showSelects"
           [value]="(userDataView.dataTemplateName) ? userDataView.dataTemplateName : dataTemplateNames[0]"
           (ionChange)="presetSelected($event)" [cancelText]="'title.cancel' | translate"
           [okText]="'title.confirm' | translate">
-          <ion-select-option  *ngFor="let preset of dataTemplateNames" [value]="preset">
+          <ion-select-option *ngFor="let preset of dataTemplateNames" [value]="preset">
             {{ 'preset.' + preset + '.presetName' | translate }}
           </ion-select-option>
         </ion-select>
@@ -75,8 +72,9 @@
         <ion-label class="font-l1">
           <h3 class="font-l1">{{ 'title.fontSize' | translate }}</h3>
         </ion-label>
-        <ion-select [value]="(userDataView.fontSize) ? userDataView.fontSize : fontSizes[0]" (ionChange)="fontSizeSelected($event)"
-          [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
+        <ion-select [value]="(userDataView.fontSize) ? userDataView.fontSize : fontSizes[0]"
+          (ionChange)="fontSizeSelected($event)" [cancelText]="'title.cancel' | translate"
+          [okText]="'title.confirm' | translate">
           <ion-select-option *ngFor="let fontsize of fontSizes" [value]="fontsize">
             {{ 'title.' + fontsize | translate }}
           </ion-select-option>
@@ -85,19 +83,18 @@
       <ion-item lines="inset">
         <ion-icon name="location-outline" slot="start"></ion-icon>
         <ion-label class="decision">
-          <h3 class="marquee">{{ 'title.locationInfo' | translate }}</h3>
+          <h3>{{ 'title.locationInfo' | translate }}</h3>
         </ion-label>
-        <ion-select  [value]="(userDataView.enableLocation) ? userDataView.enableLocation : enableLocationOption[0]" (ionChange)="locationSelected($event)"
-        [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
-        <ion-select-option *ngFor="let Option of enableLocationOption" [value]="Option">
-          {{ 'title.' + Option | translate }}
-        </ion-select-option>
-      </ion-select>
+        <ion-select [value]="(userDataView.enableLocation) ? userDataView.enableLocation : enableLocationOption[0]"
+          (ionChange)="locationSelected($event)" [cancelText]="'title.cancel' | translate"
+          [okText]="'title.confirm' | translate">
+          <ion-select-option *ngFor="let Option of enableLocationOption" [value]="Option">
+            {{ 'title.' + Option | translate }}
+          </ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-item-divider>
-        <ion-label>
-          {{ 'title.otherInfo' | translate }}
-        </ion-label>
+        <ion-label> {{ 'title.otherInfo' | translate }} </ion-label>
       </ion-item-divider>
 
       <ion-item (click)="onClickAboutItem()" button>
@@ -115,9 +112,7 @@
 
       <ng-container *ngIf="showDeveloperOptions === true">
         <ion-item-divider>
-          <ion-label>
-            開發人員選項（一般使用者請勿使用）
-          </ion-label>
+          <ion-label> 開發人員選項（一般使用者請勿使用） </ion-label>
         </ion-item-divider>
         <ion-item lines="inset">
           <ion-icon name="hammer-outline" slot="start"></ion-icon>
