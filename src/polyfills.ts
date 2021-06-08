@@ -55,7 +55,7 @@
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import * as process from 'process';
+// import * as process from 'process';
 import 'zone.js/dist/zone'; // Included with Angular CLI.
 import './zone-flags';
 
@@ -64,6 +64,6 @@ import './zone-flags';
  */
 
 // Workaround for using @iota/iota.js https://stackoverflow.com/questions/50371593/angular-6-uncaught-referenceerror-buffer-is-not-defined
-(window as any).global = window;
-global.Buffer = global.Buffer || require('buffer').Buffer;
-window['process'] = process;
+// (window as any).global = window;
+// global.Buffer = global.Buffer || require('buffer').Buffer;
+// window['process'] = process;
