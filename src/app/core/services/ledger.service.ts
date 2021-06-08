@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { runTransaction } from '@numbersprotocol/niota';
+import { sendMessage } from '@numbersprotocol/niota';
 import { from, Observable, of } from 'rxjs';
 import { catchError, tap, timeout } from 'rxjs/operators';
 
@@ -10,15 +10,13 @@ export class LedgerService {
   constructor() {}
 
   private registerOnLedger(hash: string): Observable<any> {
-    const address =
-      'HEQLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWOR99D';
-    const seed =
-      'PUEOTSEITFEVEWCWBTSIZM9NKRGJEIMXTULBACGFRQK9IMGICLBKW9TTEVSDQMGWKBXPVCBMMCXWMNPDX';
+    const index = 'Lifebox';
+    const dummySignature = '';
     const rawMsg = { hash };
-    return from(runTransaction(address, seed, rawMsg)).pipe(
+    return from(sendMessage(index, rawMsg, dummySignature)).pipe(
       timeout(10000),
       tap(resultHash =>
-        console.log(`Hash ${resultHash} registered on ledger`, resultHash)
+        console.log(`Message ID ${resultHash} registered on ledger`)
       ),
       catchError(err => {
         console.log(err);
