@@ -61,11 +61,7 @@ export class WebCryptoApiSignatureProvider implements SignatureProvider {
   }
 
   getCryptoData(): Observable<CryptoData> {
-    console.log("getCryptoData-01-2");
     return this.cryptoDataRepo.get().pipe(
-      map((cryptoData) => {
-        return cryptoData;
-      }),
       switchMap((newcryptoData) => this.cryptoDataRepo.save(newcryptoData)),
       tap((newcryptoData) => this.cryptoData.next(newcryptoData))
     );
@@ -74,10 +70,6 @@ export class WebCryptoApiSignatureProvider implements SignatureProvider {
   async initialize() {
     const originalPublicKey = this.cryptoData.getValue().publicKey;
     const originalPrivateKey = this.cryptoData.getValue().privateKey;
-
-    console.log("01_originalPublicKey", originalPublicKey);
-    console.log("01_originalPrivateKey", originalPrivateKey);
-
     if (
       originalPublicKey.length === 0 ||
       originalPrivateKey.length === 0 ||
@@ -87,12 +79,9 @@ export class WebCryptoApiSignatureProvider implements SignatureProvider {
       await this.createOrReplaceCryptoData({
         publicKey: account.address,
         privateKey: account.privateKey,
-      }).subscribe(function (value) {
-        console.log("value", value);
-        return value;
-        // this.setPublicKey(value.publicKey);
-        // this.setPrivateKey(value.privateKey);
-        // alert(value.privateKey)
+      }).subscribe(account=> {
+        console.log("account", account);
+        return account;
       });
     }
   }
@@ -100,7 +89,6 @@ export class WebCryptoApiSignatureProvider implements SignatureProvider {
   async provide(serializedSortedSignedTargets: string): Promise<Signature> {
     await this.initialize();
     const account = loadEthAccount(await this.getPrivateKey());
-    console.log("loadEthAccount-02");
     const sign = account.sign(serializedSortedSignedTargets);
     const publicKey = await this.getPublicKey();
     return { signature: sign.signature, publicKey };

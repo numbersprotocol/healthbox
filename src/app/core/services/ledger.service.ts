@@ -18,9 +18,6 @@ export class LedgerService {
     const index = 'Lifebox';
     const rawMsg = { hash };
     return this.CryptoSignature.getCryptoData().pipe(
-      map((cryptoData) => {
-        return cryptoData;
-      }),
       switchMap((dummySignature) => sendMessage(index, rawMsg, dummySignature.publicKey)),
       timeout(10000),
       tap(resultHash => {
