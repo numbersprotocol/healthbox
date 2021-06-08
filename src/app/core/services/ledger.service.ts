@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { sendMessage } from '@numbersprotocol/niota';
 import { from, Observable, of } from 'rxjs';
 import { catchError, tap, timeout } from 'rxjs/operators';
+import { WebCryptoApiSignatureProvider } from '../../core/services/web-crypto-api-signature-rovider.service'
 
 @Injectable({
   providedIn: 'root',
