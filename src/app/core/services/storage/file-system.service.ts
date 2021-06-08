@@ -1,20 +1,17 @@
 import { Injectable } from '@angular/core';
-
-import { crypto, util } from 'openpgp';
-import { defer, from, Observable, of } from 'rxjs';
-import {
-  catchError,
-  defaultIfEmpty,
-  filter,
-  map,
-  switchMap,
-} from 'rxjs/operators';
-
 import {
   FilesystemDirectory,
   FilesystemEncoding,
   Plugins,
 } from '@capacitor/core';
+import { defer, from, Observable, of } from 'rxjs';
+import {
+  catchError,
+  concatMap,
+  defaultIfEmpty,
+  filter,
+  map,
+} from 'rxjs/operators';
 
 const { Filesystem } = Plugins;
 
@@ -34,11 +31,7 @@ export class FileSystemService {
         path: fileName,
         directory: dir,
       })
-    ).pipe(
-      map(result => util.encode_utf8(result.data)),
-      switchMap(ab => crypto.hash.sha256(ab)),
-      map((intArr: Uint8Array) => util.Uint8Array_to_hex(intArr))
-    );
+    ).pipe(concatMap(result => this.digestMessage(result.data)));
   }
 
   deleteJsonData(
@@ -96,6 +89,16 @@ export class FileSystemService {
       )
     );
     return writeFile$.pipe(map(() => filename));
+  }
+
+  private async digestMessage(message: string) {
+    const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8); // hash the message
+    const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+    const hashHex = hashArray
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join(''); // convert bytes to hex string
+    return hashHex;
   }
 }
 
