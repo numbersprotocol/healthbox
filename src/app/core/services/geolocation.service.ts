@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { bindCallback, from, Observable, of } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import {
   GeolocationOptions,
@@ -31,7 +31,6 @@ export class GeolocationService {
   constructor() { }
   
   getPosition(useCache = true): Observable<GeolocationPosition> {
-    console.log("getPosition")
 
     const handlePositionTimeoutError = (error: Error) =>
       error.message.includes(GeolocationErrorCode.Timeout)
@@ -43,13 +42,10 @@ export class GeolocationService {
         this.defaultGeolocationOptions
       ).catch<GeolocationPosition>(handlePositionTimeoutError);
 
-    const position$ = from(getPosition()).pipe(
-      tap(() =>  console.log("from(getPosition())"))
-    );
+    const position$ = from(getPosition());
 
     return position$.pipe(
       take(1),
-      tap(() =>  console.log("position$.pipe")),
       map(position => {
         console.log('Geolocation retrieved', position);
         return (this.cachedPosition = position);

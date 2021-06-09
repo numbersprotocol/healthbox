@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
-import { map,tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { GeolocationPosition } from '@capacitor/core';
 import { LocationProof } from '@core/interfaces/location-proof';
@@ -22,12 +22,11 @@ export class ProofService {
   }
 
   createProof(): Observable<Proof> {
-    console.log("createProof")
     return this.geolocationService.getPosition().pipe(
       map(geolocationPosition => {
         const location = this.getLocationProof(geolocationPosition);
         return { timestamp: Date.now(), location } as Proof;
-      }),tap(() =>  console.log("createProof getLocationProof"))
+      })
     );
   }
 
