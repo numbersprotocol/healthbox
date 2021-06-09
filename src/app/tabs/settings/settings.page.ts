@@ -62,7 +62,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   readonly dataTemplateNames = this.dataTemplateService.dataTemplateNames;
   // Supported sizes: ['small', 'medium', 'large', 'veryLarge'];
   readonly fontSizes = ['small', 'large'];
-  readonly enableLocationOption = ['disable', 'enable'];
+  readonly enableLocationOption = ['enable','disable'];
   showSelects = true;
 
   userData$: Observable<UserData> = this.dataStore.userData$;

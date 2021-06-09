@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { bindCallback, from, Observable, of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 
 import {
   GeolocationOptions,
@@ -22,16 +22,16 @@ enum GeolocationErrorCode {
 export class GeolocationService {
   defaultGeolocationOptions: GeolocationOptions = {
     enableHighAccuracy: true,
-    maximumAge: 120,
+    maximumAge: 0, //120 這是一個正值，它代表可以接受暫存位置的最長時限（單位是毫秒）。如果設定為 0，代表機器必須回傳實際的當前位置而不能使用暫存位置。
     timeout: 20 * 60 * 1000,
   };
   cachedPosition: GeolocationPosition;
   cachedPositionTime: number;
-  cacheTimeout = 60000; // ms
-  constructor() {}
-
+  cacheTimeout = 10; // ms
+  constructor() { }
+  
   getPosition(useCache = true): Observable<GeolocationPosition> {
-    const cache = this.isCachedPositionValid() && useCache;
+    console.log("getPosition")
 
     const handlePositionTimeoutError = (error: Error) =>
       error.message.includes(GeolocationErrorCode.Timeout)
@@ -43,13 +43,15 @@ export class GeolocationService {
         this.defaultGeolocationOptions
       ).catch<GeolocationPosition>(handlePositionTimeoutError);
 
-    const position$ = cache ? of(this.cachedPosition) : from(getPosition());
+    const position$ = from(getPosition()).pipe(
+      tap(() =>  console.log("from(getPosition())"))
+    );
 
     return position$.pipe(
       take(1),
+      tap(() =>  console.log("position$.pipe")),
       map(position => {
         console.log('Geolocation retrieved', position);
-        this.cachedPositionTime = Date.now();
         return (this.cachedPosition = position);
       })
     );
