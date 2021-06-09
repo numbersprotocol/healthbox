@@ -9,9 +9,6 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { provider } from "web3-core";
 
 const web3 = new Web3();
-
-declare let window: { ethereum: provider; web3: Web3 };
-
 export interface Signature {
   readonly signature: string;
   readonly publicKey: string;
@@ -38,20 +35,6 @@ export class WebCryptoApiSignatureProvider implements SignatureProvider {
   web3: any;
   enable: any;
   constructor(private readonly cryptoDataRepo: CryptoDataRepositoryService) {
-    //Test web3 (DEV)
-    if (window.ethereum === undefined) {
-      alert("Non-Ethereum browser detected. Install MetaMask");
-    } else {
-      if (typeof window.web3 !== "undefined") {
-        this.web3 = window.ethereum;
-      } else {
-        this.web3 = new Web3.providers.HttpProvider("http://localhost:8545");
-      }
-      console.log("transfer.service :: constructor :: window.ethereum");
-      window.web3 = new Web3(window.ethereum);
-      console.log("transfer.service :: constructor :: this.web3");
-      console.log(this.web3);
-    }
   }
 
   createOrReplaceCryptoData(userData: CryptoData): Observable<CryptoData> {
