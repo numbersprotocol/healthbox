@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { sendMessage } from '@numbersprotocol/niota';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap, take, tap, timeout } from 'rxjs/operators';
+import { catchError, concatMap, map, take, tap, timeout } from 'rxjs/operators';
 import { WebCryptoApiSignatureProvider } from '../../core/services/web-crypto-api-signature-rovider.service'
 
 @Injectable({
@@ -18,10 +18,10 @@ export class LedgerService {
     const index = 'Lifebox';
     const rawMsg = { hash };
     return this.CryptoSignature.getCryptoData().pipe(
-      switchMap((dummySignature) => sendMessage(index, rawMsg, dummySignature.publicKey)),
+      concatMap((cryptoData) => sendMessage(index, rawMsg, cryptoData.publicKey)),
       timeout(10000),
-      tap(resultHash => {
-        console.log(`Message ID ${resultHash} registered on ledger`)
+      tap(messageId => {
+        console.log(`Message ID ${messageId} registered on ledger`)
       }
       ),
       catchError(err => {
