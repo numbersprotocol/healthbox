@@ -2,3 +2,9 @@ ion-thumbnail {
   width: 40vw;
   height: 50vw;
 }
+
+ion-card {
+  @media (prefers-color-scheme: dark) {
+    background-color: #1d1d1d;
+  }
+}
