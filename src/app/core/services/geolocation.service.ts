@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-
-import { bindCallback, from, Observable, of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
-
 import {
   GeolocationOptions,
   GeolocationPosition,
   Plugins,
 } from '@capacitor/core';
+import { bindCallback, from, Observable, of } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 const { Geolocation } = Plugins;
 
@@ -31,6 +29,7 @@ export class GeolocationService {
   constructor() {}
 
   getPosition(useCache = true): Observable<GeolocationPosition> {
+    Geolocation.requestPermissions();
     const cache = this.isCachedPositionValid() && useCache;
 
     const handlePositionTimeoutError = (error: Error) =>
