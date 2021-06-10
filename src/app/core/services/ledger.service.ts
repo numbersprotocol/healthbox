@@ -1,30 +1,35 @@
 import { Injectable } from '@angular/core';
-import { runTransaction } from '@numbersprotocol/niota';
-import { from, Observable, of } from 'rxjs';
-import { catchError, tap, timeout } from 'rxjs/operators';
+import { sendMessage } from '@numbersprotocol/niota';
+import { Observable, of } from 'rxjs';
+import { catchError, concatMap, map, take, tap, timeout } from 'rxjs/operators';
+import { WebCryptoApiSignatureProvider } from '../../core/services/web-crypto-api-signature-rovider.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class LedgerService {
-  constructor() {}
+  constructor(
+    private readonly CryptoSignature: WebCryptoApiSignatureProvider
+  ) {
+    this.CryptoSignature.initialize();
+  }
 
   private registerOnLedger(hash: string): Observable<any> {
-    const address =
-      'HEQLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWOR99D';
-    const seed =
-      'PUEOTSEITFEVEWCWBTSIZM9NKRGJEIMXTULBACGFRQK9IMGICLBKW9TTEVSDQMGWKBXPVCBMMCXWMNPDX';
+    const index = 'Lifebox';
     const rawMsg = { hash };
-    return from(runTransaction(address, seed, rawMsg)).pipe(
+    return this.CryptoSignature.getCryptoData().pipe(
+      concatMap((cryptoData) => sendMessage(index, rawMsg, cryptoData.publicKey)),
       timeout(10000),
-      tap(resultHash =>
-        console.log(`Hash ${resultHash} registered on ledger`, resultHash)
+      tap(messageId => {
+        console.log(`Message ID ${messageId} registered on ledger`)
+      }
       ),
       catchError(err => {
         console.log(err);
         return of('');
       })
-    );
+      
+    )
   }
 
   createTransactionHash(hash): Observable<string> {
