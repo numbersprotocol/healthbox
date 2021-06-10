@@ -9,7 +9,7 @@
     <app-proof-item [status]="proofStatus"></app-proof-item>
     <ng-container *ngFor="let fieldGroup of fieldGroups">
       <ion-item-divider>
-        <ion-label>
+        <ion-label class="ion-text-wrap">
           {{
             'preset.' + templateName + '.dataGroup.' + fieldGroup.name
               | translate
@@ -22,7 +22,7 @@
         (click)="onClickEdit(field, templateName)"
       >
         <ion-icon [name]="field.icon" slot="start"></ion-icon>
-        <ion-label>
+        <ion-label class="ion-text-wrap">
           <h3>{{ 'preset.' + templateName + '.' + field.name | translate }}</h3>
           <ion-text
             *ngIf="
