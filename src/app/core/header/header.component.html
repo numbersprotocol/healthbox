@@ -8,8 +8,10 @@
       <ion-icon slot="icon-only" name="close-outline"></ion-icon>
     </ion-button>
   </ion-buttons>
-  <ion-title class="ion-text-center ion-align-self-center">
+  <ion-title class="ion-text-center ion-align-self-center ion-text-wrap">
+    <div style="white-space: unset;">
     {{ headerTitle }}
+    </div>
   </ion-title>
   <ion-buttons slot="end">
     <ion-button *ngIf="showDeleteButton" (click)="onDeleteButtonClick()">
