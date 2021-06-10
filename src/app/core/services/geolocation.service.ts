@@ -29,7 +29,7 @@ export class GeolocationService {
   constructor() {}
 
   getPosition(useCache = true): Observable<GeolocationPosition> {
-    Geolocation.requestPermissions;
+
     const cache = this.isCachedPositionValid() && useCache;
 
     const handlePositionTimeoutError = (error: Error) =>
