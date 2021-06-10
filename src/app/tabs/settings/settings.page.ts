@@ -1,6 +1,20 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Plugins } from '@capacitor/core';
+import { FormService, UserDataFormField } from '@core/forms/form.service';
+import { DataTemplateService } from '@core/services/data-template.service';
+import { LanguageService } from '@core/services/language.service';
+import { ProofService } from '@core/services/proof.service';
+import { DataStoreService } from '@core/services/store/data-store.service';
+import { StyleService } from '@core/services/style.service';
+import { UtilityService } from '@core/services/utility.service';
+import { IonContent, IonDatetime } from '@ionic/angular';
+import { LoadingService } from '@shared/services/loading.service';
+import {
+  PopoverButtonSet,
+  PopoverService,
+} from '@shared/services/popover.service';
+import { ToastService } from '@shared/services/toast.service';
 import {
   combineLatest,
   concat,
@@ -23,24 +37,7 @@ import {
   tap,
 } from 'rxjs/operators';
 import { UserData } from 'src/app/core/interfaces/user-data';
-
-import { Plugins } from '@capacitor/core';
-import { FormService, UserDataFormField } from '@core/forms/form.service';
-import { DataTemplateService } from '@core/services/data-template.service';
-import { LanguageService } from '@core/services/language.service';
-import { DataStoreService } from '@core/services/store/data-store.service';
-import { StyleService } from '@core/services/style.service';
-import { UtilityService } from '@core/services/utility.service';
-import { IonContent, IonDatetime } from '@ionic/angular';
-import { LoadingService } from '@shared/services/loading.service';
-import {
-  PopoverButtonSet,
-  PopoverService,
-} from '@shared/services/popover.service';
-import { ToastService } from '@shared/services/toast.service';
-
 import { version } from '../../../../package.json';
-import { ProofService } from '@core/services/proof.service';
 
 const { Browser } = Plugins;
 
@@ -51,7 +48,6 @@ const { Browser } = Plugins;
 })
 export class SettingsPage implements OnInit, OnDestroy {
   @ViewChild(IonContent) content: IonContent;
-  enableGeolocation = this.proofService.enableGeolocation;
   fakeDataDays = 1;
   private readonly destroy$ = new Subject();
 
@@ -173,7 +169,6 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   locationSelected(event: CustomEvent): void {
     this.updateFromPage.next({ enableLocation: event.detail.value });
-    this.proofService.setLocationInfoCollection(event.detail.value);
   }
 
   fontSizeSelected(event: CustomEvent): void {

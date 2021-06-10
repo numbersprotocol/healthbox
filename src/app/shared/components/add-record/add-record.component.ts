@@ -1,17 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-
-import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
-import {
-  catchError,
-  filter,
-  map,
-  mergeMap,
-  switchMap,
-  take,
-  takeUntil,
-  tap,
-} from 'rxjs/operators';
-
 import { Record } from '@core/classes/record';
 import { ProofStatus } from '@core/enums/proof-status.enum';
 import { RecordFieldType } from '@core/enums/record-field-type.enum';
@@ -29,6 +16,17 @@ import {
   PopoverIcon,
   PopoverService,
 } from '@shared/services/popover.service';
+import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
+import {
+  catchError,
+  filter,
+  map,
+  mergeMap,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-record',
@@ -116,18 +114,11 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   private createProof() {
-    if (this.proofService.enableGeolocation == 'enable') {
-      return this.proofService.createProof().pipe(
-        tap(proof => this.updateRecordProof(proof)),
-        tap(() => (this.proofStatus = ProofStatus.COMPLETE)),
-        takeUntil(this.destroy$)
-      );
-    } else {
-      const proof = this.proofService.createProofWithoutLocation();
-      this.updateRecordProof(proof);
-      this.proofStatus = ProofStatus.COMPLETE;
-      return of(undefined);
-    }
+    return this.proofService.createProof().pipe(
+      tap(proof => this.updateRecordProof(proof)),
+      tap(() => (this.proofStatus = ProofStatus.COMPLETE)),
+      takeUntil(this.destroy$)
+    );
   }
 
   private editField(field: RecordField, templateName: string): Observable<any> {

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-
 import { UserData } from '../../interfaces/user-data';
 import { LocalStorageService } from '../storage/local-storage.service';
 
@@ -16,6 +14,7 @@ export class UserDataRepositoryService {
     firstName: '',
     lastName: '',
     dataTemplateName: '',
+    enableLocation: 'enable',
   };
   private readonly userData = new Subject<UserData>();
   userData$: Observable<UserData> = this.userData;

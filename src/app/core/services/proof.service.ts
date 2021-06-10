@@ -1,27 +1,35 @@
 import { Injectable } from '@angular/core';
-
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 import { GeolocationPosition } from '@capacitor/core';
 import { LocationProof } from '@core/interfaces/location-proof';
-
+import { Observable, of } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
 import { Proof } from '../interfaces/proof';
 import { GeolocationService } from './geolocation.service';
+import { DataStoreService } from './store/data-store.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProofService {
-  enableGeolocation = 'disable';
-
-  constructor(private readonly geolocationService: GeolocationService) {}
-
-  async setLocationInfoCollection(enable: string) {
-    this.enableGeolocation = enable;
-  }
+  constructor(
+    private readonly dataStore: DataStoreService,
+    private readonly geolocationService: GeolocationService
+  ) {}
 
   createProof(): Observable<Proof> {
+    const enableLocation$ = this.dataStore.userData$.pipe(
+      map(userData => userData.enableLocation !== 'disable')
+    );
+    return enableLocation$.pipe(
+      concatMap(enableLocation => {
+        return enableLocation
+          ? this.createProofWithLocation()
+          : of(this.createProofWithoutLocation());
+      })
+    );
+  }
+
+  private createProofWithLocation(): Observable<Proof> {
     return this.geolocationService.getPosition().pipe(
       map(geolocationPosition => {
         const location = this.getLocationProof(geolocationPosition);
@@ -30,7 +38,7 @@ export class ProofService {
     );
   }
 
-  createProofWithoutLocation(): Proof {
+  private createProofWithoutLocation(): Proof {
     return { timestamp: Date.now() };
   }
 

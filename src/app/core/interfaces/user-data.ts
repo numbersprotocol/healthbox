@@ -17,4 +17,5 @@ export interface UserData {
   endDate?: string; // yyyy-MM-dd
   uploadHost?: string;
   sharedLinks?: SharedLink[];
+  enableLocation?: string;
 }
