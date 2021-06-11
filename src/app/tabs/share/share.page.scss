@@ -9,6 +9,18 @@
   width: 95%;
 }
 
+ion-list {
+  @media (prefers-color-scheme: dark) {
+    background-color: black;
+  }
+}
+
+ion-card {
+  @media (prefers-color-scheme: dark) {
+    background-color: #1d1d1d;
+  }
+}
+
 .paperclip {
   height: 40px;
   width: 15%;
