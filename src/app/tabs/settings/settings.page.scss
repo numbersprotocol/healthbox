@@ -3,13 +3,13 @@
 }
 
 ion-select {
-  min-width:50%;
+  min-width: 50%;
   max-width: 60%;
 }
 
 .select-text::part(text) {
-   text-overflow:inherit;
-   overflow: inherit;
-   word-break: normal;
-   white-space: pre-line;
+  text-overflow: inherit;
+  overflow: inherit;
+  word-break: normal;
+  white-space: pre-line;
 }
