@@ -69,11 +69,11 @@
 
       <ion-item lines="inset">
         <ion-icon name="documents-outline" slot="start"></ion-icon>
-        <ion-label class="ion-text-wrap">
+        <ion-label>
           <h3>{{ 'title.selectRecordMode' | translate }}</h3>
         </ion-label>
         <ion-select
-          class="fullSelect"
+          class="ion-text-wrap select-text"
           *ngIf="showSelects"
           [value]="
             userDataView.dataTemplateName

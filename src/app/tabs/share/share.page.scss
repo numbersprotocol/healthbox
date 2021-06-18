@@ -6,7 +6,10 @@
 }
 
 .upload-button {
-  width: 95%;
+  text-overflow: inherit;
+  overflow: inherit;
+  word-break: normal;
+  white-space: pre-line;
 }
 
 ion-list {

@@ -38,6 +38,16 @@
               }}</ng-container
             >
           </ion-text>
+          <ng-container *ngIf="field.type === recordFieldType.photo">
+            <ion-thumbnail *ngIf="field.value">
+              <ion-img
+                [src]="'data:image/jpeg;base64,' + field.value"
+              ></ion-img>
+            </ion-thumbnail>
+            <ion-text *ngIf="!field.value">{{
+              'title.takePhoto' | translate
+            }}</ion-text>
+          </ng-container>
         </ion-label>
         <ion-toggle
           *ngIf="field.type === recordFieldType.boolean"
@@ -51,14 +61,7 @@
             field.type === recordFieldType.number
           "
         ></ion-icon>
-        <ng-container *ngIf="field.type === recordFieldType.photo">
-          <ion-thumbnail *ngIf="field.value">
-            <ion-img [src]="'data:image/jpeg;base64,' + field.value"></ion-img>
-          </ion-thumbnail>
-          <ion-text *ngIf="!field.value">{{
-            'title.takePhoto' | translate
-          }}</ion-text>
-        </ng-container>
+
         <ion-select
           *ngIf="field.type === recordFieldType.option"
           [value]="field.value || field.options[0]"
